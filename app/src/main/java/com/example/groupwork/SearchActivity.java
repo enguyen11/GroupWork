@@ -6,11 +6,13 @@ import android.os.Bundle;
 
 public class SearchActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dnd_api_menu);
     }
+
 
     // Choosing the option to search for equipment
     //todo actually implement this
@@ -22,6 +24,10 @@ public class SearchActivity extends AppCompatActivity {
         //this will automatically display a list of items in that category, clicking on one
         //would open its description just as if you had searched for it
 
+
+    }
+
+    public void search(android.view.View view){
         // sends request to web service: /api/equipment/<search-term>
         //<search-term> is whatever is entered into the search bar
         //should be an exact match
@@ -31,9 +37,9 @@ public class SearchActivity extends AppCompatActivity {
           -either we handle this ourselves or instruct the user to do so
 
          */
-
-
     }
+
+
 
 
 }
