@@ -35,7 +35,6 @@ public class SearchActivity extends AppCompatActivity {
           NOTE: Game objects with a space in their name (e.g. Leather Armor)
           are written with a hyphen (e.g. studded-leather)
           -either we handle this ourselves or instruct the user to do so
-
          */
     }
 
