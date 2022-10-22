@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">GroupWork</string>
+    <string name="string_search">Search</string>
+    <string name="string_main_activity_welcome">Welcome! Click the button below to navigate to make requests to a DnD 5e web service</string>
+    <string name="string_results">Results:</string>
 </resources>

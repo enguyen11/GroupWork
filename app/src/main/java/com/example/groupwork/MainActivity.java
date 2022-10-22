@@ -4,18 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button btnSearchActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
-    public void Search(android.view.View view){
-        Intent goToSearch = new Intent(this, SearchActivity.class);
-        startActivity(goToSearch);
+        btnSearchActivity = findViewById(R.id.button_search_activity);
+
+        btnSearchActivity.setOnClickListener(view -> {
+            Intent goToSearch = new Intent(MainActivity.this, SearchActivity.class);
+            MainActivity.this.startActivity(goToSearch);
+        });
     }
 
 }
