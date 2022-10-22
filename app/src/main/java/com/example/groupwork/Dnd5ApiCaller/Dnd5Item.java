@@ -1,4 +1,4 @@
-package Dnd5ApiCaller;
+package com.example.groupwork.Dnd5ApiCaller;
 
 /**
  * This class represents a single item extracted from the xml downloaded by the api.
