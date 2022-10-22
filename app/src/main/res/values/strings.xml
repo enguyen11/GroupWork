@@ -4,4 +4,9 @@
     <string name="string_search">Search</string>
     <string name="string_group_name">Group 32: DnD Group</string>
     <string name="string_at_your_service">At Your Service</string>
+    <string-array name="DndApiOptions">
+        <item>Equipment</item>
+        <item>Monsters</item>
+        <item>Spells</item>
+    </string-array>
 </resources>
