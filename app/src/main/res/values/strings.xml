@@ -2,4 +2,6 @@
     <string name="app_name">GroupWork</string>
     <string name="string_main_activity_welcome">\ Welcome, click the button below to navigate to query a DnD e5 web service.</string>
     <string name="string_search">Search</string>
+    <string name="string_group_name">Group 32: DnD Group</string>
+    <string name="string_at_your_service">At Your Service</string>
 </resources>

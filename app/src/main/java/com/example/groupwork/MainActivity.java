@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
         btnSearchActivity = findViewById(R.id.button_search_activity);
 
         btnSearchActivity.setOnClickListener(view -> {
-//            Intent goToSearch = new Intent(MainActivity.this, NEW ACTIVITY CLASS HERE );
-//            MainActivity.this.startActivity(goToSearch);
+            Intent goToSearch = new Intent(MainActivity.this, DndAPIActivity.class );
+            MainActivity.this.startActivity(goToSearch);
         });
     }
 }
