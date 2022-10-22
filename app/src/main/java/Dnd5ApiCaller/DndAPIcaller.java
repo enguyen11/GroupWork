@@ -6,12 +6,12 @@ import java.util.List;
  * This class is responsible in making calls to the dndApi. It also parses the xml information into
  * 3 data points. Title description and type.
  */
-public class DndAPIcaller {
+public class DndAPICaller {
 
     /**
      * Not really sure if necessary.
      */
-    DndAPIcaller(){
+    DndAPICaller(){
         super();
     }
 
