@@ -26,7 +26,7 @@ public class DndAPIActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_dnd_apiactivity);
 
         //Our recycler
         recyclerView = new RecyclerView(this);
