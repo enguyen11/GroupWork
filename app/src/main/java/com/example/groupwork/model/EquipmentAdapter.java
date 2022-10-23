@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.groupwork.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentViewHolder>{
     private final List<Equipment> equipmentList;
     private final Context context;
 
-    public EquipmentAdapter(List<Equipment> equipmentList, Context context){
+    public EquipmentAdapter(ArrayList<Equipment> equipmentList, Context context){
         this.equipmentList = equipmentList;
         this.context = context;
     }

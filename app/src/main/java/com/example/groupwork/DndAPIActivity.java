@@ -1,5 +1,6 @@
 package com.example.groupwork;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.example.groupwork.model.IDnd5e;
 import com.example.groupwork.model.Monster;
 import com.example.groupwork.model.Spell;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -38,7 +40,7 @@ public class DndAPIActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IDnd5e api;
-    private List<Equipment> equipmentList;
+    private ArrayList<Equipment> equipmentList;
 
     public DndAPIActivity() {
     }
@@ -46,8 +48,8 @@ public class DndAPIActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
-
+        setContentView(R.layout.activity_dnd_apiactivity);
+        equipmentList = new ArrayList<>();
         //Our recycler
         recyclerView = new RecyclerView(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -55,7 +57,7 @@ public class DndAPIActivity extends AppCompatActivity {
         
 
 
-        retrofitBtn = findViewById(R.id.button);
+        retrofitBtn = findViewById(R.id.button2);
         retrofitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,6 +150,8 @@ public class DndAPIActivity extends AppCompatActivity {
                 }
 
                 Equipment equipment = response.body();
+                equipmentList.add(equipment);
+                recyclerView.setAdapter(new EquipmentAdapter(equipmentList, DndAPIActivity.this));
                 StringBuffer  str = new StringBuffer();
                 str.append("Code:: ")
                         .append(response.code())
