@@ -9,4 +9,13 @@
         <item>Monsters</item>
         <item>Spells</item>
     </string-array>
+    <string name="noCategory">No Category Selected</string>
+    <string name="NotSure">Not sure what to look for?</string>
+    <string name="ActionShow">Show</string>
+    <string name="list">Show all items in category.</string>
+    <string name="results">Results:</string>
+    <string name="search">Type name of your object</string>
+    <string name="categories">Categories</string>
+    <string name="search_hint">Type to search for one item</string>
+
 </resources>

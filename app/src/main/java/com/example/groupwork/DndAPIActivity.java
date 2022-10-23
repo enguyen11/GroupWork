@@ -5,10 +5,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.util.Log;
 
 import android.widget.Button;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,7 +46,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * This class is the main driver for the DndMain activity.
  */
-public class DndAPIActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class DndAPIActivity extends AppCompatActivity{
     private static final String TAG = "DndAPIActivity";
     private Spinner spinner;
     private RecyclerView recyclerView;
@@ -52,6 +54,8 @@ public class DndAPIActivity extends AppCompatActivity implements AdapterView.OnI
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IDnd5e api;
+    private String category;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,26 +64,41 @@ public class DndAPIActivity extends AppCompatActivity implements AdapterView.OnI
 
         // Set the spinner for all categories
         spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.DndApiOptions, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.DndApiOptions, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
-
-        retrofitBtn = findViewById(R.id.button);
-        retrofitBtn.setOnClickListener(new View.OnClickListener() {
+        // SET listener for spinner
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                String text;
+                text = adapterView.getItemAtPosition(position).toString();
+                category = text;
+            }
 
-                /**
-                 * TODO: switch or if to determine which call to make
-                 *  pass in variable instead of hardcoded string
-                 */
-                String endpoint = "equipment";
-                String index = "club";
-                getEndpointList(endpoint);
-                getSpecificEquipment(index);
-                //getSpecificMonster(index);
-                //getSpecificEquipment(index);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                spinner.setPrompt(getString(R.string.categories));
+                category = null;
+            }
+        });
+        category = null;
+
+        // set up search view
+        searchView = findViewById(R.id.searchView);
+        searchView.clearFocus();
+        searchView.setQueryHint(getString(R.string.search_hint));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Log.d(TAG, "onQueryTextSubmit: ");query(s, category);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
             }
         });
 
@@ -89,47 +108,34 @@ public class DndAPIActivity extends AppCompatActivity implements AdapterView.OnI
                 .build();
 
         api = retrofit.create(IDnd5e.class);
-
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        String text;
-        text = adapterView.getItemAtPosition(position).toString();
+    // This function will form a query based on the input received.
+    private boolean query(String query, String category){
+        // edge cases
+        if (category == null){
+            return false;
+        }else if (query.equals("")){
+            getEndpointList(category);
+            return true;
+        }
+
+        // separate queries
+        switch (category) {
+            case "equipment":
+                getSpecificEquipment(query);
+                return true;
+            case "monster":
+                getSpecificMonster(query);
+                return true;
+            case "spell":
+                getSpecificSpell(query);
+                return true;
+        }
+        // nothing was found return false.
+        return false;
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-        //Our recycler
-//        recyclerView = new RecyclerView(this);
-
-
-        retrofitBtn = findViewById(R.id.button);
-        retrofitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                /**
-                 * TODO: switch or if to determine which call to make
-                 *  pass in variable instead of hardcoded string
-                 */
-                String endpoint = "equipment";
-                String index = "club";
-                getEndpointList(endpoint);
-                getSpecificEquipment(index);
-                //getSpecificMonster(index);
-                //getSpecificEquipment(index);
-            }
-        });
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.dnd5eapi.co/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        api = retrofit.create(IDnd5e.class);
-
-    }
 
     // Get requests
 
