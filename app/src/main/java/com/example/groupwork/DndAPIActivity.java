@@ -92,12 +92,15 @@ public class DndAPIActivity extends AppCompatActivity{
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d(TAG, "onQueryTextSubmit: ");query(s, category);
+                Log.d(TAG, "onQueryTextSubmit: " + s + category);
+                query(s, category);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
+                Log.d(TAG, "EMPTY QUERY: " + s + category);
+                query("", category);
                 return false;
             }
         });
