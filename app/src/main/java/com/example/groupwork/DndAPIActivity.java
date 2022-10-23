@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.groupwork.model.Dnd5eItem;
 import com.example.groupwork.model.Dnd5eItemList;
 import com.example.groupwork.model.Equipment;
+import com.example.groupwork.model.EquipmentCategoryList;
 import com.example.groupwork.model.IDnd5e;
 import com.example.groupwork.model.Monster;
 import com.example.groupwork.model.Spell;
@@ -98,6 +99,7 @@ public class DndAPIActivity extends AppCompatActivity{
             }
 
             @Override
+
             public boolean onQueryTextChange(String s) {
                 Log.d(TAG, "EMPTY QUERY: " + s + category);
                 query("", category);
@@ -315,6 +317,51 @@ public class DndAPIActivity extends AppCompatActivity{
             public void onFailure(Call<Spell> call, Throwable t) {
                 // this gets called when url is wrong and therefore calls can't be made OR processing the request goes wrong.
                 Log.d(TAG, "Call failed!" + t.getMessage());
+            }
+        });
+    }
+
+    //All items in an endpoint
+    private void getEquipmentInCategory(String index){
+        // to execute the call
+        Call<EquipmentCategoryList>  call = api.getEquipmentInCategory(index);
+        //call.execute() runs on the current thread, which is main at the moment. This will crash
+        // use Retrofit's method enqueue. This will automatically push the network call to background thread
+        call.enqueue(new Callback<EquipmentCategoryList>() {
+            @Override
+            public void onResponse(Call<EquipmentCategoryList>  call, Response<EquipmentCategoryList> response) {
+                //This gets called when at least the call reaches a server and there was a response BUT 404 or any legitimate error code from the server, also calls this
+                // check response code is between 200-300 and API was found
+
+                if(!response.isSuccessful()){
+                    Log.d(TAG, "Call failed!" + response.code());
+                    return;
+                }
+
+                Log.d(TAG, "Call Succeeded!");
+                EquipmentCategoryList equipmentList = response.body();
+                for(Dnd5eItem equipment : equipmentList.getItems()){
+                    StringBuffer  str = new StringBuffer();
+                    str.append("Code:: ")
+                            .append(response.code())
+                            .append("Name: ")
+                            .append(equipment.getName())
+                            .append("\n")
+                            .append("url: ")
+                            .append(equipment.getURL()) //if we implement clicking on the item we will need this url
+                            .append("\n");
+
+
+                    Log.d(TAG, str.toString());
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EquipmentCategoryList> call, Throwable t) {
+                // this gets called when url is wrong and therefore calls can't be made OR processing the request goes wrong.
+                Log.d(TAG, "Call failed!" + t.getMessage() + call.toString());
             }
         });
     }
