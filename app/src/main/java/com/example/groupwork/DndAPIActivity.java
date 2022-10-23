@@ -1,12 +1,14 @@
 package com.example.groupwork;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,11 +56,12 @@ public class DndAPIActivity extends AppCompatActivity {
         recyclerView = new RecyclerView(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new EquipmentAdapter(equipmentList, this));
-        
+        System.out.println(equipmentList);
 
 
         retrofitBtn = findViewById(R.id.button2);
         retrofitBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
 
@@ -72,6 +75,11 @@ public class DndAPIActivity extends AppCompatActivity {
                 getSpecificEquipment(index);
                 //getSpecificMonster(index);
                 //getSpecificEquipment(index);
+
+                //equipmentList.forEach(equipment ->{
+               //     System.out.println(equipment.getName());
+               // });
+
             }
         });
 
@@ -117,7 +125,9 @@ public class DndAPIActivity extends AppCompatActivity {
                             .append("\n");
 
 
-                   Log.d(TAG, str.toString());
+                  // Log.d(TAG, str.toString());
+                    //System.out.println(equipmentList.get(0).getName());
+
 
 
                 }
@@ -151,6 +161,8 @@ public class DndAPIActivity extends AppCompatActivity {
 
                 Equipment equipment = response.body();
                 equipmentList.add(equipment);
+                System.out.println("\n\n\n");
+                //System.out.println(equipment.getName());
                 recyclerView.setAdapter(new EquipmentAdapter(equipmentList, DndAPIActivity.this));
                 StringBuffer  str = new StringBuffer();
                 str.append("Code:: ")
@@ -163,9 +175,10 @@ public class DndAPIActivity extends AppCompatActivity {
                         .append("\n");
 
 
-                Log.d(TAG, str.toString());
+                //Log.d(TAG, str.toString());
 
                 Log.d(TAG, "Call Succeeded!");
+                System.out.println("\nSize: " + equipmentList.size() + "\n");
 
             }
 
@@ -175,6 +188,8 @@ public class DndAPIActivity extends AppCompatActivity {
                 Log.d(TAG, "Call failed!" + t.getMessage());
             }
         });
+        //System.out.println("\n" + equipmentList + "\n" +
+         //       "\n");
     }
 
 
@@ -207,7 +222,8 @@ public class DndAPIActivity extends AppCompatActivity {
                         .append("\n");
 
 
-                Log.d(TAG, str.toString());
+                //Log.d(TAG, str.toString());
+               // Log.d(TAG, equipmentList.toString());
 
                 Log.d(TAG, "Call Succeeded!");
 
