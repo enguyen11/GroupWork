@@ -12,12 +12,12 @@ import com.example.groupwork.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentViewHolder>{
-    private final List<Equipment> equipmentList;
+public class ItemAdapter extends RecyclerView.Adapter<EquipmentViewHolder>{
+    private final Dnd5eItemList itemList;
     private final Context context;
 
-    public EquipmentAdapter(ArrayList<Equipment> equipmentList, Context context){
-        this.equipmentList = equipmentList;
+    public ItemAdapter(Dnd5eItemList itemList, Context context){
+        this.itemList = itemList;
         this.context = context;
     }
     @NonNull
@@ -28,13 +28,13 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull EquipmentViewHolder holder, int position) {
-        holder.index.setText(equipmentList.get(position).getIndex());
-        holder.name.setText(equipmentList.get(position).getName());
-        holder.description.setText(equipmentList.get(position).getDescription());
+        holder.index.setText(itemList.getItems().get(position).getIndex());
+        holder.name.setText(itemList.getItems().get(position).getName());
+        //holder.description.setText(itemList.getItems().get(position).getDescription());
     }
 
     @Override
     public int getItemCount() {
-        return equipmentList.size();
+        return itemList.getItems().size();
     }
 }

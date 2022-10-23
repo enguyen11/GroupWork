@@ -1,6 +1,5 @@
 package com.example.groupwork;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,13 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.groupwork.model.Dnd5eItem;
 import com.example.groupwork.model.Dnd5eItemList;
 import com.example.groupwork.model.Equipment;
-import com.example.groupwork.model.EquipmentAdapter;
+import com.example.groupwork.model.ItemAdapter;
 import com.example.groupwork.model.IDnd5e;
 import com.example.groupwork.model.Monster;
 import com.example.groupwork.model.Spell;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,7 +40,7 @@ public class DndAPIActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IDnd5e api;
-    private ArrayList<Equipment> equipmentList;
+    private Dnd5eItemList itemList;
 
     public DndAPIActivity() {
     }
@@ -51,12 +49,12 @@ public class DndAPIActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dnd_apiactivity);
-        equipmentList = new ArrayList<>();
         //Our recycler
-        recyclerView = new RecyclerView(this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new EquipmentAdapter(equipmentList, this));
-        System.out.println(equipmentList);
+        ArrayList<Dnd5eItem> arrayList = new ArrayList<>();
+        itemList = new Dnd5eItemList(arrayList);
+        recyclerView = findViewById(R.id.recyclerView);
+
+        System.out.println(itemList);
 
 
         retrofitBtn = findViewById(R.id.button2);
@@ -75,10 +73,9 @@ public class DndAPIActivity extends AppCompatActivity {
                 getSpecificEquipment(index);
                 //getSpecificMonster(index);
                 //getSpecificEquipment(index);
+                recyclerView.setLayoutManager(new LinearLayoutManager(DndAPIActivity.this));
+                recyclerView.setAdapter(new ItemAdapter(itemList, DndAPIActivity.this));
 
-                //equipmentList.forEach(equipment ->{
-               //     System.out.println(equipment.getName());
-               // });
 
             }
         });
@@ -112,8 +109,8 @@ public class DndAPIActivity extends AppCompatActivity {
                 }
 
                 Log.d(TAG, "Call Succeeded!");
-                Dnd5eItemList itemList = response.body();
-                for(Dnd5eItem item : itemList.getItems()){
+                Dnd5eItemList responseList = response.body();
+                for(Dnd5eItem item : responseList.getItems()){
                     StringBuffer  str = new StringBuffer();
                     str.append("Code:: ")
                             .append(response.code())
@@ -125,12 +122,10 @@ public class DndAPIActivity extends AppCompatActivity {
                             .append("\n");
 
 
-                  // Log.d(TAG, str.toString());
-                    //System.out.println(equipmentList.get(0).getName());
-
-
-
+                   Log.d(TAG, str.toString());
+                   // System.out.println(itemList.get(itemList.size()-1).getName());
                 }
+                itemList = responseList;
             }
 
             @Override
@@ -139,6 +134,7 @@ public class DndAPIActivity extends AppCompatActivity {
                 Log.d(TAG, "Call failed!" + t.getMessage() + call.toString());
             }
         });
+
     }
 
 
@@ -160,10 +156,6 @@ public class DndAPIActivity extends AppCompatActivity {
                 }
 
                 Equipment equipment = response.body();
-                equipmentList.add(equipment);
-                System.out.println("\n\n\n");
-                //System.out.println(equipment.getName());
-                recyclerView.setAdapter(new EquipmentAdapter(equipmentList, DndAPIActivity.this));
                 StringBuffer  str = new StringBuffer();
                 str.append("Code:: ")
                         .append(response.code())
@@ -178,7 +170,7 @@ public class DndAPIActivity extends AppCompatActivity {
                 //Log.d(TAG, str.toString());
 
                 Log.d(TAG, "Call Succeeded!");
-                System.out.println("\nSize: " + equipmentList.size() + "\n");
+                //System.out.println("\nSize: " + itemList.getItems().size() + "\n");
 
             }
 
@@ -188,7 +180,7 @@ public class DndAPIActivity extends AppCompatActivity {
                 Log.d(TAG, "Call failed!" + t.getMessage());
             }
         });
-        //System.out.println("\n" + equipmentList + "\n" +
+        //System.out.println("\n" + itemList + "\n" +
          //       "\n");
     }
 
@@ -223,7 +215,7 @@ public class DndAPIActivity extends AppCompatActivity {
 
 
                 //Log.d(TAG, str.toString());
-               // Log.d(TAG, equipmentList.toString());
+               // Log.d(TAG, itemList.toString());
 
                 Log.d(TAG, "Call Succeeded!");
 
