@@ -19,7 +19,6 @@ import com.example.groupwork.model.Monster;
 import com.example.groupwork.model.Spell;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,7 +38,7 @@ public class DndAPIActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IDnd5e api;
-    private List<Equipment> equipmentList;
+    private Dnd5eItemList itemList;
 
     public DndAPIActivity() {
     }
@@ -47,17 +46,20 @@ public class DndAPIActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_dnd_apiactivity);
+
+        itemList = new Dnd5eItemList(new ArrayList<>());
+
 
         //Our recycler
-        equipmentList = new ArrayList<>();
-        recyclerView = findViewById(R.id.result);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new EquipmentAdapter(equipmentList, this));
-        
+        DndAPIActivity.this.recyclerView = findViewById(R.id.recyclerView);
+        DndAPIActivity.this.recyclerView.setAdapter(new EquipmentAdapter(itemList, DndAPIActivity.this));
+        DndAPIActivity.this.recyclerView.setLayoutManager(new LinearLayoutManager(DndAPIActivity.this));
 
 
-        retrofitBtn = findViewById(R.id.button);
+
+
+        retrofitBtn = findViewById(R.id.button2);
 
 
         retrofitBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +109,8 @@ public class DndAPIActivity extends AppCompatActivity {
 
                 Log.d(TAG, "Call Succeeded!");
                 Dnd5eItemList itemList = response.body();
+                DndAPIActivity.this.itemList = itemList;
+
                 for(Dnd5eItem item : itemList.getItems()){
                     StringBuffer  str = new StringBuffer();
                     str.append("Code:: ")
@@ -161,7 +165,6 @@ public class DndAPIActivity extends AppCompatActivity {
                         .append("Description: ")
                         .append(equipment.getDescription())
                         .append("\n");
-                DndAPIActivity.this.equipmentList.add(equipment);
 
 
                 Log.d(TAG, str.toString());

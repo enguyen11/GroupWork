@@ -9,14 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.groupwork.R;
 
 public class EquipmentViewHolder extends RecyclerView.ViewHolder{
-    public final TextView index;
     public final TextView name;
-    public final TextView description;
+    public final TextView url;
 
     public EquipmentViewHolder(@NonNull View itemView) {
         super(itemView);
-        index = itemView.findViewById(R.id.equipmentID);
         name = itemView.findViewById(R.id.equipmentName);
-        description = itemView.findViewById(R.id.equipmentDesc);
+        url = itemView.findViewById(R.id.equipmentURL);
     }
 }

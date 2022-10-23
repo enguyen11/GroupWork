@@ -9,14 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.groupwork.R;
 
-import java.util.List;
-
 public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentViewHolder>{
-    private final List<Equipment> equipmentList;
+    private final Dnd5eItemList itemList;
     private final Context context;
 
-    public EquipmentAdapter(List<Equipment> equipmentList, Context context){
-        this.equipmentList = equipmentList;
+    public EquipmentAdapter(Dnd5eItemList itemList, Context context){
+        this.itemList = itemList;
         this.context = context;
     }
 
@@ -28,13 +26,12 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull EquipmentViewHolder holder, int position) {
-        holder.index.setText(equipmentList.get(position).getIndex());
-        holder.name.setText(equipmentList.get(position).getName());
-        holder.description.setText(equipmentList.get(position).getDescription());
+        holder.name.setText(itemList.getItems().get(position).getName());
+        holder.url.setText(itemList.getItems().get(position).getURL());
     }
 
     @Override
     public int getItemCount() {
-        return equipmentList.size();
+        return itemList.getItems().size();
     }
 }

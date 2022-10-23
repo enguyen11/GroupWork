@@ -7,9 +7,11 @@
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="start" />
+        app:barrierDirection="start"
+        tools:layout_editor_absoluteX="411dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -66,5 +68,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </SearchView>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Button"
+        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        app:layout_constraintStart_toStartOf="@+id/spinner"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
