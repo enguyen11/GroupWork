@@ -4,6 +4,19 @@
     <string name="string_search">Search</string>
     <string name="string_group_name">Group 32: DnD Group</string>
     <string name="string_at_your_service">At Your Service</string>
+    <string-array name="DndApiOptions">
+        <item>Equipment</item>
+        <item>Monsters</item>
+        <item>Spells</item>
+    </string-array>
+    <string name="noCategory">No Category Selected</string>
+    <string name="NotSure">Not sure what to look for?</string>
+    <string name="ActionShow">Show</string>
+    <string name="list">Show all items in category.</string>
+    <string name="results">Results:</string>
+    <string name="search">Type name of your object</string>
+    <string name="categories">Categories</string>
+    <string name="search_hint">Leave blank to get all</string>
     <string name="string_firebase">Firebase Data</string>
     <string name="string_final_project">Final Project</string>
     <string name="string_future_implement">\ The buttons below are for future implementations</string>

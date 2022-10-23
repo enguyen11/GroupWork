@@ -1,10 +1,16 @@
 package com.example.groupwork;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.util.Log;
-import android.view.View;
+
 import android.widget.Button;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +30,11 @@ import retrofit2.Response;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 //import com.example.groupwork.Dnd5ApiCaller.Dnd5Item;
 
@@ -37,45 +47,63 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * This class is the main driver for the DndMain activity.
  */
-public class DndAPIActivity extends AppCompatActivity {
+public class DndAPIActivity extends AppCompatActivity{
     private static final String TAG = "DndAPIActivity";
-
     private Spinner spinner;
     private RecyclerView recyclerView;
-//    private List<Dnd5Item> itemList;
+    //    private List<Dnd5Item> itemList;
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IDnd5e api;
-
-    public DndAPIActivity() {
-    }
+    private String category;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_dnd_apiactivity);
 
-        //Our recycler
-//        recyclerView = new RecyclerView(this);
-
-
-        retrofitBtn = findViewById(R.id.button);
-        retrofitBtn.setOnClickListener(new View.OnClickListener() {
+        // Set the spinner for all categories
+        spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.DndApiOptions, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        // SET listener for spinner
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                String text;
+                text = adapterView.getItemAtPosition(position).toString();
+                category = text;
+            }
 
-                /**
-                 * TODO: switch or if to determine which call to make
-                 *  pass in variable instead of hardcoded string
-                */
-                String endpoint = "equipment-categories";
-                String index = "club";
-                //getEndpointList(endpoint);
-                //getSpecificEquipment(index);
-                //getSpecificMonster(index);
-                //getSpecificEquipment(index);
-                index = "waterborne-vehicles";
-                getEquipmentInCategory(index);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                spinner.setPrompt(getString(R.string.categories));
+                category = null;
+            }
+        });
+        category = null;
+
+        // set up search view
+        searchView = findViewById(R.id.searchView);
+        searchView.clearFocus();
+        searchView.setQueryHint(getString(R.string.search_hint));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Log.d(TAG, "onQueryTextSubmit: " + s + category);
+                query(s, category);
+                return true;
+            }
+
+            @Override
+
+            public boolean onQueryTextChange(String s) {
+                Log.d(TAG, "EMPTY QUERY: " + s + category);
+                query("", category);
+                return false;
             }
         });
 
@@ -85,8 +113,34 @@ public class DndAPIActivity extends AppCompatActivity {
                 .build();
 
         api = retrofit.create(IDnd5e.class);
-
     }
+
+    // This function will form a query based on the input received.
+    private boolean query(String query, String category){
+        // edge cases
+        if (category == null){
+            return false;
+        }else if (query.equals("")){
+            getEndpointList(category);
+            return true;
+        }
+
+        // separate queries
+        switch (category) {
+            case "equipment":
+                getSpecificEquipment(query);
+                return true;
+            case "monster":
+                getSpecificMonster(query);
+                return true;
+            case "spell":
+                getSpecificSpell(query);
+                return true;
+        }
+        // nothing was found return false.
+        return false;
+    }
+
 
     // Get requests
 
@@ -121,7 +175,7 @@ public class DndAPIActivity extends AppCompatActivity {
                             .append("\n");
 
 
-                   Log.d(TAG, str.toString());
+                    Log.d(TAG, str.toString());
 
 
                 }
