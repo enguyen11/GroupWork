@@ -1,9 +1,13 @@
 package com.example.groupwork;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+
 import android.widget.Spinner;
 import android.util.Log;
-import android.view.View;
+
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +27,11 @@ import retrofit2.Response;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 //import com.example.groupwork.Dnd5ApiCaller.Dnd5Item;
 
@@ -36,24 +44,62 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * This class is the main driver for the DndMain activity.
  */
-public class DndAPIActivity extends AppCompatActivity {
+public class DndAPIActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private static final String TAG = "DndAPIActivity";
-
     private Spinner spinner;
     private RecyclerView recyclerView;
-//    private List<Dnd5Item> itemList;
+    //    private List<Dnd5Item> itemList;
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IDnd5e api;
 
-    public DndAPIActivity() {
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_dnd_apiactivity);
 
+        // Set the spinner for all categories
+        spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.DndApiOptions, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
+        retrofitBtn = findViewById(R.id.button);
+        retrofitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                /**
+                 * TODO: switch or if to determine which call to make
+                 *  pass in variable instead of hardcoded string
+                 */
+                String endpoint = "equipment";
+                String index = "club";
+                getEndpointList(endpoint);
+                getSpecificEquipment(index);
+                //getSpecificMonster(index);
+                //getSpecificEquipment(index);
+            }
+        });
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://www.dnd5eapi.co/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        api = retrofit.create(IDnd5e.class);
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        String text;
+        text = adapterView.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
         //Our recycler
 //        recyclerView = new RecyclerView(this);
 
@@ -66,7 +112,7 @@ public class DndAPIActivity extends AppCompatActivity {
                 /**
                  * TODO: switch or if to determine which call to make
                  *  pass in variable instead of hardcoded string
-                */
+                 */
                 String endpoint = "equipment";
                 String index = "club";
                 getEndpointList(endpoint);
@@ -118,7 +164,7 @@ public class DndAPIActivity extends AppCompatActivity {
                             .append("\n");
 
 
-                   Log.d(TAG, str.toString());
+                    Log.d(TAG, str.toString());
 
 
                 }
