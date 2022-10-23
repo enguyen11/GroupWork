@@ -19,6 +19,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentViewHolder>{
         this.equipmentList = equipmentList;
         this.context = context;
     }
+
     @NonNull
     @Override
     public EquipmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

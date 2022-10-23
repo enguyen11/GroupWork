@@ -15,7 +15,10 @@ import com.example.groupwork.model.Dnd5eItemList;
 import com.example.groupwork.model.Equipment;
 import com.example.groupwork.model.EquipmentAdapter;
 import com.example.groupwork.model.IDnd5e;
+import com.example.groupwork.model.Monster;
+import com.example.groupwork.model.Spell;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -47,21 +50,30 @@ public class DndAPIActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         //Our recycler
-        recyclerView = new RecyclerView(this);
+        equipmentList = new ArrayList<>();
+        recyclerView = findViewById(R.id.result);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new EquipmentAdapter(equipmentList, this));
         
 
 
         retrofitBtn = findViewById(R.id.button);
+
+
         retrofitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getEquipment();
-                //getComments();
-                //postWithQ();
-                //createANewPost();
-                //createANewPostWithHeaders();
+
+                /**
+                 * TODO: switch or if to determine which call to make
+                 *  pass in variable instead of hardcoded string
+                */
+                String endpoint = "equipment";
+                String index = "club";
+                getEndpointList(endpoint);
+                getSpecificEquipment(index);
+                //getSpecificMonster(index);
+                //getSpecificEquipment(index);
             }
         });
 
@@ -74,10 +86,12 @@ public class DndAPIActivity extends AppCompatActivity {
 
     }
 
-    // Get requests Example
-    private void getEquipment(){
+    // Get requests
+
+    //All items in an endpoint
+    private void getEndpointList(String endpoint){
         // to execute the call
-        Call<Dnd5eItemList>  call = api.getItemList();
+        Call<Dnd5eItemList>  call = api.getItemList(endpoint);
         //call.execute() runs on the current thread, which is main at the moment. This will crash
         // use Retrofit's method enqueue. This will automatically push the network call to background thread
         call.enqueue(new Callback<Dnd5eItemList>() {
@@ -97,8 +111,11 @@ public class DndAPIActivity extends AppCompatActivity {
                     StringBuffer  str = new StringBuffer();
                     str.append("Code:: ")
                             .append(response.code())
-                            .append("Name :")
+                            .append("Name: ")
                             .append(item.getName())
+                            .append("\n")
+                            .append("url: ")
+                            .append(item.getURL()) //if we implement clicking on the item we will need this url
                             .append("\n");
 
 
@@ -110,6 +127,139 @@ public class DndAPIActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Dnd5eItemList> call, Throwable t) {
+                // this gets called when url is wrong and therefore calls can't be made OR processing the request goes wrong.
+                Log.d(TAG, "Call failed!" + t.getMessage() + call.toString());
+            }
+        });
+    }
+
+
+    //get equipment specified by
+    private void getSpecificEquipment(String index){
+        // to execute the call
+        Call<Equipment>  call = api.getSpecificEquipment(index);
+        //call.execute() runs on the current thread, which is main at the moment. This will crash
+        // use Retrofit's method enqueue. This will automatically push the network call to background thread
+        call.enqueue(new Callback<Equipment>() {
+            @Override
+            public void onResponse(Call<Equipment>  call, Response<Equipment> response) {
+                //This gets called when at least the call reaches a server and there was a response BUT 404 or any legitimate error code from the server, also calls this
+                // check response code is between 200-300 and API was found
+
+                if(!response.isSuccessful()){
+                    Log.d(TAG, "Call failed!" + response.code());
+                    return;
+                }
+
+                Equipment equipment = response.body();
+                StringBuffer  str = new StringBuffer();
+                str.append("Code:: ")
+                        .append(response.code())
+                        .append("Name: ")
+                        .append(equipment.getName())
+                        .append("\n")
+                        .append("Description: ")
+                        .append(equipment.getDescription())
+                        .append("\n");
+                DndAPIActivity.this.equipmentList.add(equipment);
+
+
+                Log.d(TAG, str.toString());
+
+                Log.d(TAG, "Call Succeeded!");
+
+            }
+
+            @Override
+            public void onFailure(Call<Equipment> call, Throwable t) {
+                // this gets called when url is wrong and therefore calls can't be made OR processing the request goes wrong.
+                Log.d(TAG, "Call failed!" + t.getMessage());
+            }
+        });
+    }
+
+
+    //get monster specified by index
+    private void getSpecificMonster(String index){
+        // to execute the call
+        Call<Monster>  call = api.getSpecificMonster(index);
+        //call.execute() runs on the current thread, which is main at the moment. This will crash
+        // use Retrofit's method enqueue. This will automatically push the network call to background thread
+        call.enqueue(new Callback<Monster>() {
+            @Override
+            public void onResponse(Call<Monster>  call, Response<Monster> response) {
+                //This gets called when at least the call reaches a server and there was a response BUT 404 or any legitimate error code from the server, also calls this
+                // check response code is between 200-300 and API was found
+
+                if(!response.isSuccessful()){
+                    Log.d(TAG, "Call failed!" + response.code());
+                    return;
+                }
+
+                Monster monster = response.body();
+                StringBuffer  str = new StringBuffer();
+                str.append("Code:: ")
+                        .append(response.code())
+                        .append("Name :")
+                        .append(monster.getName())
+                        .append("\n")
+                        .append("Description: ")
+                        .append(monster.getDescription())
+                        .append("\n");
+
+
+                Log.d(TAG, str.toString());
+
+                Log.d(TAG, "Call Succeeded!");
+
+            }
+
+            @Override
+            public void onFailure(Call<Monster> call, Throwable t) {
+                // this gets called when url is wrong and therefore calls can't be made OR processing the request goes wrong.
+                Log.d(TAG, "Call failed!" + t.getMessage());
+            }
+        });
+    }
+
+
+    //get spell specified by index
+    private void getSpecificSpell(String index){
+        // to execute the call
+        Call<Spell>  call = api.getSpecificSpell(index);
+        //call.execute() runs on the current thread, which is main at the moment. This will crash
+        // use Retrofit's method enqueue. This will automatically push the network call to background thread
+        call.enqueue(new Callback<Spell>() {
+            @Override
+            public void onResponse(Call<Spell>  call, Response<Spell> response) {
+                //This gets called when at least the call reaches a server and there was a response BUT 404 or any legitimate error code from the server, also calls this
+                // check response code is between 200-300 and API was found
+
+                if(!response.isSuccessful()){
+                    Log.d(TAG, "Call failed!" + response.code());
+                    return;
+                }
+
+                Spell spell = response.body();
+                StringBuffer  str = new StringBuffer();
+                str.append("Code:: ")
+                        .append(response.code())
+                        .append("Name :")
+                        .append(spell.getName())
+                        .append("\n")
+                        .append("Description: ")
+                        .append(spell.getDescription())
+                        .append("\n");
+
+
+                Log.d(TAG, str.toString());
+
+                Log.d(TAG, "Call Succeeded!");
+
+            }
+
+            @Override
+            public void onFailure(Call<Spell> call, Throwable t) {
                 // this gets called when url is wrong and therefore calls can't be made OR processing the request goes wrong.
                 Log.d(TAG, "Call failed!" + t.getMessage());
             }
