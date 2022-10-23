@@ -1,29 +1,22 @@
 package com.example.groupwork;
 
 import android.os.Bundle;
-import android.widget.Spinner;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.groupwork.model.Dnd5eItem;
 import com.example.groupwork.model.Dnd5eItemList;
 import com.example.groupwork.model.Equipment;
+import com.example.groupwork.model.EquipmentAdapter;
 import com.example.groupwork.model.IDnd5e;
 
-import retrofit2.Retrofit;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-
 import java.util.List;
-
-//import com.example.groupwork.Dnd5ApiCaller.Dnd5Item;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +36,7 @@ public class DndAPIActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IDnd5e api;
+    private List<Equipment> equipmentList;
 
     public DndAPIActivity() {
     }
@@ -53,7 +47,10 @@ public class DndAPIActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         //Our recycler
-//        recyclerView = new RecyclerView(this);
+        recyclerView = new RecyclerView(this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new EquipmentAdapter(equipmentList, this));
+        
 
 
         retrofitBtn = findViewById(R.id.button);
