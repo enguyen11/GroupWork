@@ -1,10 +1,12 @@
 package com.example.groupwork;
 
 import android.os.Bundle;
-import android.widget.Spinner;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,17 +17,6 @@ import com.example.groupwork.model.Equipment;
 import com.example.groupwork.model.IDnd5e;
 import com.example.groupwork.model.Monster;
 import com.example.groupwork.model.Spell;
-
-import retrofit2.Retrofit;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-
-import java.util.List;
-
-//import com.example.groupwork.Dnd5ApiCaller.Dnd5Item;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +36,8 @@ public class DndAPIActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IDnd5e api;
+    private ProgressBar loading;
+    private TextView connectionStatus;
 
     public DndAPIActivity() {
     }
@@ -57,16 +50,19 @@ public class DndAPIActivity extends AppCompatActivity {
         //Our recycler
 //        recyclerView = new RecyclerView(this);
 
-
+        loading = findViewById(R.id.connection);
+        connectionStatus = findViewById(R.id.connectionStatus);
         retrofitBtn = findViewById(R.id.button);
         retrofitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                loading.setVisibility(View.VISIBLE);
+                connectionStatus.setVisibility(View.VISIBLE);
                 /**
                  * TODO: switch or if to determine which call to make
                  *  pass in variable instead of hardcoded string
                 */
+
                 String endpoint = "equipment";
                 String index = "club";
                 getEndpointList(endpoint);
@@ -262,5 +258,13 @@ public class DndAPIActivity extends AppCompatActivity {
                 Log.d(TAG, "Call failed!" + t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //insert code for closing connection here
+        loading.setVisibility(View.INVISIBLE);
+        connectionStatus.setVisibility(View.INVISIBLE);
     }
 }
