@@ -1,34 +1,14 @@
 package com.example.groupwork.model;
 
-public class Spell {
+public class Spell extends Dnd5eItem{
 
-    private String name;
-    private String index;
-    private String url;
     private String description;
 
-    public Spell(String name, String index, String url,
+    public Spell(String index, String name, String url,
                    String description) {
-        this.index = index;
-        this.name = name;
-        this.url = url;
+        super(index, name, url);
         this.description = description;
     }
-
-    // declare getters
-    public String getIndex() {
-        return index;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-
-    public String getURL() {
-        return url;
-    }
-
 
     public String getDescription() {
         return description;
