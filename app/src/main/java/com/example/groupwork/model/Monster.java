@@ -5,36 +5,36 @@ import com.google.gson.annotations.SerializedName;
 public class Monster {
 
 
-    private String monsterName;
-    private String monsterIndex;
-    private String monsterURL;
-    private String monsterDescr;
+    private String name;
+    private String index;
+    private String url;
+    private String description;
 
-    public Monster(String monsterName, String monsterIndex, String monsterURL,
-                     String monsterDescr) {
-        this.monsterName = monsterName;
-        this.monsterIndex = monsterIndex;
-        this.monsterURL = monsterURL;
-        this.monsterDescr = monsterDescr;
+    public Monster(String name, String index, String url,
+                     String description) {
+        this.index = index;
+        this.name = name;
+        this.url = url;
+        this.description = description;
     }
 
     // declare getters
-    public String getMonsterIndex() {
-        return monsterIndex;
+    public String getIndex() {
+        return index;
     }
 
-    public String getMonsterName() {
-        return monsterName;
-    }
-
-
-    public String getMonsterURL() {
-        return monsterURL;
+    public String getName() {
+        return name;
     }
 
 
-    public String getMonsterDescr() {
-        return monsterDescr;
+    public String getURL() {
+        return url;
+    }
+
+
+    public String getDescription() {
+        return description;
     }
 
 
