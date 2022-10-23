@@ -21,6 +21,10 @@ public interface IDnd5e {
     Call<Equipment>  getSpecificEquipment(@Path(value = "index", encoded = true) String index);
 
 
+    @GET("api/equipment-categories/{index}")
+    Call<EquipmentCategoryList>  getEquipmentInCategory(@Path(value = "index", encoded = true) String index);
+
+
     @GET("api/monsters/{index}")
     Call<Monster>  getSpecificMonster(@Path(value = "index", encoded = true) String index);
 
