@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".DndAPIActivity">
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier2"
@@ -14,7 +14,7 @@
         tools:layout_editor_absoluteX="411dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerView_dndlist"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -36,7 +36,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Results:"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView_dndlist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:onClick="onClick"
         android:text="Button"
         app:layout_constraintEnd_toStartOf="@+id/spinner"
         app:layout_constraintStart_toStartOf="@+id/spinner"

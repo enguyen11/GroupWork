@@ -1,5 +1,6 @@
 package com.example.groupwork;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.groupwork.model.Dnd5eItem;
 import com.example.groupwork.model.Dnd5eItemList;
 import com.example.groupwork.model.Equipment;
-import com.example.groupwork.model.EquipmentAdapter;
+import com.example.groupwork.model.ItemAdapter;
 import com.example.groupwork.model.IDnd5e;
 import com.example.groupwork.model.Monster;
 import com.example.groupwork.model.Spell;
@@ -29,16 +30,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * This class is the main driver for the DndMain activity.
  */
-public class DndAPIActivity extends AppCompatActivity {
+public class DndAPIActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "DndAPIActivity";
 
     private Spinner spinner;
-    private RecyclerView recyclerView;
-//    private List<Dnd5Item> itemList;
+    private RecyclerView dndRecyclerView;
+    private ArrayList<Dnd5eItem> itemList;
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IDnd5e api;
-    private Dnd5eItemList itemList;
+    private ItemAdapter itemAdapter;
+    //private Dnd5eItemList itemList;
 
     public DndAPIActivity() {
     }
@@ -48,36 +50,16 @@ public class DndAPIActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dnd_apiactivity);
 
-        itemList = new Dnd5eItemList(new ArrayList<>());
+        itemList = new ArrayList<>();
 
 
         //Our recycler
-        DndAPIActivity.this.recyclerView = findViewById(R.id.recyclerView);
-        DndAPIActivity.this.recyclerView.setAdapter(new EquipmentAdapter(itemList, DndAPIActivity.this));
-        DndAPIActivity.this.recyclerView.setLayoutManager(new LinearLayoutManager(DndAPIActivity.this));
-
-
-
+        dndRecyclerView = findViewById(R.id.recyclerView_dndlist);
+        itemAdapter = new ItemAdapter(itemList, DndAPIActivity.this);
+        dndRecyclerView.setAdapter(itemAdapter);
+        dndRecyclerView.setLayoutManager(new LinearLayoutManager(DndAPIActivity.this));
 
         retrofitBtn = findViewById(R.id.button2);
-
-
-        retrofitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                /**
-                 * TODO: switch or if to determine which call to make
-                 *  pass in variable instead of hardcoded string
-                */
-                String endpoint = "equipment";
-                String index = "club";
-                getEndpointList(endpoint);
-                getSpecificEquipment(index);
-                //getSpecificMonster(index);
-                //getSpecificEquipment(index);
-            }
-        });
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.dnd5eapi.co/")
@@ -108,25 +90,25 @@ public class DndAPIActivity extends AppCompatActivity {
                 }
 
                 Log.d(TAG, "Call Succeeded!");
-                Dnd5eItemList itemList = response.body();
-                DndAPIActivity.this.itemList = itemList;
+                Dnd5eItemList dndItemList = response.body();
+                itemList = dndItemList.getItems();
+                itemAdapter.update(itemList);
 
-                for(Dnd5eItem item : itemList.getItems()){
-                    StringBuffer  str = new StringBuffer();
-                    str.append("Code:: ")
-                            .append(response.code())
-                            .append("Name: ")
-                            .append(item.getName())
-                            .append("\n")
-                            .append("url: ")
-                            .append(item.getURL()) //if we implement clicking on the item we will need this url
-                            .append("\n");
-
-
-                   Log.d(TAG, str.toString());
+//                for(Dnd5eItem item : itemList){
+//                    StringBuffer  str = new StringBuffer();
+//                    str.append("Code:: ")
+//                            .append(response.code())
+//                            .append("Name: ")
+//                            .append(item.getName())
+//                            .append("\n")
+//                            .append("url: ")
+//                            .append(item.getURL()) //if we implement clicking on the item we will need this url
+//                            .append("\n");
 
 
-                }
+                   //Log.d(TAG, str.toString());
+
+                //}
             }
 
             @Override
@@ -267,5 +249,18 @@ public class DndAPIActivity extends AppCompatActivity {
                 Log.d(TAG, "Call failed!" + t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        int btnId = view.getId(); // get the Id of the view that was clicked
+        if (btnId == R.id.button2) {
+            String endpoint = "equipment";
+            getEndpointList(endpoint);
+            Log.d(TAG, "inside onclick");
+        }
+//        itemAdapter.notifyDataSetChanged();
+
+
     }
 }

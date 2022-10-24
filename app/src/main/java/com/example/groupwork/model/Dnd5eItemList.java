@@ -2,6 +2,7 @@ package com.example.groupwork.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,14 +13,14 @@ import java.util.List;
  */
 public class Dnd5eItemList {
     @SerializedName("results")
-    private List<Dnd5eItem> results;
+    private ArrayList<Dnd5eItem> results;
 
-    public Dnd5eItemList(List<Dnd5eItem> results) {
+    public Dnd5eItemList(ArrayList<Dnd5eItem> results) {
         this.results = results;
     }
 
     // declare getters
-    public List<Dnd5eItem> getItems() {
+    public ArrayList<Dnd5eItem> getItems() {
         return results;
     }
 
