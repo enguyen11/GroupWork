@@ -19,7 +19,9 @@ import com.example.groupwork.model.ItemAdapter;
 import com.example.groupwork.model.IDnd5e;
 import com.example.groupwork.model.Monster;
 import com.example.groupwork.model.Spell;
+import com.example.groupwork.model.StringAdapter;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -40,7 +42,7 @@ public class DndAPIActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IDnd5e api;
-    private Dnd5eItemList itemList;
+    private ArrayList<Dnd5eItem> itemList;
 
     public DndAPIActivity() {
     }
@@ -51,10 +53,8 @@ public class DndAPIActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dnd_apiactivity);
         //Our recycler
         ArrayList<Dnd5eItem> arrayList = new ArrayList<>();
-        itemList = new Dnd5eItemList(arrayList);
-        recyclerView = findViewById(R.id.recyclerView);
-
-        System.out.println(itemList);
+        itemList = new ArrayList<>();
+        setDummyView();
 
 
         retrofitBtn = findViewById(R.id.button2);
@@ -67,14 +67,13 @@ public class DndAPIActivity extends AppCompatActivity {
                  * TODO: switch or if to determine which call to make
                  *  pass in variable instead of hardcoded string
                 */
+
                 String endpoint = "equipment";
                 String index = "club";
                 getEndpointList(endpoint);
                 getSpecificEquipment(index);
                 //getSpecificMonster(index);
                 //getSpecificEquipment(index);
-                recyclerView.setLayoutManager(new LinearLayoutManager(DndAPIActivity.this));
-                recyclerView.setAdapter(new ItemAdapter(itemList, DndAPIActivity.this));
 
 
             }
@@ -86,6 +85,19 @@ public class DndAPIActivity extends AppCompatActivity {
                 .build();
 
         api = retrofit.create(IDnd5e.class);
+
+
+    }
+
+    private void setDummyView(){
+        recyclerView = findViewById(R.id.recyclerView);
+        Dnd5eItem dummy1 = new Dnd5eItem("this", "This", "/this");
+        Dnd5eItem dummy2 = new Dnd5eItem("that", "That", "/that");
+       // itemList.add(dummy1);
+        //itemList.add(dummy2);
+        DndAPIActivity.this.recyclerView.setLayoutManager(new LinearLayoutManager(DndAPIActivity.this));
+        DndAPIActivity.this.recyclerView.setAdapter(new ItemAdapter(itemList, DndAPIActivity.this));
+
 
     }
 
@@ -111,6 +123,7 @@ public class DndAPIActivity extends AppCompatActivity {
                 Log.d(TAG, "Call Succeeded!");
                 Dnd5eItemList responseList = response.body();
                 for(Dnd5eItem item : responseList.getItems()){
+                    itemList.add(item);
                     StringBuffer  str = new StringBuffer();
                     str.append("Code:: ")
                             .append(response.code())
@@ -125,7 +138,10 @@ public class DndAPIActivity extends AppCompatActivity {
                    Log.d(TAG, str.toString());
                    // System.out.println(itemList.get(itemList.size()-1).getName());
                 }
-                itemList = responseList;
+
+                System.out.println(itemList.size());
+                recyclerView.setLayoutManager(new LinearLayoutManager(DndAPIActivity.this));
+                recyclerView.setAdapter(new ItemAdapter(itemList, DndAPIActivity.this));
             }
 
             @Override
