@@ -5,9 +5,9 @@
     <string name="string_group_name">Group 32: DnD Group</string>
     <string name="string_at_your_service">At Your Service</string>
     <string-array name="DndApiOptions">
-        <item>Equipment</item>
-        <item>Monsters</item>
-        <item>Spells</item>
+        <item>equipment</item>
+        <item>monsters</item>
+        <item>spells</item>
     </string-array>
     <string name="noCategory">No Category Selected</string>
     <string name="NotSure">Not sure what to look for?</string>
@@ -20,4 +20,5 @@
     <string name="string_firebase">Firebase Data</string>
     <string name="string_final_project">Final Project</string>
     <string name="string_future_implement">\ The buttons below are for future implementations</string>
+    <string name="instructions">Select a category to display the list.</string>
 </resources>
