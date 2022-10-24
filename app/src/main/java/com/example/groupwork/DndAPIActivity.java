@@ -1,15 +1,22 @@
 package com.example.groupwork;
 
 import android.os.Bundle;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import android.widget.SearchView;
 import android.widget.Spinner;
+
 import android.util.Log;
 
 import android.widget.Button;
+
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
+
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +29,7 @@ import com.example.groupwork.model.EquipmentCategoryList;
 import com.example.groupwork.model.IDnd5e;
 import com.example.groupwork.model.Monster;
 import com.example.groupwork.model.Spell;
+
 
 import retrofit2.Retrofit;
 import retrofit2.Call;
@@ -55,6 +63,11 @@ public class DndAPIActivity extends AppCompatActivity{
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IDnd5e api;
+    private ProgressBar loading;
+    private TextView connectionStatus;
+
+    public DndAPIActivity() {
+    }
     private String category;
     private SearchView searchView;
 
@@ -86,6 +99,25 @@ public class DndAPIActivity extends AppCompatActivity{
         });
         category = null;
 
+        loading = findViewById(R.id.connection);
+        connectionStatus = findViewById(R.id.connectionStatus);
+        retrofitBtn = findViewById(R.id.button);
+        retrofitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loading.setVisibility(View.VISIBLE);
+                connectionStatus.setVisibility(View.VISIBLE);
+                /**
+                 * TODO: switch or if to determine which call to make
+                 *  pass in variable instead of hardcoded string
+                */
+
+                String endpoint = "equipment";
+                String index = "club";
+                getEndpointList(endpoint);
+                getSpecificEquipment(index);
+                //getSpecificMonster(index);
+                //getSpecificEquipment(index);
         // set up search view
         searchView = findViewById(R.id.searchView);
         searchView.clearFocus();
@@ -321,6 +353,12 @@ public class DndAPIActivity extends AppCompatActivity{
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //insert code for closing connection here
+        loading.setVisibility(View.INVISIBLE);
+        connectionStatus.setVisibility(View.INVISIBLE);
     //All items in an endpoint
     private void getEquipmentInCategory(String index){
         // to execute the call
