@@ -27,6 +27,9 @@ public class Equipment extends Dnd5eItem {
         return description;
     }
 
+    public Dnd5eItem getEquipment_category() {
+        return equipment_category;
+    }
 
     public String getEquipmentCategoryName() {
         return equipment_category.getName();

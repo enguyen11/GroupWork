@@ -1,7 +1,5 @@
 package com.example.groupwork.model;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * These items make up the objects in the results list of the response from calling an endpoint
  */

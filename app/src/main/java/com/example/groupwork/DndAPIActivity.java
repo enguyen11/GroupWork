@@ -1,11 +1,7 @@
 package com.example.groupwork;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-
-import android.widget.SearchView;
 import android.widget.Spinner;
 import android.util.Log;
 import android.widget.ProgressBar;
@@ -13,15 +9,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.groupwork.model.Dnd5eItem;
 import com.example.groupwork.model.Dnd5eItemList;
 import com.example.groupwork.model.Equipment;
 import com.example.groupwork.model.EquipmentCategoryList;
+import com.example.groupwork.model.ItemAdapter;
 import com.example.groupwork.model.IDnd5e;
 import com.example.groupwork.model.Monster;
 import com.example.groupwork.model.Spell;
@@ -40,6 +39,7 @@ import java.util.Map;
 import java.util.Set;
 
 //import com.example.groupwork.Dnd5ApiCaller.Dnd5Item;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,70 +50,36 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * This class is the main driver for the DndMain activity.
  */
-public class DndAPIActivity extends AppCompatActivity{
+public class DndAPIActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "DndAPIActivity";
+
     private Spinner spinner;
-    private RecyclerView recyclerView;
-    //    private List<Dnd5Item> itemList;
+    private RecyclerView dndRecyclerView;
+    private ArrayList<Dnd5eItem> itemList;
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IDnd5e api;
-    private String category;
-    private SearchView searchView;
-    private ProgressBar loading;
-    private TextView connectionStatus;
+    private ItemAdapter itemAdapter;
+    //private Dnd5eItemList itemList;
+
+    public DndAPIActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dnd_apiactivity);
-        loading = findViewById(R.id.connection);
-        connectionStatus = findViewById(R.id.connectionStatus);
-        loading.setVisibility(View.VISIBLE);
-        connectionStatus.setVisibility(View.VISIBLE);
 
-        // Set the spinner for all categories
-        spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.DndApiOptions, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        // SET listener for spinner
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                String text;
-                text = adapterView.getItemAtPosition(position).toString();
-                category = text;
-            }
+        itemList = new ArrayList<>();
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                spinner.setPrompt(getString(R.string.categories));
-                category = null;
-            }
-        });
-        category = null;
 
-        // set up search view
-        searchView = findViewById(R.id.searchView);
-        searchView.clearFocus();
-        searchView.setQueryHint(getString(R.string.search_hint));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                Log.d(TAG, "onQueryTextSubmit: " + s + category);
-                query(s, category);
-                return true;
-            }
+        //Our recycler
+        dndRecyclerView = findViewById(R.id.recyclerView_dndlist);
+        itemAdapter = new ItemAdapter(itemList, DndAPIActivity.this);
+        dndRecyclerView.setAdapter(itemAdapter);
+        dndRecyclerView.setLayoutManager(new LinearLayoutManager(DndAPIActivity.this));
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                Log.d(TAG, "EMPTY QUERY: " + s + category);
-                query("", category);
-                return false;
-            }
-        });
+        retrofitBtn = findViewById(R.id.button2);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.dnd5eapi.co/")
@@ -149,7 +115,6 @@ public class DndAPIActivity extends AppCompatActivity{
         return false;
     }
 
-
     // Get requests
 
     //All items in an endpoint
@@ -182,9 +147,20 @@ public class DndAPIActivity extends AppCompatActivity{
                             .append(item.getURL()) //if we implement clicking on the item we will need this url
                             .append("\n");
 
+//                for(Dnd5eItem item : itemList){
+//                    StringBuffer  str = new StringBuffer();
+//                    str.append("Code:: ")
+//                            .append(response.code())
+//                            .append("Name: ")
+//                            .append(item.getName())
+//                            .append("\n")
+//                            .append("url: ")
+//                            .append(item.getURL()) //if we implement clicking on the item we will need this url
+//                            .append("\n");
 
-                    Log.d(TAG, str.toString());
+                   Log.d(TAG, str.toString());
 
+                   //Log.d(TAG, str.toString());
 
                 }
             }
@@ -381,5 +357,18 @@ public class DndAPIActivity extends AppCompatActivity{
         //insert code for closing connection here
         loading.setVisibility(View.INVISIBLE);
         connectionStatus.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int btnId = view.getId(); // get the Id of the view that was clicked
+        if (btnId == R.id.button2) {
+            String endpoint = "equipment";
+            getEndpointList(endpoint);
+            Log.d(TAG, "inside onclick");
+        }
+//        itemAdapter.notifyDataSetChanged();
+
+
     }
 }
