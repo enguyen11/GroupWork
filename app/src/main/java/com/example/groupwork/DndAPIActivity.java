@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.util.Log;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import android.widget.Button;
 import android.widget.Switch;
@@ -57,11 +60,17 @@ public class DndAPIActivity extends AppCompatActivity{
     private IDnd5e api;
     private String category;
     private SearchView searchView;
+    private ProgressBar loading;
+    private TextView connectionStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dnd_apiactivity);
+        loading = findViewById(R.id.connection);
+        connectionStatus = findViewById(R.id.connectionStatus);
+        loading.setVisibility(View.VISIBLE);
+        connectionStatus.setVisibility(View.VISIBLE);
 
         // Set the spinner for all categories
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -364,5 +373,14 @@ public class DndAPIActivity extends AppCompatActivity{
                 Log.d(TAG, "Call failed!" + t.getMessage() + call.toString());
             }
         });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //insert code for closing connection here
+        loading.setVisibility(View.INVISIBLE);
+        connectionStatus.setVisibility(View.INVISIBLE);
     }
 }
