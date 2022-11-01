@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "14411872947",
+    "project_id": "cs5220-dndapp",
+    "storage_bucket": "cs5220-dndapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:14411872947:android:900759157831249026cec6",
+        "android_client_info": {
+          "package_name": "com.example.groupwork"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "14411872947-du1dkbg36apq4prpn939n6csokktiqmv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbY1ZB5Dl3V1h-rDHphn7e9agvRJNljKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "14411872947-du1dkbg36apq4prpn939n6csokktiqmv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
