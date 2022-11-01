@@ -21,4 +21,14 @@
     <string name="string_final_project">Final Project</string>
     <string name="string_future_implement">\ The buttons below are for future implementations</string>
     <string name="instructions">Select a category to display the list.</string>
+    <string name="sticker_title">Welcome to StickerShare!</string>
+    <string name="username_text">Username</string>
+    <string name="please_enter_text">Please login below</string>
+    <string name="enter_login">Log In</string>
+    <string name="new_user">New User?</string>
+    <string name="create_account">Create Account</string>
+    <string name="welcome_stickers">Welcome, Username!</string>
+    <string name="friends">Friends</string>
+    <string name="stickers_cat">Sticker Catalog</string>
+
 </resources>

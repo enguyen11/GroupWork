@@ -76,6 +76,8 @@ public class DndAPIActivity extends AppCompatActivity {
 
         // Set the spinner for all categories
         spinner = (Spinner) findViewById(R.id.spinner);
+
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.DndApiOptions, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -111,6 +113,15 @@ public class DndAPIActivity extends AppCompatActivity {
                 .build();
 
         api = retrofit.create(IDnd5e.class);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState){
+        category = savedInstanceState.getString("category");
+    }
+
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("category",category);
     }
 
     // This function will form a query based on the input received.
