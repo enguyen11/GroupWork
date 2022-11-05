@@ -18,11 +18,19 @@ import com.google.firebase.database.ValueEventListener;
 public class Chat extends AppCompatActivity {
 
     String userID;
+    Button friendsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_sticker_account);
+
+        friendsButton = findViewById(R.id.button_friends);
+
+        friendsButton.setOnClickListener(view -> {
+            //Open friends activity
+
+        });
 
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
         DatabaseReference mDatabase = db.getReference("conversation");

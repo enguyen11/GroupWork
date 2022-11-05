@@ -21,18 +21,9 @@ public class StickerAccount extends AppCompatActivity {
         setContentView(R.layout.activity_sticker_account);
 
         friendsButton = findViewById(R.id.button_friends);
-        stickersButton = findViewById(R.id.button_stickers);
-        /*
-            call function to fill stickerArray
-            should run on a new thread
-         */
 
         friendsButton.setOnClickListener(view -> {
             //Open friends activity
-
-        });
-        stickersButton.setOnClickListener(view -> {
-            //Open sticker catalog activity
 
         });
         //We want the welcome message to actually display the username

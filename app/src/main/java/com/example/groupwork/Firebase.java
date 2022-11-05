@@ -36,8 +36,8 @@ public class Firebase extends AppCompatActivity {
          */
         login_button.setOnClickListener(view -> {
             String username = username_entry.getText().toString();
-            Intent openAccount = new Intent(Firebase.this, StickerAccount.class);
-            openAccount.putExtra("username", username);
+            Intent openAccount = new Intent(Firebase.this, Chat.class);
+            openAccount.putExtra("userID", username);
             Firebase.this.startActivity(openAccount);
         });
 
