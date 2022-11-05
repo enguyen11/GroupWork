@@ -1,5 +1,6 @@
 package com.example.groupwork;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +53,9 @@ public class Chat extends AppCompatActivity {
 
                 //mDatabase.push().child("conversations").child(userID).child("chats").child(friendID).child("messages").setValue(message);
                 //sendMessageToFirebase(friendID,message);
+
+                Intent show = new Intent(Chat.this, ShowSticker.class);
+                Chat.this.startActivity(show);
             }
         });
     }

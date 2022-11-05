@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="@string/string_send" />
+        android:text="@string/send" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sticker_recyclerview"
