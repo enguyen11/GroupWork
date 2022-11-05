@@ -29,8 +29,8 @@ public class Chat extends AppCompatActivity {
         friendsButton = findViewById(R.id.button_friends);
 
         friendsButton.setOnClickListener(view -> {
-            //Open friends activity
-
+            Intent goToFriends = new Intent(Chat.this, Friends.class);
+            Chat.this.startActivity(goToFriends);
         });
 
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
@@ -54,8 +54,14 @@ public class Chat extends AppCompatActivity {
                 //mDatabase.push().child("conversations").child(userID).child("chats").child(friendID).child("messages").setValue(message);
                 //sendMessageToFirebase(friendID,message);
 
-                Intent show = new Intent(Chat.this, ShowSticker.class);
-                Chat.this.startActivity(show);
+                setContentView(R.layout.activity_show_sticker);
+                if (savedInstanceState == null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .setReorderingAllowed(true)
+                            .add(R.id.fragment_container_view, StickerSelectionFragment.class, null)
+                            .commit();
+                }
+
             }
         });
     }

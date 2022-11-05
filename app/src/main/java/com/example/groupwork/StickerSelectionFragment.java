@@ -29,6 +29,7 @@ public class StickerSelectionFragment extends Fragment {
     private StickerAdapter stickerAdapter;
     private ArrayList<Sticker> stickerList;
     private DataSource ds;
+    private String message;
 
 //    public StickerSelectionFragment(){
 //        super(R.layout.fragment_sticker_selection);
@@ -88,19 +89,32 @@ public class StickerSelectionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sticker_selection, container, false);
 
 
-        sendSticker = view.findViewById(R.id.button_firebase);
+        sendSticker = view.findViewById(R.id.button_sendSticker);
         sendSticker.setOnClickListener(v -> {
+            if(message != null){
+                //send message to user selected in Chat activity
+                System.out.println(message);
+            }
 
         });
 
         stickerRecyclerView = view.findViewById(R.id.sticker_recyclerview);
-        stickerAdapter = new StickerAdapter( stickerList, view.getContext());
+        stickerAdapter = new StickerAdapter( stickerList, view.getContext(), this);
         stickerRecyclerView.setAdapter(stickerAdapter);
         stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
 
         //stickerRecyclerView.setHasFixedSize(true);
 
         return view;
+
+    }
+
+    /**
+     *
+     * @param message - name of sticker clicked on list
+     */
+    public void setMessage(String message){
+        this.message = message;
 
     }
 }

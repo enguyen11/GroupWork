@@ -20,10 +20,12 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerViewHolder>{
     private final ArrayList<Sticker> stickerList;
     private final Context context;
     private static final String TAG = "DndAPIActivity";
+    private StickerSelectionFragment fragment;
 
-    public StickerAdapter(ArrayList<Sticker> stickerList, Context context) {
+    public StickerAdapter(ArrayList<Sticker> stickerList, Context context, StickerSelectionFragment fragment) {
         this.stickerList = stickerList;
         this.context = context;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -45,6 +47,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerViewHolder>{
         holder.itemView.setOnClickListener(view -> {
             //TODO pass into message send stuff
             Log.d(TAG, stickerList.get(position).getName());
+            fragment.setMessage(stickerList.get(position).getName()); // passes message to fragment
         });
 
     }

@@ -17,6 +17,9 @@
         android:theme="@style/Theme.GroupWork"
         tools:targetApi="31">
         <activity
+            android:name=".Friends"
+            android:exported="false" />
+        <activity
             android:name=".ShowSticker"
             android:exported="false" />
         <activity

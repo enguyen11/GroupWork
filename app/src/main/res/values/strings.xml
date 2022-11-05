@@ -42,4 +42,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="send">Send</string>
     <string name="send_to">Send To</string>
+    <string name="send_message">Send Message</string>
+    <string name="remove">Remove Friend</string>
 </resources>
