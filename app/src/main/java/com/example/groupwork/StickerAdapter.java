@@ -20,11 +20,9 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerViewHolder>{
     private final ArrayList<Sticker> stickerList;
     private final Context context;
     private static final String TAG = "DndAPIActivity";
-    OnStickerClickListener listener;
 
     public StickerAdapter(ArrayList<Sticker> stickerList, Context context) {
         this.stickerList = stickerList;
-        this.listener = (OnStickerClickListener) context.getActivity();
         this.context = context;
     }
 
@@ -46,9 +44,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerViewHolder>{
         // set a click event on the whole itemView (every element of the recyclerview).
         holder.itemView.setOnClickListener(view -> {
             //TODO pass into message send stuff
-//            Log.d(TAG, stickerList.get(position).getName());
-            String data = stickerList.get(position).getName();
-            listener.onStickerClick(data);
+            Log.d(TAG, stickerList.get(position).getName());
         });
 
     }
@@ -57,8 +53,4 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerViewHolder>{
     public int getItemCount() {
         return stickerList.size();
     }
-}
-
-interface OnStickerClickListener {
-    void onStickerClick(String data);
 }
