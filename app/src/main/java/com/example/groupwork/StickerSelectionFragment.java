@@ -1,9 +1,11 @@
 package com.example.groupwork;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 public class StickerSelectionFragment extends Fragment {
 
     private RecyclerView stickerRecyclerView;
+    private Button sendSticker;
     private StickerAdapter stickerAdapter;
     private ArrayList<Sticker> stickerList;
     private DataSource ds;
@@ -71,6 +74,7 @@ public class StickerSelectionFragment extends Fragment {
 //            mParam2 = getArguments().getString(ARG_PARAM2);
 //        }
 
+
         ds = new DataSource();
 
         stickerList = ds.loadStickers();
@@ -83,12 +87,18 @@ public class StickerSelectionFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sticker_selection, container, false);
 
+
+        sendSticker = view.findViewById(R.id.button_firebase);
+        sendSticker.setOnClickListener(v -> {
+
+        });
+
         stickerRecyclerView = view.findViewById(R.id.sticker_recyclerview);
         stickerAdapter = new StickerAdapter( stickerList, view.getContext());
         stickerRecyclerView.setAdapter(stickerAdapter);
         stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
 
-        stickerRecyclerView.setHasFixedSize(true);
+        //stickerRecyclerView.setHasFixedSize(true);
 
         return view;
 
