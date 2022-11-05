@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class Firebase extends AppCompatActivity {
@@ -33,31 +36,9 @@ public class Firebase extends AppCompatActivity {
          */
         login_button.setOnClickListener(view -> {
             String username = username_entry.getText().toString();
-            Boolean found = false;
-            int num = 0;
-            username_list.add("Username");
-            //This loop is a placeholder for the actual logic
-            //Prints may be replaced by messaged displayed on screen
-            while(!found){
-                System.out.println("loop");
-                if(num >= username_list.size()){
-                    System.out.println("Username not found!");
-                    break;
-                }
-                if(username.matches(username_list.get(num))){ // query database instead
-                    System.out.println("Username found!");
-                    found = true;
-                }
-                num ++;
-            }
-            if(found){
-                Intent goToAccount = new Intent(Firebase.this, StickerAccount.class);
-                Firebase.this.startActivity(goToAccount);
-            }
-            else{
-                //Prompt user to try the create account option
-                System.out.println("Create new account?");
-            }
+            Intent openAccount = new Intent(Firebase.this, StickerAccount.class);
+            openAccount.putExtra("username", username);
+            Firebase.this.startActivity(openAccount);
         });
 
     }
