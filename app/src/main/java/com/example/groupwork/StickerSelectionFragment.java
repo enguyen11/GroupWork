@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 // * Use the {@link StickerSelectionFragment#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-public class StickerSelectionFragment extends Fragment {
+public class StickerSelectionFragment extends Fragment implements OnStickerClickListener {
 
     private RecyclerView stickerRecyclerView;
     private Button sendSticker;
@@ -88,13 +89,13 @@ public class StickerSelectionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sticker_selection, container, false);
 
 
-        sendSticker = view.findViewById(R.id.button_firebase);
+        sendSticker = view.findViewById(R.id.button_sendSticker);
         sendSticker.setOnClickListener(v -> {
-
+            Toast.makeText(getActivity(), "Sticker sent", Toast.LENGTH_SHORT).show();
         });
 
         stickerRecyclerView = view.findViewById(R.id.sticker_recyclerview);
-        stickerAdapter = new StickerAdapter( stickerList, view.getContext());
+        stickerAdapter = new StickerAdapter(stickerList, view.getContext());
         stickerRecyclerView.setAdapter(stickerAdapter);
         stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
 
@@ -102,5 +103,10 @@ public class StickerSelectionFragment extends Fragment {
 
         return view;
 
+    }
+
+    @Override
+    public void onStickerClick(String data) {
+        Toast.makeText(getActivity(), "Got: " + data, Toast.LENGTH_SHORT).show();
     }
 }
