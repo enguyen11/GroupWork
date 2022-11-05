@@ -1,6 +1,7 @@
 package com.example.groupwork;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,15 +34,13 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull StickerViewHolder holder, int position) {
-        String uri = "@drawable/" + stickerList.get(position).getName();  // where myresource (without the extension) is the file
-        Log.d(TAG, uri);
-
+        String uri = "@drawable/" + stickerList.get(position).getName();
         int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-        Log.d(TAG, "" + imageResource);
 
         Drawable res = context.getResources().getDrawable(imageResource);
-
+        res.setBounds(new Rect(0,0,96,96));
         holder.sticker.setImageDrawable(res);
+
     }
 
     @Override

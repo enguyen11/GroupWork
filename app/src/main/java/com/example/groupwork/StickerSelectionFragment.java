@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -85,7 +86,9 @@ public class StickerSelectionFragment extends Fragment {
         stickerRecyclerView = view.findViewById(R.id.sticker_recyclerview);
         stickerAdapter = new StickerAdapter( stickerList, view.getContext());
         stickerRecyclerView.setAdapter(stickerAdapter);
-        stickerRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
+
+        stickerRecyclerView.setHasFixedSize(true);
 
         return view;
 
