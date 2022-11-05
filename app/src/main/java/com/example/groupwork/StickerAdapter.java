@@ -41,6 +41,12 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerViewHolder>{
         res.setBounds(new Rect(0,0,96,96));
         holder.sticker.setImageDrawable(res);
 
+        // set a click event on the whole itemView (every element of the recyclerview).
+        holder.itemView.setOnClickListener(view -> {
+            //TODO pass into message send stuff
+            Log.d(TAG, stickerList.get(position).getName());
+        });
+
     }
 
     @Override
