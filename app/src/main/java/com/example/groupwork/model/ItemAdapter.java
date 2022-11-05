@@ -26,13 +26,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder>{
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d(TAG, "onCreateViewHolder:  " + viewType);
         return new ItemViewHolder((LayoutInflater.from(context).inflate(R.layout.item_card, null)));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder:  " + position);
         holder.name.setText(itemList.get(position).getName());
         //holder.url.setText(itemList.get(position).getURL());
     }
