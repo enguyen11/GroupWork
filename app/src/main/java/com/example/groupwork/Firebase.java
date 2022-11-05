@@ -10,6 +10,9 @@ import android.widget.EditText;
 //import com.google.firebase.database.DatabaseReference;
 //import com.google.firebase.database.FirebaseDatabase;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class Firebase extends AppCompatActivity {
@@ -38,6 +41,11 @@ public class Firebase extends AppCompatActivity {
             String username = username_entry.getText().toString();
             Intent openAccount = new Intent(Firebase.this, Chat.class);
             openAccount.putExtra("userID", username);
+            FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
+            DatabaseReference mDatabase = db.getReference("conversations");
+            mDatabase.push().child(username).setValue(username);
+            mDatabase = db.getReference("friends");
+            mDatabase.push().child(username).setValue(username);
             Firebase.this.startActivity(openAccount);
         });
 
