@@ -25,9 +25,12 @@ import java.util.ArrayList;
 public class StickerSelectionFragment extends Fragment {
 
     private RecyclerView stickerRecyclerView;
+    private RecyclerView selected_stickerRecyclerView;
     private Button selectSticker;
     private StickerAdapter stickerAdapter;
+    private StickerAdapter selectedStickerAdapter;
     private ArrayList<Sticker> stickerList;
+    private ArrayList<Sticker> selected_stickerList;
     private DataSource ds;
     private String message;
 
@@ -102,6 +105,11 @@ public class StickerSelectionFragment extends Fragment {
         stickerAdapter = new StickerAdapter( stickerList, view.getContext(), this);
         stickerRecyclerView.setAdapter(stickerAdapter);
         stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
+
+        selected_stickerRecyclerView = view.findViewById(R.id.selectedStickerRV);
+        selectedStickerAdapter = new StickerAdapter(selected_stickerList, view.getContext(), this);
+        selected_stickerRecyclerView.setAdapter(stickerAdapter);
+        selected_stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
 
         //stickerRecyclerView.setHasFixedSize(true);
 
