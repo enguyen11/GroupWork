@@ -1,6 +1,7 @@
 package com.example.groupwork;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -48,6 +49,9 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerViewHolder>{
             //TODO pass into message send stuff
             Log.d(TAG, stickerList.get(position).getName());
             fragment.setMessage(stickerList.get(position).getName()); // passes message to fragment
+            Intent clickedSticker = new Intent(context, DisplayClickedSticker.class);
+            clickedSticker.putExtra("passedSticker", stickerList.get(position).getName());
+            context.startActivity(clickedSticker);
         });
 
     }
