@@ -11,36 +11,29 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.groupwork.model.Dnd5eItem;
-import com.example.groupwork.model.ItemViewHolder;
-
 import java.util.ArrayList;
 
-public class StickerAdapter extends RecyclerView.Adapter<StickerViewHolder>{
+public class StickerAdapter2 extends RecyclerView.Adapter<StickerViewHolder2>{
 
     private final ArrayList<Sticker> stickerList;
     private final Context context;
     private static final String TAG = "DndAPIActivity";
-    private final StickerRecyclerViewInterface myStickerRVI;
     private StickerSelectionFragment fragment;
 
-    public StickerAdapter(ArrayList<Sticker> stickerList, Context context,
-                          StickerSelectionFragment fragment, StickerRecyclerViewInterface stickerRecyclerViewInterface) {
+    public StickerAdapter2(ArrayList<Sticker> stickerList, Context context, StickerSelectionFragment fragment) {
         this.stickerList = stickerList;
         this.context = context;
         this.fragment = fragment;
-        this.myStickerRVI = stickerRecyclerViewInterface;
-
     }
 
     @NonNull
     @Override
-    public StickerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new StickerViewHolder((LayoutInflater.from(context).inflate(R.layout.sticker_card, null)), myStickerRVI);
+    public StickerViewHolder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new StickerViewHolder2((LayoutInflater.from(context).inflate(R.layout.sticker_card, null)));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StickerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull StickerViewHolder2 holder, int position) {
         String uri = "@drawable/" + stickerList.get(position).getName();
         int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
 

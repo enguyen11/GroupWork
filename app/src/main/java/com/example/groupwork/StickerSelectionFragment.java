@@ -22,15 +22,15 @@ import java.util.ArrayList;
 // * Use the {@link StickerSelectionFragment#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-public class StickerSelectionFragment extends Fragment {
+public class StickerSelectionFragment extends Fragment implements StickerRecyclerViewInterface{
 
     private RecyclerView stickerRecyclerView;
     private RecyclerView selected_stickerRecyclerView;
     private Button selectSticker;
     private StickerAdapter stickerAdapter;
-    private StickerAdapter selectedStickerAdapter;
+    private StickerAdapter2 selectedStickerAdapter;
     private ArrayList<Sticker> stickerList;
-    private ArrayList<Sticker> selected_stickerList;
+    protected ArrayList<Sticker> selected_stickerList;
     private DataSource ds;
     private String message;
 
@@ -82,6 +82,8 @@ public class StickerSelectionFragment extends Fragment {
         ds = new DataSource();
 
         stickerList = ds.loadStickers();
+        selected_stickerList = new ArrayList<>();
+
 
     }
 
@@ -102,13 +104,13 @@ public class StickerSelectionFragment extends Fragment {
         });
 
         stickerRecyclerView = view.findViewById(R.id.sticker_recyclerview);
-        stickerAdapter = new StickerAdapter( stickerList, view.getContext(), this);
+        stickerAdapter = new StickerAdapter( stickerList, view.getContext(), this, this);
         stickerRecyclerView.setAdapter(stickerAdapter);
         stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
 
         selected_stickerRecyclerView = view.findViewById(R.id.selectedStickerRV);
-        selectedStickerAdapter = new StickerAdapter(selected_stickerList, view.getContext(), this);
-        selected_stickerRecyclerView.setAdapter(stickerAdapter);
+        selectedStickerAdapter = new StickerAdapter2(selected_stickerList, view.getContext(), this);
+        selected_stickerRecyclerView.setAdapter(selectedStickerAdapter);
         selected_stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
 
         //stickerRecyclerView.setHasFixedSize(true);
@@ -124,5 +126,11 @@ public class StickerSelectionFragment extends Fragment {
     public void setMessage(String message){
         this.message = message;
 
+    }
+
+    @Override
+    public void onStickerClick(int position) {
+        selected_stickerList.add(new Sticker(stickerList.get(position).getName()));
+        selectedStickerAdapter.notifyItemChanged(position);
     }
 }

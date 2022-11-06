@@ -11,8 +11,22 @@ public class StickerViewHolder extends RecyclerView.ViewHolder{
 
     private static final String TAG = "StickerViewHolder";
 
-    public StickerViewHolder(@NonNull View itemView) {
+    public StickerViewHolder(@NonNull View itemView, StickerRecyclerViewInterface myStickerRVI) {
         super(itemView);
         sticker = itemView.findViewById(R.id.sticker_image);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (myStickerRVI != null){
+                    int pos = getBindingAdapterPosition();
+
+                    if (pos != RecyclerView.NO_POSITION){
+                        myStickerRVI.onStickerClick(pos);
+                    }
+
+                }
+            }
+        });
     }
 }
