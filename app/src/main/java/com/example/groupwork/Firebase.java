@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Firebase extends AppCompatActivity {
 
@@ -42,10 +43,16 @@ public class Firebase extends AppCompatActivity {
             Intent openAccount = new Intent(Firebase.this, Chat.class);
             openAccount.putExtra("userID", username);
             FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
-            DatabaseReference mDatabase = db.getReference("conversations");
-            mDatabase.push().child(username).setValue(username);
-            mDatabase = db.getReference("friends");
-            mDatabase.push().child(username).setValue(username);
+            DatabaseReference mDatabase = db.getReference("Users");
+            User user = new User(username);
+            mDatabase.child(user.userName).setValue(user);
+            user.friendsList.add("User1");
+            StickerMessage message = new StickerMessage("User1", username, "Hi, welcome to StickerShare!");
+            user.messageList.add(message);
+            mDatabase.child(user.userName).child("Friends").setValue(user.friendsList);
+            mDatabase.child(user.userName).child("Conversations").setValue(user.messageList);
+           // mDatabase = db.getReference("friends");
+           // mDatabase.setValue(username);
             Firebase.this.startActivity(openAccount);
         });
 
