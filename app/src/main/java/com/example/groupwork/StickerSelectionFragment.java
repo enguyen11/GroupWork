@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class StickerSelectionFragment extends Fragment {
 
     private RecyclerView stickerRecyclerView;
-    private Button sendSticker;
+    private Button selectSticker;
     private StickerAdapter stickerAdapter;
     private ArrayList<Sticker> stickerList;
     private DataSource ds;
@@ -89,8 +89,8 @@ public class StickerSelectionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sticker_selection, container, false);
 
 
-        sendSticker = view.findViewById(R.id.button_sendSticker);
-        sendSticker.setOnClickListener(v -> {
+        selectSticker = view.findViewById(R.id.button_selectSticker);
+        selectSticker.setOnClickListener(v -> {
             if(message != null){
                 //send message to user selected in Chat activity
                 System.out.println(message);
