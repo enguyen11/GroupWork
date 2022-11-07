@@ -33,6 +33,7 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
     protected ArrayList<Sticker> selected_stickerList;
     private DataSource ds;
     private String message;
+    private Button stickSelectionComplete;
 
 //    public StickerSelectionFragment(){
 //        super(R.layout.fragment_sticker_selection);
@@ -85,6 +86,7 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
         selected_stickerList = new ArrayList<>();
 
 
+
     }
 
     @Override
@@ -101,6 +103,15 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
                 System.out.println(message);
             }
 
+        });
+
+        stickSelectionComplete = view.findViewById(R.id.button_selectSticker);
+        stickSelectionComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToSearch = new Intent(v.getContext(), Chat.class);
+                startActivity(goToSearch);
+            }
         });
 
         stickerRecyclerView = view.findViewById(R.id.sticker_recyclerview);
