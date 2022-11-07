@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,10 +60,11 @@ public class Chat extends AppCompatActivity {
             public void onClick(View view) {
                 EditText mEdit = (EditText) findViewById(R.id.sendToUser);
                 friendID = mEdit.getText().toString();
-                getList();
+                //getList();
+                getMessages();
                 mEdit = (EditText) findViewById(R.id.message);
                 String message = mEdit.getText().toString();
-                sendMessageToFirebase(message);
+                //sendMessageToFirebase(message);
 
                 /*
                 setContentView(R.layout.activity_show_sticker);
@@ -78,13 +81,25 @@ public class Chat extends AppCompatActivity {
 
     private void sendMessageToFirebase(String message) {
         StickerMessage newMessage = new StickerMessage(userID, friendID, message);
-        getList();
+        //getList();
         userMessages.add(newMessage);
         receiverMessages.add(newMessage);
         mDatabase.child(userID).child("messageList").setValue(userMessages);
         mDatabase.child(friendID).child("messageList").setValue(receiverMessages);
     }
 
+    private void getMessages(){
+        userMessages.clear();
+        mDatabase.child(userID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                System.out.println((ArrayList<StickerMessage>) task.getResult().getValue());
+                //System.out.println(userMessages.get(0).content);
+            }
+        });
+    }
+
+    /*
     private void getList(){
         mDatabase.child(userID).child("messageList").addValueEventListener(new ValueEventListener() {
             @Override
@@ -118,6 +133,6 @@ public class Chat extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
 }
