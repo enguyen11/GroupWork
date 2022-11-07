@@ -20,6 +20,7 @@ public class Chat extends AppCompatActivity {
 
     String userID;
     Button friendsButton;
+    Button stickerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,20 @@ public class Chat extends AppCompatActivity {
             userID = extras.getString("userID");
         }
 
+        stickerButton = (Button) findViewById(R.id.select_stickers);
+        stickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setContentView(R.layout.activity_show_sticker);
+                if (savedInstanceState == null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .setReorderingAllowed(true)
+                            .add(R.id.fragment_container_view, StickerSelectionFragment.class, null)
+                            .commit();
+                }
+            }
+        });
+
         Button mButton = (Button) findViewById(R.id.send_button);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,13 +69,7 @@ public class Chat extends AppCompatActivity {
                 //mDatabase.push().child("conversations").child(userID).child("chats").child(friendID).child("messages").setValue(message);
                 //sendMessageToFirebase(friendID,message);
 
-                setContentView(R.layout.activity_show_sticker);
-                if (savedInstanceState == null) {
-                    getSupportFragmentManager().beginTransaction()
-                            .setReorderingAllowed(true)
-                            .add(R.id.fragment_container_view, StickerSelectionFragment.class, null)
-                            .commit();
-                }
+
 
             }
         });
