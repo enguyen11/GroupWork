@@ -29,7 +29,7 @@ public class StickerAdapter2 extends RecyclerView.Adapter<StickerViewHolder2>{
     @NonNull
     @Override
     public StickerViewHolder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new StickerViewHolder2((LayoutInflater.from(context).inflate(R.layout.sticker_card, null)));
+        return new StickerViewHolder2((LayoutInflater.from(context).inflate(R.layout.sticker_card2, null)));
     }
 
     @Override

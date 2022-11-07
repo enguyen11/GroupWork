@@ -128,6 +128,7 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
 
     }
 
+    //Used this video as a reference: https://www.youtube.com/watch?v=7GPUpvcU1FE to make recyclerview clickable
     @Override
     public void onStickerClick(int position) {
         selected_stickerList.add(new Sticker(stickerList.get(position).getName()));

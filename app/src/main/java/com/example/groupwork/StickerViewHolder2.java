@@ -13,6 +13,6 @@ public class StickerViewHolder2 extends RecyclerView.ViewHolder{
 
     public StickerViewHolder2(@NonNull View itemView) {
         super(itemView);
-        sticker = itemView.findViewById(R.id.sticker_image);
+        sticker = itemView.findViewById(R.id.sticker_image2);
     }
 }

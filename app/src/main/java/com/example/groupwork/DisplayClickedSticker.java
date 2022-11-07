@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DisplayClickedSticker extends AppCompatActivity {
+    //Used for testing, no longer used
 
     String sticker;
     TextView stickerDisplay;
