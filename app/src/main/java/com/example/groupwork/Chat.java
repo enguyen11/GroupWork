@@ -43,10 +43,8 @@ public class Chat extends AppCompatActivity {
             goToFriends.putExtra("userID", userID);
             Chat.this.startActivity(goToFriends);
         });
-
         userMessages = new ArrayList<>();
         receiverMessages = new ArrayList<>();
-
         db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
         mDatabase = db.getReference("Users");
 
@@ -54,31 +52,37 @@ public class Chat extends AppCompatActivity {
         if (extras != null) {
             userID = extras.getString("userID");
         }
-        //mDatabase.child(userID).child("messageList").get();
 
         Button mButton = (Button) findViewById(R.id.send_button);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean retry = false;
                 EditText mEdit = (EditText) findViewById(R.id.sendToUser);
                 friendID = mEdit.getText().toString();
-                mDatabase.child(userID).child("messageList").get();
+                //Todo************* Problem starts here **********************
+                /*
+                mDatabase.get() sends us to onComplete()
+                onComplete() will populate the ArrayLists with the data from the db
+                The problem is that the db gets updated with the new message BEFORE onComplete() finishes
+                The first time sending a message to a friend this causes a problem, but it seems
+                to work okay if you send that message twice
+                 */
+                mDatabase.child(userID).child("messageList").get(); // gets us to onComplete()
                 mDatabase.child(friendID).child("messageList").get();
                 mEdit = (EditText) findViewById(R.id.message);
                 String message = mEdit.getText().toString();
 
+
+                //Todo**************** The bulk of the problem ******************
                 /*
-                setContentView(R.layout.activity_show_sticker);
-                if (savedInstanceState == null) {
-                    getSupportFragmentManager().beginTransaction()
-                            .setReorderingAllowed(true)
-                            .add(R.id.fragment_container_view, StickerSelectionFragment.class, null)
-                            .commit();
-                }*/
-
+                This is the code that doesn't seem to be finishing on time
+                 */
                 mDatabase.child(userID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-
+                    /**
+                     * This takes the ArrayLists and repopulates them with messages from the db
+                     * Messages have three parts, hence the String[3]
+                     * @param task
+                     */
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         userMessages.clear();
@@ -93,12 +97,14 @@ public class Chat extends AppCompatActivity {
                             num = 0;
                             StickerMessage message = new StickerMessage(array[2], array[1], array[0]);
                             userMessages.add(message);
-                            System.out.println("added from database");
                         }
-                        //System.out.println(userMessages.get(0).content);
                     }
                 });
                 mDatabase.child(friendID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    /**
+                     * Do the above again for the friend's message list
+                     * @param task
+                     */
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         receiverMessages.clear();
@@ -113,64 +119,37 @@ public class Chat extends AppCompatActivity {
                             num = 0;
                             StickerMessage message = new StickerMessage(array[2], array[1], array[0]);
                             receiverMessages.add(message);
-                            System.out.println("Adding message: " + message);
                         }
-                        //System.out.println(userMessages.get(0).content);
                     }
                 });
-                System.out.println(userMessages);
-                System.out.println(receiverMessages);
+                //Todo********************The other part**********************
+                /*
+                Even though the call to sendMessageToFirebase() comes after in the code
+                it runs before the onComplete().
+                 */
                 sendMessageToFirebase(message);
             }
         });
     }
 
+    //Todo*************The end***************
+    /*
+    This code works perfectly as is. It's just supposed to run AFTER the ArrayLists are updated
+    But it runs before instead.
+     */
+    /**
+     * Sets the value of the user and friend message lists to their respective ArrayLists
+     * The ArrayLists are meant to be populated with the messages from the db before adding the new one
+     * @param message
+     */
     private void sendMessageToFirebase(String message) {
         StickerMessage newMessage = new StickerMessage(userID, friendID, message);
         //getList();
         userMessages.add(newMessage);
         receiverMessages.add(newMessage);
-        System.out.println("Updating database");
         mDatabase.child(userID).child("messageList").setValue(userMessages);
         mDatabase.child(friendID).child("messageList").setValue(receiverMessages);
     }
 
-
-
-    /*
-    private void getList(){
-        mDatabase.child(userID).child("messageList").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot child : snapshot.getChildren()){
-                    //System.out.println(child.getValue().toString());
-                    String sender = child.child("sender").getValue().toString();
-                    String receiver = child.child("receiver").getValue().toString();
-                    String content = child.child("content").getValue().toString();
-                   userMessages.add(new StickerMessage(sender, receiver, content));
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-        mDatabase.child(friendID).child("messageList").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot child : snapshot.getChildren()){
-                    //receiverMessages.add((StickerMessage)child.getValue());
-                    String sender = child.child("sender").getValue().toString();
-                    String receiver = child.child("receiver").getValue().toString();
-                    String content = child.child("content").getValue().toString();
-                    receiverMessages.add(new StickerMessage(sender, receiver, content));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }*/
 
 }
