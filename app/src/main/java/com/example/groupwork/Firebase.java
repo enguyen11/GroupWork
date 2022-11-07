@@ -72,9 +72,11 @@ public class Firebase extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 boolean isNew = true;
                 for(DataSnapshot child : snapshot.getChildren()) {
-                    if(child.child("userName").getValue().toString().equals(user.userName)){
-                        isNew = false;
-                        break;
+                    if(child.child("userName").getValue() != null) {
+                        if (child.child("userName").getValue().toString().equals(user.userName)) {
+                            isNew = false;
+                            break;
+                        }
                     }
                 }
                 if(isNew){
