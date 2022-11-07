@@ -54,24 +54,19 @@ public class Chat extends AppCompatActivity {
         if (extras != null) {
             userID = extras.getString("userID");
         }
+        //mDatabase.child(userID).child("messageList").get();
 
         Button mButton = (Button) findViewById(R.id.send_button);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean retry = false;
                 EditText mEdit = (EditText) findViewById(R.id.sendToUser);
                 friendID = mEdit.getText().toString();
                 mDatabase.child(userID).child("messageList").get();
                 mDatabase.child(friendID).child("messageList").get();
                 mEdit = (EditText) findViewById(R.id.message);
                 String message = mEdit.getText().toString();
-                if(userMessages.isEmpty() || receiverMessages.isEmpty()){
-                    mDatabase.child(userID).child("messageList").get();
-                    mDatabase.child(friendID).child("messageList").get();
-                    //onClick(view);
-                    System.out.println("was empty");
-                }
-                sendMessageToFirebase(message);
 
                 /*
                 setContentView(R.layout.activity_show_sticker);
@@ -81,7 +76,6 @@ public class Chat extends AppCompatActivity {
                             .add(R.id.fragment_container_view, StickerSelectionFragment.class, null)
                             .commit();
                 }*/
-
 
                 mDatabase.child(userID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
@@ -99,6 +93,7 @@ public class Chat extends AppCompatActivity {
                             num = 0;
                             StickerMessage message = new StickerMessage(array[2], array[1], array[0]);
                             userMessages.add(message);
+                            System.out.println("added from database");
                         }
                         //System.out.println(userMessages.get(0).content);
                     }
@@ -118,22 +113,24 @@ public class Chat extends AppCompatActivity {
                             num = 0;
                             StickerMessage message = new StickerMessage(array[2], array[1], array[0]);
                             receiverMessages.add(message);
-
+                            System.out.println("Adding message: " + message);
                         }
                         //System.out.println(userMessages.get(0).content);
                     }
                 });
+                System.out.println(userMessages);
+                System.out.println(receiverMessages);
+                sendMessageToFirebase(message);
             }
         });
     }
 
     private void sendMessageToFirebase(String message) {
-        mDatabase.child(userID).child("messageList").get();
-        mDatabase.child(friendID).child("messageList").get();
         StickerMessage newMessage = new StickerMessage(userID, friendID, message);
         //getList();
         userMessages.add(newMessage);
         receiverMessages.add(newMessage);
+        System.out.println("Updating database");
         mDatabase.child(userID).child("messageList").setValue(userMessages);
         mDatabase.child(friendID).child("messageList").setValue(receiverMessages);
     }
