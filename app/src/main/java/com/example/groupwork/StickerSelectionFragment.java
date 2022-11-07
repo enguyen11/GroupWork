@@ -1,12 +1,16 @@
 package com.example.groupwork;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -79,12 +83,19 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
 //            mParam2 = getArguments().getString(ARG_PARAM2);
 //        }
 
+        if (savedInstanceState != null) {
+            stickerList = savedInstanceState.getParcelableArrayList("stickerList");
+            Log.d(TAG, "world");
+            selected_stickerList = savedInstanceState.getParcelableArrayList("selected_stickerList");
+        }
+        else {
 
-        ds = new DataSource();
+            ds = new DataSource();
 
-        stickerList = ds.loadStickers();
-        selected_stickerList = new ArrayList<>();
+            stickerList = ds.loadStickers();
+            selected_stickerList = new ArrayList<>();
 
+        }
 
 
     }
@@ -146,5 +157,25 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
         stickerList.get(position).numUse = stickerList.get(position).getNumUse() + 1;
         stickerAdapter.notifyItemChanged(position);
         selectedStickerAdapter.notifyItemChanged(position);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putParcelableArrayList("stickerList", (ArrayList) stickerList);
+        //Log.d(TAG, "hello");
+        savedInstanceState.putParcelableArrayList("selected_stickerList", (ArrayList) selected_stickerList);
+
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            stickerList = savedInstanceState.getParcelableArrayList("stickerList");
+            //Log.d(TAG, "world");
+            selected_stickerList = savedInstanceState.getParcelableArrayList("selected_stickerList");
+            //Log.d(TAG, "onViewStateRestored: not empty");
+        }
     }
 }

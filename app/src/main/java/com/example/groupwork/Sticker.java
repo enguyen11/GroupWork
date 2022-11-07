@@ -1,6 +1,9 @@
 package com.example.groupwork;
 
-public class Sticker {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Sticker implements Parcelable {
     private final String name;
     protected int numUse = 0;
 
@@ -12,4 +15,32 @@ public class Sticker {
         return name;
     }
     public int getNumUse() {return numUse;}
+
+    protected Sticker(Parcel in) {
+        name = in.readString();
+        numUse = in.readInt();
+    }
+
+    public static final Creator<Sticker> CREATOR = new Creator<Sticker>() {
+        @Override
+        public Sticker createFromParcel(Parcel in) {
+            return new Sticker(in);
+        }
+
+        @Override
+        public Sticker[] newArray(int size) {
+            return new Sticker[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(numUse);
+    }
 }
