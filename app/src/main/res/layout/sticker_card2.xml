@@ -7,7 +7,7 @@
     android:outlineProvider="bounds">
 
     <ImageView
-        android:id="@+id/sticker_image"
+        android:id="@+id/sticker_image2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -24,12 +24,4 @@
         app:srcCompat="@drawable/sticker_barbarian"
         tools:layout_constraintHeight_max="96dp" />
 
-    <TextView
-        android:id="@+id/usages"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:textStyle="bold"
-        android:text="0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
