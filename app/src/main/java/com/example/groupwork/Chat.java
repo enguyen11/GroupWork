@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Chat extends AppCompatActivity {
 
@@ -60,11 +61,17 @@ public class Chat extends AppCompatActivity {
             public void onClick(View view) {
                 EditText mEdit = (EditText) findViewById(R.id.sendToUser);
                 friendID = mEdit.getText().toString();
-                //getList();
-                getMessages();
+                mDatabase.child(userID).child("messageList").get();
+                mDatabase.child(friendID).child("messageList").get();
                 mEdit = (EditText) findViewById(R.id.message);
                 String message = mEdit.getText().toString();
-                //sendMessageToFirebase(message);
+                if(userMessages.isEmpty() || receiverMessages.isEmpty()){
+                    mDatabase.child(userID).child("messageList").get();
+                    mDatabase.child(friendID).child("messageList").get();
+                    //onClick(view);
+                    System.out.println("was empty");
+                }
+                sendMessageToFirebase(message);
 
                 /*
                 setContentView(R.layout.activity_show_sticker);
@@ -75,11 +82,54 @@ public class Chat extends AppCompatActivity {
                             .commit();
                 }*/
 
+
+                mDatabase.child(userID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        userMessages.clear();
+                        String[] array = new String[3];
+                        int num = 0;
+                        Iterable<DataSnapshot> outer = task.getResult().getChildren();
+                        for(DataSnapshot inner : outer){
+                            for(DataSnapshot part : inner.getChildren()){
+                                array[num] = part.getValue().toString();
+                                num++;
+                            }
+                            num = 0;
+                            StickerMessage message = new StickerMessage(array[2], array[1], array[0]);
+                            userMessages.add(message);
+                        }
+                        //System.out.println(userMessages.get(0).content);
+                    }
+                });
+                mDatabase.child(friendID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        receiverMessages.clear();
+                        String[] array = new String[3];
+                        int num = 0;
+                        Iterable<DataSnapshot> outer = task.getResult().getChildren();
+                        for(DataSnapshot inner : outer){
+                            for(DataSnapshot part : inner.getChildren()){
+                                array[num] = part.getValue().toString();
+                                num++;
+                            }
+                            num = 0;
+                            StickerMessage message = new StickerMessage(array[2], array[1], array[0]);
+                            receiverMessages.add(message);
+
+                        }
+                        //System.out.println(userMessages.get(0).content);
+                    }
+                });
             }
         });
     }
 
     private void sendMessageToFirebase(String message) {
+        mDatabase.child(userID).child("messageList").get();
+        mDatabase.child(friendID).child("messageList").get();
         StickerMessage newMessage = new StickerMessage(userID, friendID, message);
         //getList();
         userMessages.add(newMessage);
@@ -88,16 +138,7 @@ public class Chat extends AppCompatActivity {
         mDatabase.child(friendID).child("messageList").setValue(receiverMessages);
     }
 
-    private void getMessages(){
-        userMessages.clear();
-        mDatabase.child(userID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                System.out.println((ArrayList<StickerMessage>) task.getResult().getValue());
-                //System.out.println(userMessages.get(0).content);
-            }
-        });
-    }
+
 
     /*
     private void getList(){
