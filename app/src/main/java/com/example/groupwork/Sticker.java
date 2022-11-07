@@ -6,6 +6,7 @@ import android.os.Parcelable;
 public class Sticker implements Parcelable {
     private final String name;
     protected int numUse = 0;
+    protected String sender = "";
 
     public Sticker(String name) {
         this.name = name;
@@ -15,10 +16,12 @@ public class Sticker implements Parcelable {
         return name;
     }
     public int getNumUse() {return numUse;}
+    public String getSender() {return sender;}
 
     protected Sticker(Parcel in) {
         name = in.readString();
         numUse = in.readInt();
+        sender = in.readString();
     }
 
     public static final Creator<Sticker> CREATOR = new Creator<Sticker>() {
@@ -42,5 +45,6 @@ public class Sticker implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeInt(numUse);
+        dest.writeString(sender);
     }
 }

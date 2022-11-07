@@ -9,23 +9,40 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.groupwork.model.Dnd5eItem;
+import com.example.groupwork.model.ItemAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class Chat extends AppCompatActivity {
 
-    String userID;
-    Button friendsButton;
-    Button stickerButton;
+    private String userID;
+    private Button friendsButton;
+    private Button stickerButton;
+    private ArrayList<Sticker> stickerMsgList;
+    private RecyclerView chatHistoryRecyclerView;
+    private StickerMessageAdapter stickerMsgAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticker_account);
+
+        stickerMsgList = new ArrayList<>();
+
+        chatHistoryRecyclerView = findViewById(R.id.chat_history_recyclerview);
+
+        stickerMsgAdapter = new StickerMessageAdapter(stickerMsgList, this);
+        chatHistoryRecyclerView.setAdapter(stickerMsgAdapter);
+        chatHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         friendsButton = findViewById(R.id.button_friends);
 

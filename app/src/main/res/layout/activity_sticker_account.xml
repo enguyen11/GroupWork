@@ -6,27 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".StickerAccount">
 
-    <TextView
-        android:id="@+id/textView_welcome_stickers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:text="@string/welcome_stickers"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/button_friends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="15dp"
         android:text="@string/friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView_welcome_stickers"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_welcome_stickers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/welcome_stickers"
+        app:layout_constraintEnd_toStartOf="@+id/button_friends"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chat_history_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/sendToUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_welcome_stickers"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/button_friends" />
 
     <EditText
         android:id="@+id/sendToUser"
@@ -44,18 +53,18 @@
         android:layout_width="301dp"
         android:layout_height="64dp"
 
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="20dp"
         android:hint="Type Message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/send_button"
-        app:layout_constraintHorizontal_bias="0.165"
+        app:layout_constraintHorizontal_bias="0.758"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/send_button"
-        android:layout_width="74dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="10dp"
+        android:layout_width="109dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="16dp"
         android:text="@string/send"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,13 +72,14 @@
 
     <Button
         android:id="@+id/select_stickers"
-        android:layout_width="75dp"
-        android:layout_height="62dp"
+        android:layout_width="120dp"
+        android:layout_height="59dp"
         android:layout_marginEnd="8dp"
         android:text="Stickers"
-        android:textSize="8sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/send_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sendToUser"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.961" />
 

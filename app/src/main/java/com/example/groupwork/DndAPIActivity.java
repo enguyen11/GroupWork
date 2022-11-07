@@ -386,17 +386,4 @@ public class DndAPIActivity extends AppCompatActivity {
         connectionStatus.setVisibility(View.INVISIBLE);
     }
 
-//    @Override
-//    public void onClick(View view) {
-//        int btnId = view.getId(); // get the Id of the view that was clicked
-//        if (btnId == R.id.newButton) {
-//            System.out.println("SPINNER IS ACTIVE " + category);
-//            String endpoint = category;
-//
-//            Log.d(TAG, "inside onclick");
-//        }
-//        itemAdapter.notifyDataSetChanged();
-
-
-
 }

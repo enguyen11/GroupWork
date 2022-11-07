@@ -47,4 +47,6 @@
     <string name="select_these_stickers">select these stickers</string>
     <string name="selected_stickers">SELECTED STICKERS</string>
     <string name="sticker_selection">STICKER SELECTION</string>
+    <string name="string_sent_by">Sent by</string>
+    <string name="string_sticker">sticker</string>
 </resources>
