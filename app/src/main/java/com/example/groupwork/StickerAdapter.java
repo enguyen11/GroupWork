@@ -47,7 +47,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerViewHolder>{
         Drawable res = context.getResources().getDrawable(imageResource);
         res.setBounds(new Rect(0,0,96,96));
         holder.sticker.setImageDrawable(res);
-        holder.numUse.setText(stickerList.get(position).getNumUse());
+        holder.numUse.setText(String.valueOf(stickerList.get(position).getNumUse()));
     }
 
     @Override

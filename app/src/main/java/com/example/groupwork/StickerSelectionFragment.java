@@ -132,6 +132,8 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
     @Override
     public void onStickerClick(int position) {
         selected_stickerList.add(new Sticker(stickerList.get(position).getName()));
+        stickerList.get(position).numUse = stickerList.get(position).getNumUse() + 1;
+        stickerAdapter.notifyItemChanged(position);
         selectedStickerAdapter.notifyItemChanged(position);
     }
 }
