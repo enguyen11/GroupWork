@@ -39,6 +39,11 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
     private String message;
     private Button stickSelectionComplete;
 
+    public interface OnInputListener {
+        void sendInput(ArrayList<Sticker> selected_stickerList);
+    }
+
+    public OnInputListener onInputListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,10 +82,17 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
 
         });
 
+        try {
+            onInputListener = (OnInputListener) getActivity();
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: " + e.getMessage());
+        }
+
         stickSelectionComplete = view.findViewById(R.id.button_selectSticker);
         stickSelectionComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onInputListener.sendInput(stickerList);
                 Intent goToSearch = new Intent(v.getContext(), Chat.class);
                 startActivity(goToSearch);
             }

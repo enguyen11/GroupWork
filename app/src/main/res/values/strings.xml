@@ -49,4 +49,6 @@
     <string name="sticker_selection">STICKER SELECTION</string>
     <string name="string_sent_by">Sent by</string>
     <string name="string_sticker">sticker</string>
+    <string name="string_type_message">Type Message</string>
+    <string name="string_stickers">Stickers</string>
 </resources>
