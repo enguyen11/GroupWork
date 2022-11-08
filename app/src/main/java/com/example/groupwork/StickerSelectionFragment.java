@@ -2,6 +2,8 @@ package com.example.groupwork;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,11 +15,13 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.groupwork.data.DataSource;
+import com.example.groupwork.data.FirebaseViewModel;
 
 import java.util.ArrayList;
 
@@ -38,6 +42,7 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
     private DataSource ds;
     private String message;
     private Button stickSelectionComplete;
+    private FirebaseViewModel viewModel;
 
     public interface OnInputListener {
         void sendInput(ArrayList<Sticker> selected_stickerList);
@@ -70,7 +75,11 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_sticker_selection, container, false);
+//        viewModel = new ViewModelProvider(requireActivity()).get(FirebaseViewModel.class);
+//        viewModel.initStickers(stickerList);
+
 
         Chat chatActivity = (Chat) getActivity();
         ArrayList<Sticker> list = chatActivity.getSelectedStickers();
@@ -94,19 +103,20 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
 
         });
 
-        try {
-            onInputListener = (OnInputListener) getActivity();
-        } catch (ClassCastException e) {
-            Log.e(TAG, "onAttach: " + e.getMessage());
-        }
 
         stickSelectionComplete = view.findViewById(R.id.button_selectSticker);
         stickSelectionComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onInputListener.sendInput(selected_stickerList);
-                Intent goToSearch = new Intent(v.getContext(), Chat.class);
-                startActivity(goToSearch);
+                //onInputListener.sendInput(selected_stickerList);
+                for (Sticker s : selected_stickerList) {
+                    Log.d("onClick", s.getName() + " " + s.getNumUse());
+                }
+//                viewModel.selectStickers(selected_stickerList);
+//                viewModel.setStickersCount(stickerList);
+//                Intent goToSearch = new Intent(v.getContext(), Chat.class);
+//                startActivity(goToSearch);
+
             }
         });
 
@@ -119,8 +129,7 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
         selectedStickerAdapter = new StickerAdapter2(selected_stickerList, view.getContext(), this);
         selected_stickerRecyclerView.setAdapter(selectedStickerAdapter);
         selected_stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
-
-        //stickerRecyclerView.setHasFixedSize(true);
+//        selected_stickerRecyclerView.setHasFixedSize(true);
 
         return view;
 
@@ -138,8 +147,8 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
     //Used this video as a reference: https://www.youtube.com/watch?v=7GPUpvcU1FE to make recyclerview clickable
     @Override
     public void onStickerClick(int position) {
-        selected_stickerList.add(new Sticker(stickerList.get(position).getName()));
         stickerList.get(position).setNumUse(stickerList.get(position).getNumUse() + 1);
+        selected_stickerList.add(new Sticker(stickerList.get(position).getName(), stickerList.get(position).getNumUse()));
         stickerAdapter.notifyItemChanged(position);
         selectedStickerAdapter.notifyItemChanged(position);
     }
@@ -163,4 +172,17 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
             //Log.d(TAG, "onViewStateRestored: not empty");
         }
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            onInputListener = (OnInputListener) getActivity();
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onAttach: " + e.getMessage());
+        }
+    }
+
+
+
 }

@@ -11,6 +11,10 @@ public class Sticker implements Parcelable {
     public Sticker(String name) {
         this.name = name;
     }
+    public Sticker(String name, int numUse) {
+        this.name = name;
+        this.numUse = numUse;
+    }
 
     public String getName() {
         return name;
