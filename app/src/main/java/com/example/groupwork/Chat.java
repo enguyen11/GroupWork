@@ -275,20 +275,20 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         return stickersToSend;
     }
 
-    @Override
-    public void onBackPressed() {
-        List<Fragment> all_frags = getSupportFragmentManager().getFragments();
-        if(all_frags != null){
-            if (all_frags.size() == 0) {
-                super.onBackPressed();
-            } else {
-                for (Fragment frag : all_frags) {
-                    getSupportFragmentManager().beginTransaction().remove(frag).commit();
-                }
-            }
-        }else{
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        List<Fragment> all_frags = getSupportFragmentManager().getFragments();
+//        if(all_frags != null){
+//            if (all_frags.size() == 0) {
+//                super.onBackPressed();
+//            } else {
+//                for (Fragment frag : all_frags) {
+//                    getSupportFragmentManager().beginTransaction().remove(frag).commit();
+//                }
+//            }
+//        }else{
+//            super.onBackPressed();
+//        }
+//    }
 
 }
