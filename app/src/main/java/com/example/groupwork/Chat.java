@@ -52,6 +52,8 @@ public class Chat extends AppCompatActivity {
 
                 //mDatabase.push().child("conversations").child(userID).child("chats").child(friendID).child("messages").setValue(message);
                 //sendMessageToFirebase(friendID,message);
+
+
             }
         });
     }
