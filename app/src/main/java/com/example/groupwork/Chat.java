@@ -23,8 +23,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Chat extends AppCompatActivity implements StickerSelectionFragment.OnInputListener{
@@ -42,7 +43,11 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
     private RecyclerView  selectedStickerRecyclerView;
     private StickerMessageAdapter stickerMsgAdapter;
     private StickerMessageAdapter stickerToSendAdapter;
-
+    private ArrayList<StickerMessage> userMessages;
+    private ArrayList<StickerMessage> receiverMessages;
+    //private String receiver;
+    private FirebaseDatabase db;
+    private DatabaseReference mDatabase;
     private String friendID;
 
     @Override
@@ -52,15 +57,23 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
 
         welcomeMsg = findViewById(R.id.textView_welcome_stickers);
 
-        friendsButton = findViewById(R.id.button_friends);
 
+        friendsButton = findViewById(R.id.button_friends);
         friendsButton.setOnClickListener(view -> {
             Intent goToFriends = new Intent(Chat.this, Friends.class);
+            goToFriends.putExtra("userID", userID);
             Chat.this.startActivity(goToFriends);
         });
 
+
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
-        DatabaseReference mDatabase = db.getReference("Users");
+        this.mDatabase = db.getReference("Users");
+
+        userMessages = new ArrayList<>();
+        receiverMessages = new ArrayList<>();
+        db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
+        mDatabase = db.getReference("Users");
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -73,39 +86,96 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         }
 
 
-
         stickerButton = (Button) findViewById(R.id.select_stickers);
         stickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setContentView(R.layout.activity_show_sticker);
                 //if (savedInstanceState == null) {
-                    getSupportFragmentManager().beginTransaction()
-                            .setReorderingAllowed(true)
-                            .add(R.id.fragment_container_view, StickerSelectionFragment.class, null)
-                            .commit();
+                getSupportFragmentManager().beginTransaction()
+                        .setReorderingAllowed(true)
+                        .add(R.id.fragment_container_view, StickerSelectionFragment.class, null)
+                        .commit();
                 //}
             }
         });
 
         Button mButton = (Button) findViewById(R.id.send_button);
-        friendID = "";
+        //friendID = "";
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText mEdit = (EditText) findViewById(R.id.sendToUser);
                 friendID = mEdit.getText().toString();
 
+                /*
+                mDatabase.get() sends us to onComplete()
+                onComplete() will populate the ArrayLists with the data from the db
+                Each time this button is clicked they should be reset
+                 */
+                mDatabase.child(userID).child("messageList").get();
+                mDatabase.child(friendID).child("messageList").get();
                 mEdit = (EditText) findViewById(R.id.message);
                 String message = mEdit.getText().toString();
-
-                if(stickersToSend.size() > 0) {
-                    for (Sticker s: stickersToSend) {
+/*
+                if (stickersToSend.size() > 0) {
+                    for (Sticker s : stickersToSend) {
                         mDatabase.push().child(userID).child("messageList").child(friendID).child("messages").setValue(s);
                         //sendMessageToFirebase(friendID,message);
                     }
                 }
 
+ */
+
+                mDatabase.child(userID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    /**
+                     * This takes the ArrayLists and repopulates them with messages from the db
+                     * Messages have three parts, hence the String[3]
+                     * @param task
+                     */
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        userMessages.clear();
+                        String[] array = new String[3];
+                        int num = 0;
+                        Iterable<DataSnapshot> outer = task.getResult().getChildren();
+                        for (DataSnapshot inner : outer) {
+                            for (DataSnapshot part : inner.getChildren()) {
+                                array[num] = part.getValue().toString();
+                                num++;
+                            }
+                            num = 0;
+                            StickerMessage message = new StickerMessage(array[2], array[1], array[0]);
+                            userMessages.add(message);
+                        }
+                    }
+                });
+                mDatabase.child(friendID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    /**
+                     * Do the above again for the friend's message list
+                     * @param task
+                     */
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        receiverMessages.clear();
+                        String[] array = new String[3];
+                        int num = 0;
+                        Iterable<DataSnapshot> outer = task.getResult().getChildren();
+                        for (DataSnapshot inner : outer) {
+                            for (DataSnapshot part : inner.getChildren()) {
+                                array[num] = part.getValue().toString();
+                                num++;
+                            }
+                            num = 0;
+                            StickerMessage message = new StickerMessage(array[2], array[1], array[0]);
+                            receiverMessages.add(message);
+                        }
+                    }
+                });
+
+
+                //Send message to db
+                sendMessageToFirebase(message);
             }
         });
 
@@ -120,31 +190,27 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         chatHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         selectedStickerRecyclerView = findViewById(R.id.selected_sticker_recyclerView);
-        stickerToSendAdapter = new StickerMessageAdapter( new ArrayList<>(), this);
+        stickerToSendAdapter = new StickerMessageAdapter(new ArrayList<>(), this);
         selectedStickerRecyclerView.setAdapter(stickerToSendAdapter);
         selectedStickerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
     }
 
-    private void sendMessageToFirebase(String sendID, String message) {
-        FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
-        DatabaseReference mDatabase = db.getReference("conversation");
-
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                //mDatabase.child("conversations").child(userID).child("chats").child(sendID).child("messages").setValue(message);
-                //mDatabase.child("conversations").child(userID).child("chats").child(sendID).child("ifSender").setValue(true);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Chat.this, "Fail to send " + error, Toast.LENGTH_SHORT).show();
-            }
-        });
+    /**
+     * Pushes message to user and friend's messageLists
+     *
+     * @param message
+     */
+    private void sendMessageToFirebase(String message) {
+        StickerMessage newMessage = new StickerMessage(userID, friendID, message);
+        //getList();
+        userMessages.add(newMessage);
+        receiverMessages.add(newMessage);
+        mDatabase.child(userID).child("messageList").push().setValue(newMessage);
+        mDatabase.child(friendID).child("messageList").push().setValue(newMessage);
     }
+
 
     private ArrayList getMessageHistory(String sendID) {
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
@@ -160,8 +226,8 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 Iterable<DataSnapshot> outer = task.getResult().getChildren();
-                for(DataSnapshot inner : outer){
-                    for(DataSnapshot part : inner.getChildren()){
+                for (DataSnapshot inner : outer) {
+                    for (DataSnapshot part : inner.getChildren()) {
                         arr.add(part.getValue().toString());
                         Log.d(TAG, part.getValue().toString());
                     }
@@ -181,11 +247,12 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
     }
 
     public ArrayList<Sticker> getSelectedStickers() {
-        if(stickersToSend != null) {
+        if (stickersToSend != null) {
             for (Sticker s : stickersToSend) {
                 Log.d("getSelectedStickers", s.getName() + " " + s.getNumUse());
             }
         }
         return stickersToSend;
     }
+
 }
