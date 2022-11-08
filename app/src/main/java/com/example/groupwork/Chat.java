@@ -59,24 +59,18 @@ public class Chat extends AppCompatActivity {
             public void onClick(View view) {
                 EditText mEdit = (EditText) findViewById(R.id.sendToUser);
                 friendID = mEdit.getText().toString();
-                //Todo************* Problem starts here **********************
+
                 /*
                 mDatabase.get() sends us to onComplete()
                 onComplete() will populate the ArrayLists with the data from the db
-                The problem is that the db gets updated with the new message BEFORE onComplete() finishes
-                The first time sending a message to a friend this causes a problem, but it seems
-                to work okay if you send that message twice
+                Each time this button is clicked they should be reset
                  */
-                mDatabase.child(userID).child("messageList").get(); // gets us to onComplete()
+                mDatabase.child(userID).child("messageList").get();
                 mDatabase.child(friendID).child("messageList").get();
                 mEdit = (EditText) findViewById(R.id.message);
                 String message = mEdit.getText().toString();
 
 
-                //Todo**************** The bulk of the problem ******************
-                /*
-                This is the code that doesn't seem to be finishing on time
-                 */
                 mDatabase.child(userID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     /**
                      * This takes the ArrayLists and repopulates them with messages from the db
@@ -122,24 +116,15 @@ public class Chat extends AppCompatActivity {
                         }
                     }
                 });
-                //Todo********************The other part**********************
-                /*
-                Even though the call to sendMessageToFirebase() comes after in the code
-                it runs before the onComplete().
-                 */
+
+                //Send message to db
                 sendMessageToFirebase(message);
             }
         });
     }
 
-    //Todo*************The end***************
-    /*
-    This code works perfectly as is. It's just supposed to run AFTER the ArrayLists are updated
-    But it runs before instead.
-     */
     /**
-     * Sets the value of the user and friend message lists to their respective ArrayLists
-     * The ArrayLists are meant to be populated with the messages from the db before adding the new one
+     * Pushes message to user and friend's messageLists
      * @param message
      */
     private void sendMessageToFirebase(String message) {
@@ -147,8 +132,8 @@ public class Chat extends AppCompatActivity {
         //getList();
         userMessages.add(newMessage);
         receiverMessages.add(newMessage);
-        mDatabase.child(userID).child("messageList").setValue(userMessages);
-        mDatabase.child(friendID).child("messageList").setValue(receiverMessages);
+        mDatabase.child(userID).child("messageList").push().setValue(newMessage);
+        mDatabase.child(friendID).child("messageList").push().setValue(newMessage);
     }
 
 
