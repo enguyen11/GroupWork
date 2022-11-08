@@ -36,8 +36,11 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
     private Button friendsButton;
     private Button stickerButton;
     private ArrayList<Sticker> stickerMsgList;
+    private ArrayList<Sticker> stickersToSend;
     private RecyclerView chatHistoryRecyclerView;
+    private RecyclerView  selectedStickerRecyclerView;
     private StickerMessageAdapter stickerMsgAdapter;
+    private StickerMessageAdapter stickerToSendAdapter;
 
     private String friendID;
 
@@ -56,14 +59,19 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         });
 
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
-        DatabaseReference mDatabase = db.getReference("conversation");
+        //DatabaseReference mDatabase = db.getReference("conversation");
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userID = extras.getString("userID");
+            Log.d(TAG, userID);
+            welcomeMsg.setText("Welcome, " + userID);
+
+        } else {
+            welcomeMsg.setText("Welcome!");
         }
 
-        welcomeMsg.setText("Welcome, " + userID);
+
 
         stickerButton = (Button) findViewById(R.id.select_stickers);
         stickerButton.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +103,8 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
 
             }
         });
+
+        selectedStickerRecyclerView = findViewById(R.id.selected_sticker_recyclerView);
 
         //user's chat history shown in a recyclerview
         stickerMsgList = new ArrayList<>();
@@ -167,13 +177,14 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
 
     @Override
     public void sendInput(ArrayList<Sticker> selected_stickerList) {
-        stickerMsgList = selected_stickerList;
+        stickersToSend = selected_stickerList;
+        Log.d(TAG,"sendInput Hit");
 
-        for (Sticker s : stickerMsgList ) {
-            Log.d("STICKERS NAMEEEEEEEEEE", s.getName());
+        for (Sticker s : stickersToSend ) {
+            Log.d("STICKERS", s.getName());
         }
 
-        stickerMsgAdapter = new StickerMessageAdapter(stickerMsgList, this);
+        stickerMsgAdapter = new StickerMessageAdapter(stickersToSend, this);
         chatHistoryRecyclerView.setAdapter(stickerMsgAdapter);
         chatHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

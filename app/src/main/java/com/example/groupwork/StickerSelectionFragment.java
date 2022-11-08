@@ -92,7 +92,7 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
         stickSelectionComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onInputListener.sendInput(stickerList);
+                onInputListener.sendInput(selected_stickerList);
                 Intent goToSearch = new Intent(v.getContext(), Chat.class);
                 startActivity(goToSearch);
             }
