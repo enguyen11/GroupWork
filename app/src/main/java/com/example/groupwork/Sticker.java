@@ -5,8 +5,8 @@ import android.os.Parcelable;
 
 public class Sticker implements Parcelable {
     private final String name;
-    protected int numUse = 0;
-    protected String sender = "";
+    private int numUse = 0;
+    private String sender = "";
 
     public Sticker(String name) {
         this.name = name;
@@ -16,6 +16,7 @@ public class Sticker implements Parcelable {
         return name;
     }
     public int getNumUse() {return numUse;}
+    public void setNumUse(int n) {numUse = n;}
     public String getSender() {return sender;}
 
     protected Sticker(Parcel in) {

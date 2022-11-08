@@ -72,8 +72,20 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sticker_selection, container, false);
 
+        Chat chatActivity = (Chat) getActivity();
+        ArrayList<Sticker> list = chatActivity.getSelectedStickers();
+        Log.d(TAG, "" + list);
+
+        if(list !=null) {
+            Log.d(TAG, list.toString());
+            selected_stickerList = chatActivity.getSelectedStickers();
+            for (Sticker s : selected_stickerList ) {
+                Log.d("STICKERS", s.getName());
+            }
+        }
 
         selectSticker = view.findViewById(R.id.button_selectSticker);
+
         selectSticker.setOnClickListener(v -> {
             if(message != null){
                 //send message to user selected in Chat activity
@@ -127,7 +139,7 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
     @Override
     public void onStickerClick(int position) {
         selected_stickerList.add(new Sticker(stickerList.get(position).getName()));
-        stickerList.get(position).numUse = stickerList.get(position).getNumUse() + 1;
+        stickerList.get(position).setNumUse(stickerList.get(position).getNumUse() + 1);
         stickerAdapter.notifyItemChanged(position);
         selectedStickerAdapter.notifyItemChanged(position);
     }

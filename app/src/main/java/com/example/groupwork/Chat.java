@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Chat extends AppCompatActivity implements StickerSelectionFragment.OnInputListener{
 
@@ -59,7 +60,7 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         });
 
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
-        //DatabaseReference mDatabase = db.getReference("conversation");
+        DatabaseReference mDatabase = db.getReference("Users");
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -78,12 +79,12 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
             @Override
             public void onClick(View v) {
                 setContentView(R.layout.activity_show_sticker);
-                if (savedInstanceState == null) {
+                //if (savedInstanceState == null) {
                     getSupportFragmentManager().beginTransaction()
                             .setReorderingAllowed(true)
                             .add(R.id.fragment_container_view, StickerSelectionFragment.class, null)
                             .commit();
-                }
+                //}
             }
         });
 
@@ -98,13 +99,16 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
                 mEdit = (EditText) findViewById(R.id.message);
                 String message = mEdit.getText().toString();
 
-                //mDatabase.push().child("conversations").child(userID).child("chats").child(friendID).child("messages").setValue(message);
-                //sendMessageToFirebase(friendID,message);
+                if(stickersToSend.size() > 0) {
+                    for (Sticker s: stickersToSend) {
+                        mDatabase.push().child(userID).child("messageList").child(friendID).child("messages").setValue(s);
+                        //sendMessageToFirebase(friendID,message);
+                    }
+                }
 
             }
         });
 
-        selectedStickerRecyclerView = findViewById(R.id.selected_sticker_recyclerView);
 
         //user's chat history shown in a recyclerview
         stickerMsgList = new ArrayList<>();
@@ -114,6 +118,11 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         stickerMsgAdapter = new StickerMessageAdapter(stickerMsgList, this);
         chatHistoryRecyclerView.setAdapter(stickerMsgAdapter);
         chatHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        selectedStickerRecyclerView = findViewById(R.id.selected_sticker_recyclerView);
+        stickerToSendAdapter = new StickerMessageAdapter( new ArrayList<>(), this);
+        selectedStickerRecyclerView.setAdapter(stickerToSendAdapter);
+        selectedStickerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
     }
@@ -141,21 +150,8 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
         DatabaseReference mDatabase = db.getReference("Users");
 
-//        mDatabase.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                //mDatabase.child("conversations").child(userID).child("chats").child(sendID).child("messages").setValue(message);
-//                //mDatabase.child("conversations").child(userID).child("chats").child(sendID).child("ifSender").setValue(true);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(Chat.this, "Fail to send " + error, Toast.LENGTH_SHORT).show();
-//            }
-//        });
         ArrayList<String> arr = new ArrayList<>();
-        mDatabase.child(userID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        mDatabase.child(userID).child("messageList").child(friendID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             /**
              * This takes the ArrayLists and repopulates them with messages from the db
              * Messages have three parts, hence the String[3]
@@ -178,14 +174,18 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
     @Override
     public void sendInput(ArrayList<Sticker> selected_stickerList) {
         stickersToSend = selected_stickerList;
-        Log.d(TAG,"sendInput Hit");
-
-        for (Sticker s : stickersToSend ) {
-            Log.d("STICKERS", s.getName());
+        for (Sticker s : stickersToSend) {
+            Log.d("getSelectedStickers", s.getName() + " " + s.getNumUse());
         }
+        stickerToSendAdapter.update(stickersToSend);
+    }
 
-        stickerMsgAdapter = new StickerMessageAdapter(stickersToSend, this);
-        chatHistoryRecyclerView.setAdapter(stickerMsgAdapter);
-        chatHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    public ArrayList<Sticker> getSelectedStickers() {
+        if(stickersToSend != null) {
+            for (Sticker s : stickersToSend) {
+                Log.d("getSelectedStickers", s.getName() + " " + s.getNumUse());
+            }
+        }
+        return stickersToSend;
     }
 }

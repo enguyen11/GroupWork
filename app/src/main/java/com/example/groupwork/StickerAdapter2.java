@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.groupwork.model.Dnd5eItem;
+
 import java.util.ArrayList;
 
 public class StickerAdapter2 extends RecyclerView.Adapter<StickerViewHolder2>{
@@ -45,5 +47,11 @@ public class StickerAdapter2 extends RecyclerView.Adapter<StickerViewHolder2>{
     @Override
     public int getItemCount() {
         return stickerList.size();
+    }
+
+    public void update(ArrayList<Sticker> data) {
+        stickerList.clear();
+        stickerList.addAll(data);
+        this.notifyDataSetChanged();
     }
 }

@@ -3,6 +3,7 @@ package com.example.groupwork;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -44,5 +45,14 @@ public class StickerMessageAdapter extends RecyclerView.Adapter<StickerMessageVi
     @Override
     public int getItemCount() {
         return stickerList.size();
+    }
+
+    public void update(ArrayList<Sticker> data) {
+        stickerList.clear();
+        stickerList.addAll(data);
+        this.notifyDataSetChanged();
+        for (Sticker s : stickerList) {
+            Log.d("update!!!", s.getName() + " " + s.getNumUse());
+        }
     }
 }
