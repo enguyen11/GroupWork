@@ -43,8 +43,19 @@
         android:layout_width="409dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="104dp"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/sendToUser"
+        android:layout_width="294dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
+        android:hint="@string/send_to"
+        android:inputType="textShortMessage"
+        app:layout_constraintBottom_toTopOf="@+id/message"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -84,17 +95,6 @@
         android:inputType="textShortMessage"
         android:textColorHint="#757575"
         app:layout_constraintBottom_toTopOf="@+id/selected_sticker_recyclerView"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/sendToUser"
-        android:layout_width="294dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/send_to"
-        android:inputType="textShortMessage"
-        app:layout_constraintBottom_toTopOf="@+id/message"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

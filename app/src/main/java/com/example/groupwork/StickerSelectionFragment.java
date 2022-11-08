@@ -135,6 +135,8 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
 
     }
 
+
+
     /**
      *
      * @param message - name of sticker clicked on list
@@ -182,6 +184,7 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
             Log.e(TAG, "onAttach: " + e.getMessage());
         }
     }
+
 
 
 

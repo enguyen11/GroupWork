@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Chat extends AppCompatActivity implements StickerSelectionFragment.OnInputListener{
@@ -269,12 +272,23 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
     }
 
     public ArrayList<Sticker> getSelectedStickers() {
-        if (stickersToSend != null) {
-            for (Sticker s : stickersToSend) {
-                Log.d("getSelectedStickers", s.getName() + " " + s.getNumUse());
-            }
-        }
         return stickersToSend;
+    }
+
+    @Override
+    public void onBackPressed() {
+        List<Fragment> all_frags = getSupportFragmentManager().getFragments();
+        if(all_frags != null){
+            if (all_frags.size() == 0) {
+                super.onBackPressed();
+            } else {
+                for (Fragment frag : all_frags) {
+                    getSupportFragmentManager().beginTransaction().remove(frag).commit();
+                }
+            }
+        }else{
+            super.onBackPressed();
+        }
     }
 
 }
