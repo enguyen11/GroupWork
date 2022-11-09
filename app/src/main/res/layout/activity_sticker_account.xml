@@ -48,8 +48,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/selected_sticker_recyclerView"
         android:layout_width="409dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="100dp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -95,14 +94,22 @@
         android:layout_height="64dp"
 
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
         android:autofillHints=""
         android:hint="@string/string_type_message"
         android:importantForAutofill="no"
         android:inputType="textShortMessage"
         android:textColorHint="#757575"
-        app:layout_constraintBottom_toTopOf="@+id/selected_sticker_recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/text_selected"
         app:layout_constraintEnd_toStartOf="@+id/send_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_selected_stickers"
+        app:layout_constraintBottom_toTopOf="@+id/selected_sticker_recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
