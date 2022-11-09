@@ -3,6 +3,7 @@ package com.example.groupwork;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder>{
             String[] words = content.split(" ");
             for (String word: words){
                 if (word.contains("sticker_")){
-                    uri = "@drawable/" + content;
+                    uri = "@drawable/" + word.trim();
                     break;
                 }
             }

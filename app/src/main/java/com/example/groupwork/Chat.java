@@ -147,25 +147,29 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
             }
         });
 
-        Button mButton = (Button) findViewById(R.id.send_button);
+        Button sendButton = (Button) findViewById(R.id.send_button);
         //friendID = "";
-        mButton.setOnClickListener(new View.OnClickListener() {
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 EditText mEdit = (EditText) findViewById(R.id.sendToUser);
                 friendID = mEdit.getText().toString();
+
+                if(friendID.length() == 0) {
+                    notifyErrorToast("Please specify user to send sticker to.");
+                } else {
+
+
 
                 /*
                 mDatabase.get() sends us to onComplete()
                 onComplete() will populate the ArrayLists with the data from the db
                 Each time this button is clicked they should be reset
                  */
-                mDatabase.child(userID).child("messageList").get();
-                mDatabase.child(friendID).child("messageList").get();
-                mEdit = (EditText) findViewById(R.id.message);
-                String message = mEdit.getText().toString();
+                    mDatabase.child(userID).child("messageList").get();
+                    mDatabase.child(friendID).child("messageList").get();
+                    mEdit = (EditText) findViewById(R.id.message);
+                    String message = mEdit.getText().toString();
 /*
                 if (stickersToSend.size() > 0) {
                     for (Sticker s : stickersToSend) {
@@ -176,55 +180,58 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
 
  */
 
-                mDatabase.child(userID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    /**
-                     * This takes the ArrayLists and repopulates them with messages from the db
-                     * Messages have three parts, hence the String[3]
-                     * @param task
-                     */
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        userMessages.clear();
-                        String[] array = new String[3];
-                        int num = 0;
-                        Iterable<DataSnapshot> outer = task.getResult().getChildren();
-                        for (DataSnapshot inner : outer) {
-                            for (DataSnapshot part : inner.getChildren()) {
-                                array[num] = part.getValue().toString();
-                                num++;
+                    mDatabase.child(userID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        /**
+                         * This takes the ArrayLists and repopulates them with messages from the db
+                         * Messages have three parts, hence the String[3]
+                         *
+                         * @param task
+                         */
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            userMessages.clear();
+                            String[] array = new String[3];
+                            int num = 0;
+                            Iterable<DataSnapshot> outer = task.getResult().getChildren();
+                            for (DataSnapshot inner : outer) {
+                                for (DataSnapshot part : inner.getChildren()) {
+                                    array[num] = part.getValue().toString();
+                                    num++;
+                                }
+                                num = 0;
+                                StickerMessage message = new StickerMessage(array[2], array[1], array[0]);
+                                userMessages.add(message);
                             }
-                            num = 0;
-                            StickerMessage message = new StickerMessage(array[2], array[1], array[0]);
-                            userMessages.add(message);
                         }
-                    }
-                });
-                mDatabase.child(friendID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    /**
-                     * Do the above again for the friend's message list
-                     * @param task
-                     */
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        receiverMessages.clear();
-                        String[] array = new String[3];
-                        int num = 0;
-                        Iterable<DataSnapshot> outer = task.getResult().getChildren();
-                        for (DataSnapshot inner : outer) {
-                            for (DataSnapshot part : inner.getChildren()) {
-                                array[num] = part.getValue().toString();
-                                num++;
+                    });
+                    mDatabase.child(friendID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        /**
+                         * Do the above again for the friend's message list
+                         *
+                         * @param task
+                         */
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            receiverMessages.clear();
+                            String[] array = new String[3];
+                            int num = 0;
+                            Iterable<DataSnapshot> outer = task.getResult().getChildren();
+                            for (DataSnapshot inner : outer) {
+                                for (DataSnapshot part : inner.getChildren()) {
+                                    array[num] = part.getValue().toString();
+                                    num++;
+                                }
+                                num = 0;
+                                StickerMessage message = new StickerMessage(array[2], array[1], array[0]);
+                                receiverMessages.add(message);
                             }
-                            num = 0;
-                            StickerMessage message = new StickerMessage(array[2], array[1], array[0]);
-                            receiverMessages.add(message);
                         }
-                    }
-                });
+                    });
 
 
-                //Send message to db
-                sendMessageToFirebase(message);
+                    //Send message to db
+                    sendMessageToFirebase(message);
+                }
             }
         });
 
@@ -339,6 +346,11 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    private void notifyErrorToast(String msg) {
+        Log.d(TAG, msg);
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
 }
