@@ -41,16 +41,18 @@ public class Messages extends AppCompatActivity {
         messageList = new ArrayList<>();
         db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
         mDatabase = db.getReference("Users");
-        messageView.setAdapter(new MessageAdapter(displayList, messageView.getContext()));
+        messageView.setAdapter(new MessageAdapter(messageList, messageView.getContext()));
         messageView.setLayoutManager(new LinearLayoutManager(Messages.this));
 
         mDatabase.child(userID).child("messageList").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot child : snapshot.getChildren()){
-                    displayList.add("Sent by: " + child.child("sender").getValue().toString() + "\nReceived by: " +
-                            child.child("receiver").getValue().toString() + "\n" + child.child("content").getValue().toString() + "\n___\n");
-                    messageView.getAdapter().notifyDataSetChanged();
+                    String sender = child.child("sender").getValue().toString();
+                    String receiver = child.child("receiver").getValue().toString();
+                    String content = child.child("content").getValue().toString();
+                    StickerMessage message = new StickerMessage(sender, receiver, content);
+                    messageList.add(message);
                 }
             }
             @Override

@@ -97,7 +97,7 @@ public class Firebase extends AppCompatActivity {
      */
     private void makeNew(User user){
         user.friendsList.add("User1");
-        StickerMessage message = new StickerMessage("User1", user.userName, "Hi, welcome to StickerShare!");
+        StickerMessage message = new StickerMessage("User1", user.userName, "sticker_dnd_logo");
         user.messageList.add(message);
         mDatabase.child(user.userName).setValue(user);
     }

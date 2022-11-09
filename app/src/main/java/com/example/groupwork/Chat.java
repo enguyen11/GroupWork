@@ -74,14 +74,28 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         }
         messageList = new ArrayList<>();
         displayList = new ArrayList<>();
+        displayList.add("Dummy");
         db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
         mDatabase = db.getReference("Users");
-        messageView.setAdapter(new MessageAdapter(displayList, messageView.getContext()));
+        messageView.setAdapter(new MessageAdapter(messageList, messageView.getContext()));
         messageView.setLayoutManager(new LinearLayoutManager(Chat.this));
         messageView.getAdapter().notifyDataSetChanged();
 
         welcomeMsg = findViewById(R.id.textView_welcome_stickers);
 
+        mDatabase.child(userID).child("messageList").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot child : snapshot.getChildren()){
+                    displayList.add("Sent by: " + child.child("sender").getValue().toString() + "\nReceived by: " +
+                            child.child("receiver").getValue().toString() + "\n" + child.child("content").getValue().toString() + "\n___\n");
+                    messageView.getAdapter().notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
         messageButton = findViewById(R.id.button_messages);
         messageButton.setOnClickListener(view -> {
