@@ -3,6 +3,7 @@ package com.example.groupwork;
 import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -30,7 +32,11 @@ import java.util.ArrayList;
 // * Use the {@link StickerSelectionFragment#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-public class StickerSelectionFragment extends Fragment implements StickerRecyclerViewInterface{
+public class StickerSelectionFragment extends DialogFragment implements StickerRecyclerViewInterface{
+
+
+    public static final String TAG = "StickerSelectionFragm";
+
 
     private RecyclerView stickerRecyclerView;
     private RecyclerView selected_stickerRecyclerView;
@@ -56,7 +62,6 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
 
         if (savedInstanceState != null) {
             stickerList = savedInstanceState.getParcelableArrayList("stickerList");
-            Log.d(TAG, "world");
             selected_stickerList = savedInstanceState.getParcelableArrayList("selected_stickerList");
         }
         else {
@@ -72,25 +77,32 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
     }
 
     @Override
+    public void onStart()
+    {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null)
+        {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            dialog.getWindow().setLayout(width, height);
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_sticker_selection, container, false);
-//        viewModel = new ViewModelProvider(requireActivity()).get(FirebaseViewModel.class);
-//        viewModel.initStickers(stickerList);
 
 
         Chat chatActivity = (Chat) getActivity();
         ArrayList<Sticker> list = chatActivity.getSelectedStickers();
-        Log.d(TAG, "" + list);
-
         if(list !=null) {
             Log.d(TAG, list.toString());
             selected_stickerList = chatActivity.getSelectedStickers();
-            for (Sticker s : selected_stickerList ) {
-                Log.d("STICKERS", s.getName());
-            }
+
         }
 
         selectSticker = view.findViewById(R.id.button_selectSticker);
@@ -109,15 +121,8 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
             @Override
             public void onClick(View v) {
                 onInputListener.sendInput(selected_stickerList);
-                for (Sticker s : selected_stickerList) {
-                    Log.d("onClick", s.getName() + " " + s.getNumUse());
-                }
-                getActivity().setContentView(R.layout.activity_sticker_account);
-//                viewModel.selectStickers(selected_stickerList);
-//                viewModel.setStickersCount(stickerList);
-//                Intent goToSearch = new Intent(v.getContext(), Chat.class);
-//                startActivity(goToSearch);
-
+                closeFragment();
+                //getActivity().setContentView(R.layout.activity_sticker_account);
             }
         });
 
@@ -130,7 +135,6 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
         selectedStickerAdapter = new StickerAdapter2(selected_stickerList, view.getContext(), this);
         selected_stickerRecyclerView.setAdapter(selectedStickerAdapter);
         selected_stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
-//        selected_stickerRecyclerView.setHasFixedSize(true);
 
         return view;
 
@@ -186,7 +190,9 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
         }
     }
 
-
+    private void closeFragment() {
+        this.dismiss();
+    }
 
 
 }

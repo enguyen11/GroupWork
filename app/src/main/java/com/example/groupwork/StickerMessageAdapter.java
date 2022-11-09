@@ -22,7 +22,6 @@ public class StickerMessageAdapter extends RecyclerView.Adapter<StickerMessageVi
     public StickerMessageAdapter(ArrayList<Sticker> stickerList, Context context) {
         this.stickerList = stickerList;
         this.context = context;
-        this.fragment = fragment;
     }
 
     @NonNull
@@ -37,6 +36,7 @@ public class StickerMessageAdapter extends RecyclerView.Adapter<StickerMessageVi
         int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
 
         Drawable res = context.getResources().getDrawable(imageResource);
+        Log.d(TAG, uri);
         res.setBounds(new Rect(0,0,96,96));
         holder.sticker.setImageDrawable(res);
         holder.senderText.setText(stickerList.get(position).getSender());
@@ -51,8 +51,6 @@ public class StickerMessageAdapter extends RecyclerView.Adapter<StickerMessageVi
         stickerList.clear();
         stickerList.addAll(data);
         this.notifyDataSetChanged();
-        for (Sticker s : stickerList) {
-            Log.d("update!!!", s.getName() + " " + s.getNumUse());
-        }
+
     }
 }

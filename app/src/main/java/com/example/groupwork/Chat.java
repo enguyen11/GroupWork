@@ -61,6 +61,7 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticker_account);
 
+
         welcomeMsg = findViewById(R.id.textView_welcome_stickers);
 
 
@@ -84,7 +85,6 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userID = extras.getString("userID");
-            Log.d(TAG, userID);
             welcomeMsg.setText("Welcome, " + userID);
 
         } else {
@@ -96,13 +96,13 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         stickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.activity_show_sticker);
-                //if (savedInstanceState == null) {
-                getSupportFragmentManager().beginTransaction()
-                        .setReorderingAllowed(true)
-                        .add(R.id.fragment_container_view, StickerSelectionFragment.class, null)
-                        .commit();
-                //}
+                openStickerSelection(v);
+//                getSupportFragmentManager().beginTransaction()
+//                        .setReorderingAllowed(true)
+//                        .add(R.id.fragment_container_view, StickerSelectionFragment.class, null)
+//                        .addToBackStack(null)
+//                        .commit();
+
             }
         });
 
@@ -111,6 +111,8 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 EditText mEdit = (EditText) findViewById(R.id.sendToUser);
                 friendID = mEdit.getText().toString();
 
@@ -186,6 +188,7 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         });
 
 
+
         //user's chat history shown in a recyclerview
         stickerMsgList = new ArrayList<>();
         chatHistoryRecyclerView = findViewById(R.id.chat_history_recyclerview);
@@ -193,25 +196,8 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         chatHistoryRecyclerView.setAdapter(stickerMsgAdapter);
         chatHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-//        //user's selected stickers to send
-//        FirebaseViewModel model = new ViewModelProvider(this).get(FirebaseViewModel.class);
-//        model.getStickers().observe(this, stickers -> {
-//            stickersToSend = (ArrayList<Sticker>) stickers;
-//        });
 
         stickersToSend = new ArrayList<>();
-//        viewModel = new ViewModelProvider(this).get(FirebaseViewModel.class);
-//        viewModel.getSelectedStickers().observe(this, sl -> {
-//            stickersToSend = (ArrayList<Sticker>) sl;
-//            for (Sticker s : stickersToSend) {
-//                Log.d("getSelectedStickers", s.getName() + " " + s.getNumUse());
-//            }
-//        });
-//        viewModel.getStickers().observe(this, sl -> {
-//            for (Sticker s : sl) {
-//                Log.d("getStickers", s.getName() + " " + s.getNumUse());
-//            }
-//        });
 
         selectedStickerRecyclerView = findViewById(R.id.selected_sticker_recyclerView);
         stickerToSendAdapter = new StickerMessageAdapter(stickersToSend, this);
@@ -220,6 +206,10 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         selectedStickerRecyclerView.setHasFixedSize(true);
 
 
+    }
+
+    public void openStickerSelection(View view) {
+        new StickerSelectionFragment().show(getSupportFragmentManager(), StickerSelectionFragment.TAG);
     }
 
     /**
@@ -266,7 +256,7 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
     public void sendInput(ArrayList<Sticker> selected_stickerList) {
         stickersToSend = selected_stickerList;
         for (Sticker s : stickersToSend) {
-            Log.d("sendInput", s.getName() + " " + s.getNumUse());
+            s.setSender(userID);
         }
         stickerToSendAdapter.update(stickersToSend);
     }
@@ -275,20 +265,6 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         return stickersToSend;
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        List<Fragment> all_frags = getSupportFragmentManager().getFragments();
-//        if(all_frags != null){
-//            if (all_frags.size() == 0) {
-//                super.onBackPressed();
-//            } else {
-//                for (Fragment frag : all_frags) {
-//                    getSupportFragmentManager().beginTransaction().remove(frag).commit();
-//                }
-//            }
-//        }else{
-//            super.onBackPressed();
-//        }
-//    }
+
 
 }

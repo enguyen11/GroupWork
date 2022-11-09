@@ -22,6 +22,7 @@ public class Sticker implements Parcelable {
     public int getNumUse() {return numUse;}
     public void setNumUse(int n) {numUse = n;}
     public String getSender() {return sender;}
+    public void setSender(String s) {sender = s;}
 
     protected Sticker(Parcel in) {
         name = in.readString();
