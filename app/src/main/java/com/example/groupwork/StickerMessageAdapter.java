@@ -49,7 +49,12 @@ public class StickerMessageAdapter extends RecyclerView.Adapter<StickerMessageVi
 
     public void update(ArrayList<Sticker> data) {
         stickerList.clear();
+
         stickerList.addAll(data);
+        for(Sticker s : data){
+            System.out.println(s.getName());
+        }
+        System.out.println("*********************************************");
         this.notifyDataSetChanged();
 
     }

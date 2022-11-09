@@ -218,8 +218,13 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
      * @param message
      */
     private void sendMessageToFirebase(String message) {
-        StickerMessage newMessage = new StickerMessage(userID, friendID, message);
+        StickerMessage newMessage = new StickerMessage(userID, friendID, message + "\n" + stickersToSend.size());
         //getList();
+        String string = message;
+        for(Sticker image : stickersToSend){
+            string += " " + image.getName();
+            System.out.println("adding");
+        }
         userMessages.add(newMessage);
         receiverMessages.add(newMessage);
         mDatabase.child(userID).child("messageList").push().setValue(newMessage);
