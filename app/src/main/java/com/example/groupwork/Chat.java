@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -198,12 +199,10 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
 
 
         stickersToSend = new ArrayList<>();
-
         selectedStickerRecyclerView = findViewById(R.id.selected_sticker_recyclerView);
-        stickerToSendAdapter = new StickerMessageAdapter(stickersToSend, this);
+        stickerToSendAdapter = new StickerMessageAdapter( stickersToSend, this);
         selectedStickerRecyclerView.setAdapter(stickerToSendAdapter);
-        selectedStickerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        selectedStickerRecyclerView.setHasFixedSize(true);
+        selectedStickerRecyclerView.setLayoutManager(new GridLayoutManager(this, 5));
 
 
     }
@@ -224,6 +223,7 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         receiverMessages.add(newMessage);
         mDatabase.child(userID).child("messageList").push().setValue(newMessage);
         mDatabase.child(friendID).child("messageList").push().setValue(newMessage);
+        stickerToSendAdapter.clear();
     }
 
 
@@ -258,13 +258,12 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         for (Sticker s : stickersToSend) {
             s.setSender(userID);
         }
+        Log.d("Before Update", "" + stickersToSend.size());
         stickerToSendAdapter.update(stickersToSend);
     }
 
     public ArrayList<Sticker> getSelectedStickers() {
         return stickersToSend;
     }
-
-
 
 }
