@@ -11,6 +11,10 @@ public class Sticker implements Parcelable {
     public Sticker(String name) {
         this.name = name;
     }
+    public Sticker(String name, int numUse) {
+        this.name = name;
+        this.numUse = numUse;
+    }
 
     public String getName() {
         return name;
@@ -18,6 +22,7 @@ public class Sticker implements Parcelable {
     public int getNumUse() {return numUse;}
     public void setNumUse(int n) {numUse = n;}
     public String getSender() {return sender;}
+    public void setSender(String s) {sender = s;}
 
     protected Sticker(Parcel in) {
         name = in.readString();

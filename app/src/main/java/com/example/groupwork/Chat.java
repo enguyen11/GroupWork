@@ -9,11 +9,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.groupwork.data.FirebaseViewModel;
 import com.example.groupwork.model.Dnd5eItem;
 import com.example.groupwork.model.ItemAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Chat extends AppCompatActivity implements StickerSelectionFragment.OnInputListener{
@@ -49,11 +55,13 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
     private String friendID;
+    private FirebaseViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticker_account);
+
 
         welcomeMsg = findViewById(R.id.textView_welcome_stickers);
 
@@ -78,7 +86,6 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userID = extras.getString("userID");
-            Log.d(TAG, userID);
             welcomeMsg.setText("Welcome, " + userID);
 
         } else {
@@ -90,13 +97,13 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         stickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.activity_show_sticker);
-                //if (savedInstanceState == null) {
-                getSupportFragmentManager().beginTransaction()
-                        .setReorderingAllowed(true)
-                        .add(R.id.fragment_container_view, StickerSelectionFragment.class, null)
-                        .commit();
-                //}
+                openStickerSelection(v);
+//                getSupportFragmentManager().beginTransaction()
+//                        .setReorderingAllowed(true)
+//                        .add(R.id.fragment_container_view, StickerSelectionFragment.class, null)
+//                        .addToBackStack(null)
+//                        .commit();
+
             }
         });
 
@@ -105,6 +112,8 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 EditText mEdit = (EditText) findViewById(R.id.sendToUser);
                 friendID = mEdit.getText().toString();
 
@@ -180,21 +189,26 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         });
 
 
+
         //user's chat history shown in a recyclerview
         stickerMsgList = new ArrayList<>();
-
         chatHistoryRecyclerView = findViewById(R.id.chat_history_recyclerview);
-
         stickerMsgAdapter = new StickerMessageAdapter(stickerMsgList, this);
         chatHistoryRecyclerView.setAdapter(stickerMsgAdapter);
         chatHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+        stickersToSend = new ArrayList<>();
         selectedStickerRecyclerView = findViewById(R.id.selected_sticker_recyclerView);
-        stickerToSendAdapter = new StickerMessageAdapter(new ArrayList<>(), this);
+        stickerToSendAdapter = new StickerMessageAdapter( stickersToSend, this);
         selectedStickerRecyclerView.setAdapter(stickerToSendAdapter);
-        selectedStickerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        selectedStickerRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
 
 
+    }
+
+    public void openStickerSelection(View view) {
+        new StickerSelectionFragment().show(getSupportFragmentManager(), StickerSelectionFragment.TAG);
     }
 
     /**
@@ -209,6 +223,7 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         receiverMessages.add(newMessage);
         mDatabase.child(userID).child("messageList").push().setValue(newMessage);
         mDatabase.child(friendID).child("messageList").push().setValue(newMessage);
+        stickerToSendAdapter.clear();
     }
 
 
@@ -241,17 +256,12 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
     public void sendInput(ArrayList<Sticker> selected_stickerList) {
         stickersToSend = selected_stickerList;
         for (Sticker s : stickersToSend) {
-            Log.d("getSelectedStickers", s.getName() + " " + s.getNumUse());
+            s.setSender(userID);
         }
         stickerToSendAdapter.update(stickersToSend);
     }
 
     public ArrayList<Sticker> getSelectedStickers() {
-        if (stickersToSend != null) {
-            for (Sticker s : stickersToSend) {
-                Log.d("getSelectedStickers", s.getName() + " " + s.getNumUse());
-            }
-        }
         return stickersToSend;
     }
 
