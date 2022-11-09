@@ -52,6 +52,6 @@ public class StickerAdapter2 extends RecyclerView.Adapter<StickerViewHolder2>{
     public void update(ArrayList<Sticker> data) {
         stickerList.clear();
         stickerList.addAll(data);
-        this.notifyDataSetChanged();
+       this.notifyDataSetChanged();
     }
 }

@@ -49,7 +49,6 @@ public class StickerMessageAdapter extends RecyclerView.Adapter<StickerMessageVi
     public void update(ArrayList<Sticker> data) {
 
         Log.d("Inside Update", "" + data.size());
-        stickerList.addAll(data);
         for (Sticker s : stickerList) {
             Log.d(TAG, s.getName() + " x " +  s.getNumUse() + " by " + s.getSender());
         }
