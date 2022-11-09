@@ -4,12 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/GroupWork/GroupWork/app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/activity_chat.xml" value="0.20516304347826086" />
-        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/activity_firebase.xml" value="0.20516304347826086" />
-        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/activity_show_sticker.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/2.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/activity_chat.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/activity_display_clicked_sticker.xml" value="0.1403985507246377" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/activity_show_sticker.xml" value="0.14402173913043478" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/activity_sticker_account.xml" value="0.2" />
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/fragment_sticker_selection.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/sticker_card.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/sticker_card2.xml" value="0.12132725430597771" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/sticker_card.xml" value="0.8800000000000001" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/Stickers/GroupWork/app/src/main/res/layout/sticker_card2.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/anotherCopy/GroupWork/app/src/main/res/layout/activity_final_project.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/anotherCopy/GroupWork/app/src/main/res/layout/activity_firebase.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/anotherCopy/GroupWork/app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
@@ -31,17 +34,21 @@
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_sticker_selection.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/friend_card.xml" value="0.2" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_about.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_chat.xml" value="0.21739130434782608" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_dnd_apiactivity.xml" value="0.152" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_firebase.xml" value="0.21739130434782608" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_main2.xml" value="0.15081521739130435" />
-
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_show_sticker.xml" value="0.1" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_sticker_account.xml" value="0.264" />
-
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dnd_api_menu.xml" value="0.32472826086956524" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/equipment_arrange.xml" value="0.264" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_sticker_selection.xml" value="0.2" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/item_card.xml" value="0.536" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card2.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card_withSender.xml" value="0.536" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card_with_sender.xml" value="0.1" />
       </map>
     </option>
   </component>
