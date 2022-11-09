@@ -56,14 +56,40 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
     private DatabaseReference mDatabase;
     private String friendID;
     private FirebaseViewModel viewModel;
+    private ArrayList<StickerMessage> messageList;
+    private RecyclerView messageView;
+    private ArrayList<String> displayList;
+    private Button messageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticker_account);
 
+        messageView = findViewById(R.id.chat_history_recyclerview);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userID = extras.getString("userID");
+        }
+        messageList = new ArrayList<>();
+        displayList = new ArrayList<>();
+        db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
+        mDatabase = db.getReference("Users");
+        messageView.setAdapter(new MessageAdapter(displayList, messageView.getContext()));
+        messageView.setLayoutManager(new LinearLayoutManager(Chat.this));
+        messageView.getAdapter().notifyDataSetChanged();
 
         welcomeMsg = findViewById(R.id.textView_welcome_stickers);
+
+
+        messageButton = findViewById(R.id.button_messages);
+        messageButton.setOnClickListener(view -> {
+            Intent goToMessages = new Intent(Chat.this, Messages.class);
+            goToMessages.putExtra("userID", userID);
+            Chat.this.startActivity(goToMessages);
+        });
+
 
 
         friendsButton = findViewById(R.id.button_friends);
@@ -83,7 +109,7 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         mDatabase = db.getReference("Users");
 
 
-        Bundle extras = getIntent().getExtras();
+        extras = getIntent().getExtras();
         if (extras != null) {
             userID = extras.getString("userID");
             welcomeMsg.setText("Welcome, " + userID);
@@ -204,6 +230,20 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         selectedStickerRecyclerView.setAdapter(stickerToSendAdapter);
         selectedStickerRecyclerView.setLayoutManager(new GridLayoutManager(this, 5));
 
+        mDatabase.child(userID).child("messageList").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot child : snapshot.getChildren()){
+                    displayList.add("Sent by: " + child.child("sender").getValue().toString() + "\nReceived by: " +
+                            child.child("receiver").getValue().toString() + "\n" + child.child("content").getValue().toString());
+                    messageView.getAdapter().notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
 
     }
 
@@ -269,6 +309,22 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
 
     public ArrayList<Sticker> getSelectedStickers() {
         return stickersToSend;
+    }
+
+    private void getList(){
+        mDatabase.child(userID).child("messageList").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot child : snapshot.getChildren()){
+                    displayList.add("Sent by: " + child.child("sender").getValue().toString() + "\nReceived by: " +
+                            child.child("receiver").getValue().toString() + "\n" + child.child("content").getValue().toString());
+                    messageView.getAdapter().notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
 }
