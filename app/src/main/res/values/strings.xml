@@ -51,4 +51,5 @@
     <string name="string_sticker">sticker</string>
     <string name="string_type_message">Type Message</string>
     <string name="string_stickers">Stickers</string>
+    <string name="string_selected_stickers">Selected Stickers:</string>
 </resources>
