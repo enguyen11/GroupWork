@@ -40,6 +40,9 @@
             android:name=".StickerAccount"
             android:exported="false" />
         <activity
+            android:name=".About"
+            android:exported="false" />
+        <activity
             android:name=".FinalProject"
             android:exported="false" />
         <activity
