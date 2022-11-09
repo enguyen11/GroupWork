@@ -17,7 +17,25 @@
         android:theme="@style/Theme.GroupWork"
         tools:targetApi="31">
         <activity
+
+            android:name=".DisplayClickedSticker"
+            android:exported="false" />
+        <activity
+            android:name=".Friends"
+            android:exported="false" />
+        <activity
+            android:name=".ShowSticker"
+            android:exported="false" />
+        <activity
+            android:name=".Chat"
+            android:exported="false"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/Theme.GroupWork.NoActionBar" />
+        <activity
+            android:name=".StickerAccount"
+
             android:name=".About"
+
             android:exported="false" />
         <activity
             android:name=".FinalProject"

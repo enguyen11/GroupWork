@@ -6,4 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".Firebase">
 
+    <TextView
+        android:id="@+id/textView_sticker_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sticker_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias=".10"/>
+
+    <EditText
+        android:id="@+id/editText_Username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="@string/username_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_enter_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_sticker_title"
+        app:layout_constraintHorizontal_chainStyle="packed"/>
+
+    <TextView
+        android:id="@+id/textView_Please_Enter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/please_enter_text"
+        app:layout_constraintBottom_toTopOf="@+id/editText_Username"
+        app:layout_constraintEnd_toEndOf="@+id/editText_Username"
+        app:layout_constraintStart_toStartOf="@+id/editText_Username"
+        app:layout_constraintTop_toBottomOf="@+id/textView_sticker_title"
+        app:layout_constraintVertical_bias=".90"
+        app:layout_constraintHorizontal_bias="0"/>
+
+    <Button
+        android:id="@+id/button_enter_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editText_Username"
+        app:layout_constraintTop_toBottomOf="@+id/textView_sticker_title" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

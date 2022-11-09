@@ -21,7 +21,39 @@
     <string name="string_final_project">Final Project</string>
     <string name="string_future_implement">\ The buttons below are for future implementations</string>
     <string name="instructions">Select a category to display the list.</string>
+    <string name="sticker_title">Welcome to StickerShare!</string>
+    <string name="username_text">Username</string>
+    <string name="please_enter_text">Please login below</string>
+    <string name="enter_login">Log In</string>
+    <string name="new_user">New User?</string>
+    <string name="create_account">Create Account</string>
+    <string name="welcome_stickers">Welcome, Username!</string>
+    <string name="friends">Friends</string>
+    <string name="stickers_cat">Sticker Catalog</string>
+
+    <string name="title_activity_chat">Chat</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="send">Send</string>
+    <string name="send_to">Send To</string>
+    <string name="send_message">Send Message</string>
+    <string name="remove">Remove Friend</string>
+    <string name="select_these_stickers">select these stickers</string>
+    <string name="selected_stickers">SELECTED STICKERS</string>
+    <string name="sticker_selection">STICKER SELECTION</string>
+    <string name="string_sent_by">Sent by</string>
+    <string name="string_sticker">sticker</string>
+    <string name="string_type_message">Type Message</string>
+    <string name="string_stickers">Stickers</string>
+
     <string name="string_about">About</string>
     <string name="string_group_members">Group Members:</string>
     <string name="string_bryant_rogers_nguyen_baush_garciaCastillo">Nolen Bryant, Hannah Rogers, Eric Nguyen, Connor Baush, Alan Garcia Castillo</string>
+
 </resources>
