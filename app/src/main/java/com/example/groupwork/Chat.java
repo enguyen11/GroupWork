@@ -202,7 +202,7 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         selectedStickerRecyclerView = findViewById(R.id.selected_sticker_recyclerView);
         stickerToSendAdapter = new StickerMessageAdapter( stickersToSend, this);
         selectedStickerRecyclerView.setAdapter(stickerToSendAdapter);
-        selectedStickerRecyclerView.setLayoutManager(new GridLayoutManager(this, 5));
+        selectedStickerRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
 
 
     }
@@ -258,7 +258,6 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         for (Sticker s : stickersToSend) {
             s.setSender(userID);
         }
-        Log.d("Before Update", "" + stickersToSend.size());
         stickerToSendAdapter.update(stickersToSend);
     }
 
