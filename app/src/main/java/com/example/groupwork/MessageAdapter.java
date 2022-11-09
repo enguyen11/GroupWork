@@ -46,8 +46,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder>{
             }
             int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
             Drawable res = context.getResources().getDrawable(imageResource);
-            holder.content.setImageDrawable(res);
-            holder.text.setVisibility(View.INVISIBLE);
+            if (res != null){
+                holder.content.setImageDrawable(res);
+                holder.text.setVisibility(View.INVISIBLE);
+            }else{
+                holder.content.setVisibility(View.INVISIBLE);
+                holder.text.setText("STICKER NOT FOUND");
+            }
         } else {
             holder.content.setVisibility(View.INVISIBLE);
             holder.text.setText(content);
