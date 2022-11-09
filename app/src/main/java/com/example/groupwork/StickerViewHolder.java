@@ -22,7 +22,9 @@ public class StickerViewHolder extends RecyclerView.ViewHolder{
             @Override
             public void onClick(View v) {
                 if (myStickerRVI != null){
-                    int pos = getBindingAdapterPosition();
+                    //TODO change this
+                    int pos = 10;
+                    // int pos = getBindingAdapterPosition();
 
                     if (pos != RecyclerView.NO_POSITION){
                         myStickerRVI.onStickerClick(pos);

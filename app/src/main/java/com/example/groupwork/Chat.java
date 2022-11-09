@@ -1,6 +1,13 @@
 package com.example.groupwork;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -23,18 +32,20 @@ import com.example.groupwork.model.Dnd5eItem;
 import com.example.groupwork.model.ItemAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Chat extends AppCompatActivity implements StickerSelectionFragment.OnInputListener{
+public class Chat extends AppCompatActivity implements StickerSelectionFragment.OnInputListener {
 
 
     private static final String TAG = "ChatActivity";
@@ -46,7 +57,7 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
     private ArrayList<Sticker> stickerMsgList;
     private ArrayList<Sticker> stickersToSend;
     private RecyclerView chatHistoryRecyclerView;
-    private RecyclerView  selectedStickerRecyclerView;
+    private RecyclerView selectedStickerRecyclerView;
     private StickerMessageAdapter stickerMsgAdapter;
     private StickerMessageAdapter stickerToSendAdapter;
     private ArrayList<StickerMessage> userMessages;
@@ -56,9 +67,13 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
     private DatabaseReference mDatabase;
     private String friendID;
     private FirebaseViewModel viewModel;
+    //Notifications
+    String channelId;
+    NotificationManager notificationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticker_account);
 
@@ -159,6 +174,8 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
                         }
                     }
                 });
+
+
                 mDatabase.child(friendID).child("messageList").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     /**
                      * Do the above again for the friend's message list
@@ -182,7 +199,8 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
                     }
                 });
 
-
+                //Setup Notification Channel
+                createNotificationChannel();
                 //Send message to db
                 sendMessageToFirebase(message);
             }
@@ -205,11 +223,101 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         selectedStickerRecyclerView.setLayoutManager(new GridLayoutManager(this, 5));
 
 
+        /*
+        SETTING UP NOTIFCATION CHANNEL
+         */
+        createNotificationChannel();
+
+        db.getReference().child("Users").child(userID).child("messageList").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.d("notification", "A child has been added");
+                Iterable<DataSnapshot> messages = snapshot.child("Users").child(userID).child("messageList").getChildren();
+                sendChatNotificationSimplified();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
+
+    /**
+     * This method creates a notification channel and listener to trigger
+     * the notification when a new message is received.
+     */
+    private void createNotificationChannel() {
+        // Check the version
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && this.notificationManager == null) {
+            CharSequence title = "You got mail!";
+            String channelId = "STANDARD_NOTIFICATION_CHANNEL";
+            this.channelId = channelId;
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel currentChannel = new NotificationChannel(channelId, title, importance);
+            String description = "A new message has arrived.";
+            currentChannel.setDescription(description);
+            currentChannel.setLightColor(Color.blue(120));
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(currentChannel);
+            this.notificationManager = notificationManager;
+        }
+    }
+
+    public void sendChatNotificationSimplified() {
+        //Intent activityIntent = new Intent(this, Chat.class);
+        //PendingIntent contentIntent = PendingIntent.getActivity(this,
+        //       0, activityIntent, 0);
+        // might meed to build a back stack for the pending intent
+
+        int stickerID = Chat.this.getResources().getIdentifier("sticker_d12","drawable", Chat.this.getPackageName());
+
+        Bitmap picture = BitmapFactory.decodeResource(getResources(), stickerID);
+
+        Notification notification = new NotificationCompat.Builder(this, this.channelId)
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle("Sticker Received!")
+                .setContentText("You got a message incoming ")
+                .setLargeIcon(picture)
+                .setStyle(new NotificationCompat.BigPictureStyle()
+                        .bigPicture(picture)
+                        .bigLargeIcon(null)) // this makes the thumbnail vanish on the drag
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                //        .setContentIntent(contentIntent) Not sure yet what we want to launch
+                .setAutoCancel(true)
+                .setOnlyAlertOnce(true)
+                .setLights(Color.RED, 300, 100)
+                .setVibrate(new long[] { 0, 1000, 100, 1000, 100 })
+                .build();
+
+        notificationManager.notify(1, notification);
+        // will need to change the ID peram if we want multiple notifications to show up at a time
+        // ideally, might be the id of the hash created in the db?
+    }
+
+
 
     public void openStickerSelection(View view) {
         new StickerSelectionFragment().show(getSupportFragmentManager(), StickerSelectionFragment.TAG);
     }
+
 
     /**
      * Pushes message to user and friend's messageLists
