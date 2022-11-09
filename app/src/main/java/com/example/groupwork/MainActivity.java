@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnSearchActivity, firebase, project;
+    private Button btnSearchActivity, firebase, project, about;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
         project = findViewById(R.id.button_final);
         project.setOnClickListener(view -> {
             Intent goToSearch = new Intent(MainActivity.this, FinalProject.class);
+            MainActivity.this.startActivity(goToSearch);
+        });
+
+        about = findViewById(R.id.button_about);
+        about.setOnClickListener(view -> {
+            Intent goToSearch = new Intent(MainActivity.this, About.class);
             MainActivity.this.startActivity(goToSearch);
         });
     }

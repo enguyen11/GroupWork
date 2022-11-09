@@ -52,4 +52,8 @@
     <string name="string_type_message">Type Message</string>
     <string name="string_stickers">Stickers</string>
     <string name="string_selected_stickers">Selected Stickers:</string>
+    <string name="string_about">About</string>
+    <string name="string_group_members">Group Members:</string>
+    <string name="string_bryant_rogers_nguyen_baush_garciaCastillo">Nolen Bryant, Hannah Rogers, Eric Nguyen, Connor Baush, Alan Garcia Castillo</string>
+
 </resources>
