@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -31,13 +32,26 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder>{
         String sender = messageList.get(position).sender;
         String receiver = messageList.get(position).receiver;
         String content = messageList.get(position).content;
-        String uri = "@drawable/" + content;
         holder.sender.setText(sender);
         holder.receiver.setText(receiver);
-        int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-        Drawable res = context.getResources().getDrawable(imageResource);
-        res.setBounds(new Rect(0,0, 50,50));
-        holder.content.setImageDrawable(res);
+        String uri = null;
+        // check if content contains sticker
+        if (content.contains("sticker_")){
+            String[] words = content.split(" ");
+            for (String word: words){
+                if (word.contains("sticker_")){
+                    uri = "@drawable/" + content;
+                    break;
+                }
+            }
+            int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
+            Drawable res = context.getResources().getDrawable(imageResource);
+            holder.content.setImageDrawable(res);
+            holder.text.setVisibility(View.INVISIBLE);
+        } else {
+            holder.content.setVisibility(View.INVISIBLE);
+            holder.text.setText(content);
+        }
     }
 
 

@@ -38,7 +38,6 @@ public class StickerAdapter2 extends RecyclerView.Adapter<StickerViewHolder2>{
     public void onBindViewHolder(@NonNull StickerViewHolder2 holder, int position) {
         String uri = "@drawable/" + stickerList.get(position).getName();
         int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-
         Drawable res = context.getResources().getDrawable(imageResource);
         res.setBounds(new Rect(0,0,96,96));
         holder.sticker.setImageDrawable(res);
