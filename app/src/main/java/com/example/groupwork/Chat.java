@@ -43,11 +43,11 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
     private TextView welcomeMsg;
     private Button friendsButton;
     private Button stickerButton;
-    private ArrayList<Sticker> stickerMsgList;
+    private ArrayList<StickerMessage> stickerMsgList;
     private ArrayList<Sticker> stickersToSend;
     private RecyclerView chatHistoryRecyclerView;
     private RecyclerView  selectedStickerRecyclerView;
-    private StickerMessageAdapter stickerMsgAdapter;
+    private MessageAdapter stickerMsgAdapter;
     private StickerMessageAdapter stickerToSendAdapter;
     private ArrayList<StickerMessage> userMessages;
     private ArrayList<StickerMessage> receiverMessages;
@@ -97,12 +97,6 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
             }
         });
 
-        messageButton = findViewById(R.id.button_messages);
-        messageButton.setOnClickListener(view -> {
-            Intent goToMessages = new Intent(Chat.this, Messages.class);
-            goToMessages.putExtra("userID", userID);
-            Chat.this.startActivity(goToMessages);
-        });
 
 
 
@@ -244,7 +238,7 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         //user's chat history shown in a recyclerview
         stickerMsgList = new ArrayList<>();
         chatHistoryRecyclerView = findViewById(R.id.chat_history_recyclerview);
-        stickerMsgAdapter = new StickerMessageAdapter(stickerMsgList, this);
+        stickerMsgAdapter = new MessageAdapter(stickerMsgList, this);
         chatHistoryRecyclerView.setAdapter(stickerMsgAdapter);
         chatHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -262,6 +256,12 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
                     displayList.add("Sent by: " + child.child("sender").getValue().toString() + "\nReceived by: " +
                             child.child("receiver").getValue().toString() + "\n" + child.child("content").getValue().toString());
                     messageView.getAdapter().notifyDataSetChanged();
+
+                    String sender = child.child("sender").getValue().toString();
+                    String receiver = child.child("receiver").getValue().toString();
+                    String content = child.child("content").getValue().toString();
+                    StickerMessage message = new StickerMessage(sender, receiver, content);
+                    stickerMsgList.add(message);
                 }
             }
             @Override
