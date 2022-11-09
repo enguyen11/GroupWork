@@ -45,13 +45,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder>{
                 }
             }
             int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
-            Drawable res = context.getResources().getDrawable(imageResource);
-            if (res != null){
+
+            if (imageResource > 0){
+                Drawable res = context.getResources().getDrawable(imageResource);
                 holder.content.setImageDrawable(res);
                 holder.text.setVisibility(View.INVISIBLE);
             }else{
                 holder.content.setVisibility(View.INVISIBLE);
-                holder.text.setText("STICKER NOT FOUND");
+                holder.text.setText("STICKER NOT FOUND: " + uri);
             }
         } else {
             holder.content.setVisibility(View.INVISIBLE);
