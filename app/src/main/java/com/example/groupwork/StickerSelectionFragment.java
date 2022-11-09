@@ -43,6 +43,7 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
     private String message;
     private Button stickSelectionComplete;
     private FirebaseViewModel viewModel;
+    private int stickerPositionSelectedStickerList;
 
     public interface OnInputListener {
         void sendInput(ArrayList<Sticker> selected_stickerList);
@@ -150,11 +151,34 @@ public class StickerSelectionFragment extends Fragment implements StickerRecycle
     //Used this video as a reference: https://www.youtube.com/watch?v=7GPUpvcU1FE to make recyclerview clickable
     @Override
     public void onStickerClick(int position) {
+        boolean containsSticker = false;
+
         stickerList.get(position).setNumUse(stickerList.get(position).getNumUse() + 1);
-        selected_stickerList.add(new Sticker(stickerList.get(position).getName(), stickerList.get(position).getNumUse()));
+        for (Sticker mySticker: selected_stickerList) {
+
+            if (mySticker.getName().equals(stickerList.get(position).getName())){
+                containsSticker = true;
+                break;
+            }
+            this.stickerPositionSelectedStickerList += 1;
+        }
+        if (containsSticker == false) {
+            selected_stickerList.add(new Sticker(stickerList.get(position).getName(), stickerList.get(position).getNumUse()));
+        }
+        else {
+            /*
+            selected_stickerList.get(selected_stickerList.indexOf(stickerList.get(position).getName()))
+                    .setNumUse(selected_stickerList.get(selected_stickerList.indexOf(stickerList.get(position).getName())).getNumUse() + 1);
+
+             */
+            //selected_stickerList.add(new Sticker(stickerList.get(position).getName(), stickerList.get(position).getNumUse()));
+            selected_stickerList.get(this.stickerPositionSelectedStickerList).setNumUse(selected_stickerList.get(this.stickerPositionSelectedStickerList).getNumUse() + 1);
+        }
+        this.stickerPositionSelectedStickerList = 0;
         stickerAdapter.notifyItemChanged(position);
         selectedStickerAdapter.notifyItemChanged(position);
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
