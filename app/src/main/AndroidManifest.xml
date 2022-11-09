@@ -23,6 +23,9 @@
             android:name=".DisplayClickedSticker"
             android:exported="false" />
         <activity
+            android:name=".About"
+            android:exported="false" />
+        <activity
             android:name=".Friends"
             android:exported="false" />
         <activity

@@ -49,6 +49,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder>{
 
             if (imageResource > 0){
                 Drawable res = context.getResources().getDrawable(imageResource);
+                res.setBounds(new Rect(0,0,96,96));
                 holder.content.setImageDrawable(res);
                 holder.text.setVisibility(View.INVISIBLE);
             }else{

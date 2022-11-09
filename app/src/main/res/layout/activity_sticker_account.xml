@@ -55,15 +55,15 @@
 
     <EditText
         android:id="@+id/sendToUser"
-        android:layout_width="0dp"
-        android:layout_height="68dp"
+        android:layout_width="366dp"
+        android:layout_height="59dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="4dp"
         android:hint="@string/send_to"
         android:inputType="textShortMessage"
-        app:layout_constraintBottom_toTopOf="@+id/message"
-        app:layout_constraintEnd_toStartOf="@+id/select_stickers"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chat_history_recyclerview" />
 
     <Button
         android:id="@+id/send_button"
@@ -72,38 +72,24 @@
         android:layout_marginEnd="28dp"
         android:text="@string/send"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/message"
+        app:layout_constraintBottom_toTopOf="@+id/selected_sticker_recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/message"
-        app:layout_constraintVertical_bias="0.812" />
+        app:layout_constraintEnd_toStartOf="@+id/select_stickers"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/fragment_container_view"
+        app:layout_constraintTop_toBottomOf="@+id/sendToUser" />
 
     <Button
         android:id="@+id/select_stickers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
         android:text="@string/string_stickers"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/sendToUser"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sendToUser"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <EditText
-        android:id="@+id/message"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
-        android:autofillHints=""
-        android:hint="@string/string_type_message"
-        android:importantForAutofill="no"
-        android:inputType="textShortMessage"
-        android:textColorHint="#757575"
         app:layout_constraintBottom_toTopOf="@+id/selected_sticker_recyclerView"
-        app:layout_constraintEnd_toStartOf="@+id/send_button"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/fragment_container_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/send_button"
+        app:layout_constraintTop_toBottomOf="@+id/sendToUser" />
 
     <Button
         android:id="@+id/button_messages"

@@ -154,11 +154,15 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
             public void onClick(View view) {
                 EditText mEdit = (EditText) findViewById(R.id.sendToUser);
                 friendID = mEdit.getText().toString();
-
-                if(friendID.length() == 0) {
+                if(stickersToSend.size() == 0) {
+                    notifyErrorToast("Please select stickers");
+                }
+                else if(friendID.length() == 0) {
                     notifyErrorToast("Please specify user to send sticker to.");
                 } else {
-
+                    if(stickersToSend.size() > 1) {
+                        notifyErrorToast("Warning: only the first sticker will display in chat history");
+                    }
 
 
                 /*
@@ -168,8 +172,8 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
                  */
                     mDatabase.child(userID).child("messageList").get();
                     mDatabase.child(friendID).child("messageList").get();
-                    mEdit = (EditText) findViewById(R.id.message);
-                    String message = mEdit.getText().toString();
+//                    mEdit = (EditText) findViewById(R.id.message);
+                    String message = "";
 /*
                 if (stickersToSend.size() > 0) {
                     for (Sticker s : stickersToSend) {
