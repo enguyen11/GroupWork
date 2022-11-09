@@ -49,6 +49,7 @@ public class StickerSelectionFragment extends DialogFragment implements StickerR
     private String message;
     private Button stickSelectionComplete;
     private FirebaseViewModel viewModel;
+    private ArrayList<Sticker> selected_stickerListCopy = new ArrayList<>();
 
     public interface OnInputListener {
         void sendInput(ArrayList<Sticker> selected_stickerList);
@@ -132,7 +133,8 @@ public class StickerSelectionFragment extends DialogFragment implements StickerR
         stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
 
         selected_stickerRecyclerView = view.findViewById(R.id.selectedStickerRV);
-        selectedStickerAdapter = new StickerAdapter2(selected_stickerList, view.getContext(), this);
+
+        selectedStickerAdapter = new StickerAdapter2(selected_stickerListCopy, view.getContext(), this);
         selected_stickerRecyclerView.setAdapter(selectedStickerAdapter);
         selected_stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
 
@@ -156,6 +158,7 @@ public class StickerSelectionFragment extends DialogFragment implements StickerR
     public void onStickerClick(int position) {
         stickerList.get(position).setNumUse(stickerList.get(position).getNumUse() + 1);
         selected_stickerList.add(new Sticker(stickerList.get(position).getName(), stickerList.get(position).getNumUse()));
+        selected_stickerListCopy.add(new Sticker(stickerList.get(position).getName(), stickerList.get(position).getNumUse()));
         stickerAdapter.notifyItemChanged(position);
         selectedStickerAdapter.notifyItemChanged(position);
     }
