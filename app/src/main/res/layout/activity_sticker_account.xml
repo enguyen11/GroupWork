@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".StickerAccount">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/button_friends"
         android:layout_width="wrap_content"
@@ -42,20 +49,20 @@
         android:id="@+id/selected_sticker_recyclerView"
         android:layout_width="409dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
         android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/sendToUser"
-        android:layout_width="294dp"
+        android:layout_width="0dp"
         android:layout_height="68dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="4dp"
         android:hint="@string/send_to"
         android:inputType="textShortMessage"
         app:layout_constraintBottom_toTopOf="@+id/message"
+        app:layout_constraintEnd_toStartOf="@+id/select_stickers"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -84,7 +91,7 @@
 
     <EditText
         android:id="@+id/message"
-        android:layout_width="323dp"
+        android:layout_width="0dp"
         android:layout_height="64dp"
 
         android:layout_marginStart="16dp"
@@ -95,6 +102,7 @@
         android:inputType="textShortMessage"
         android:textColorHint="#757575"
         app:layout_constraintBottom_toTopOf="@+id/selected_sticker_recyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/send_button"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

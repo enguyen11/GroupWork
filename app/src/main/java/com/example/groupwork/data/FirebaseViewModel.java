@@ -12,53 +12,25 @@ import java.util.List;
 public class FirebaseViewModel extends ViewModel {
 
     // Expose screen UI state
-    private MutableLiveData<List<Sticker>> selectedStickers;
-    private MutableLiveData<List<Sticker>> allStickers;
+    private MutableLiveData<String> user;
 
-    public LiveData<List<Sticker>> getSelectedStickers() {
-        if (selectedStickers == null) {
-            selectedStickers = new MutableLiveData<List<Sticker>>();
-            loadSelectedStickers();
+    public LiveData<String> getCurrentUser() {
+        if (user == null) {
+            user = new MutableLiveData<String>();
+            loadUser();
         }
-        return selectedStickers;
+        return user;
     }
 
     // Handle business logic
-    private void loadSelectedStickers() {
+    private void loadUser() {
         // Do an asynchronous operation to fetch users.
     }
 
-    public void selectStickers(List<Sticker> sl) {
-        selectedStickers.setValue(sl);
+    public void setUser(String s) {
+        user.setValue(s);
 //        selectedItem.setValue(item);
     }
 
-    public LiveData<List<Sticker>> getStickers() {
-        if (allStickers == null) {
-            allStickers = new MutableLiveData<List<Sticker>>();
-            loadAllStickers();
-        }
-        return allStickers;
-    }
 
-    // Handle business logic
-    private void loadAllStickers() {
-        // Do an asynchronous operation to fetch users.
-    }
-
-    public void initStickers(List<Sticker> sl) {
-        if (allStickers == null) {
-            allStickers = new MutableLiveData<List<Sticker>>();
-            allStickers.setValue(sl);
-        }
-    }
-
-    public void setStickersCount(List<Sticker> sl) {
-        initStickers(sl);
-        for(int i = 0; i < sl.size(); i++){
-            allStickers.getValue().get(i).setNumUse(sl.get(i).getNumUse());
-        }
-        //selectedStickers.setValue(sl);
-//        selectedItem.setValue(item);
-    }
 }
