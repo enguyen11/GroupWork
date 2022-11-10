@@ -30,14 +30,17 @@
             android:exported="false" />
         <activity
             android:name=".ShowSticker"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Chat"
+            android:configChanges="orientation|screenSize"
             android:exported="false"
             android:label="@string/title_activity_chat"
             android:theme="@style/Theme.GroupWork.NoActionBar" />
         <activity
             android:name=".StickerAccount"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
 
         <activity
