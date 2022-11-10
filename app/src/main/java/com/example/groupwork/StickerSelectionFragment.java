@@ -44,6 +44,7 @@ public class StickerSelectionFragment extends DialogFragment implements StickerR
     private StickerAdapter stickerAdapter;
     private StickerAdapter2 selectedStickerAdapter;
     private ArrayList<Sticker> stickerList;
+    private ArrayList<Sticker> selected_stickerListCopy;
     protected ArrayList<Sticker> selected_stickerList;
     private DataSource ds;
     private String message;
@@ -60,18 +61,22 @@ public class StickerSelectionFragment extends DialogFragment implements StickerR
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
         if (savedInstanceState != null) {
             stickerList = savedInstanceState.getParcelableArrayList("stickerList");
             selected_stickerList = savedInstanceState.getParcelableArrayList("selected_stickerList");
         }
         else {
 
+
+         */
             ds = new DataSource();
 
             stickerList = ds.loadStickers();
             selected_stickerList = new ArrayList<>();
+            selected_stickerListCopy = new ArrayList<>();
 
-        }
+        //}
 
 
     }
@@ -132,7 +137,7 @@ public class StickerSelectionFragment extends DialogFragment implements StickerR
         stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
 
         selected_stickerRecyclerView = view.findViewById(R.id.selectedStickerRV);
-        selectedStickerAdapter = new StickerAdapter2(selected_stickerList, view.getContext(), this);
+        selectedStickerAdapter = new StickerAdapter2(selected_stickerListCopy, view.getContext(), this);
         selected_stickerRecyclerView.setAdapter(selectedStickerAdapter);
         selected_stickerRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 4));
 
@@ -156,11 +161,12 @@ public class StickerSelectionFragment extends DialogFragment implements StickerR
     public void onStickerClick(int position) {
         stickerList.get(position).setNumUse(stickerList.get(position).getNumUse() + 1);
         selected_stickerList.add(new Sticker(stickerList.get(position).getName(), stickerList.get(position).getNumUse()));
-        System.out.println("********************************" + stickerList.get(position).getName());
+        selected_stickerListCopy.add(new Sticker(stickerList.get(position).getName(), stickerList.get(position).getNumUse()));
         stickerAdapter.notifyItemChanged(position);
         selectedStickerAdapter.notifyItemChanged(position);
     }
 
+    /*
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
@@ -180,6 +186,8 @@ public class StickerSelectionFragment extends DialogFragment implements StickerR
             //Log.d(TAG, "onViewStateRestored: not empty");
         }
     }
+
+     */
 
     @Override
     public void onAttach(Context context) {
