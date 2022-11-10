@@ -156,6 +156,7 @@ public class StickerSelectionFragment extends DialogFragment implements StickerR
     public void onStickerClick(int position) {
         stickerList.get(position).setNumUse(stickerList.get(position).getNumUse() + 1);
         selected_stickerList.add(new Sticker(stickerList.get(position).getName(), stickerList.get(position).getNumUse()));
+        System.out.println("********************************" + stickerList.get(position).getName());
         stickerAdapter.notifyItemChanged(position);
         selectedStickerAdapter.notifyItemChanged(position);
     }

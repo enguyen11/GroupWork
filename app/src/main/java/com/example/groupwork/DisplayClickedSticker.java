@@ -23,6 +23,7 @@ public class DisplayClickedSticker extends AppCompatActivity {
         }
         stickerDisplay = findViewById(R.id.passedSticker);
         stickerDisplay.setText(sticker);
+        System.out.println("********************" + sticker);
         String temp = "@drawable/" + sticker;
         int imageResource = getResources().getIdentifier(temp, null, this.getPackageName());
         display = findViewById(R.id.display);

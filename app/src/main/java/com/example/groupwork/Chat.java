@@ -371,7 +371,8 @@ public class Chat extends AppCompatActivity implements StickerSelectionFragment.
         for (Sticker s : stickersToSend) {
             s.setSender(userID);
         }
-        Log.d("Before Update", "" + stickersToSend.size());
+        Log.d("Before Update", "*******************************************" + stickersToSend.size());
+        System.out.println(stickersToSend.get(0).getName());
         stickerToSendAdapter.update(stickersToSend);
     }
 
