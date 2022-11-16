@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/rpgBuddyGameMainMenu"
+        android:title="Play"
+        android:icon="@drawable/wooden_door"/>
+    <item
+        android:id="@+id/rpgBuddyCharacterEditor"
+        android:title="Heroes"
+        android:icon="@drawable/round_shield" />
+    <item
+        android:id="@+id/rpgBuddyDiceRoller"
+        android:title="Dice"
+        android:icon="@drawable/perspective_dice_six_faces_two"/>
+</menu>

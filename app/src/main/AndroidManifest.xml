@@ -44,7 +44,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".FinalProject"
+            android:name=".RpgBuddyMainMenu"
             android:exported="false" />
         <activity
             android:name=".Firebase"

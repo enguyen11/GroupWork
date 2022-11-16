@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rpg_buddy_main_nav_bar"
+    app:startDestination="@id/rpgBuddyGameMainMenu">
+
+    <fragment
+        android:id="@+id/rpgBuddyCharacterEditor"
+        android:name="com.example.groupwork.RpgBuddyCharacterEditor"
+        android:label="fragment_rpg_buddy_character_editor"
+        tools:layout="@layout/fragment_rpg_buddy_character_editor" />
+    <fragment
+        android:id="@+id/rpgBuddyDiceRoller"
+        android:name="com.example.groupwork.rpgBuddyDiceRoller"
+        android:label="fragment_rpg_buddy_dice_roller"
+        tools:layout="@layout/fragment_rpg_buddy_dice_roller" />
+    <fragment
+        android:id="@+id/rpgBuddyGameMainMenu"
+        android:name="com.example.groupwork.RpgBuddyGameMainMenu"
+        android:label="fragment_rpg_buddy_game_main_menu"
+        tools:layout="@layout/fragment_rpg_buddy_game_main_menu" />
+</navigation>
