@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         project = findViewById(R.id.button_final);
         project.setOnClickListener(view -> {
-            Intent goToSearch = new Intent(MainActivity.this, FinalProject.class);
+            Intent goToSearch = new Intent(MainActivity.this, RpgBuddyMainMenu.class);
             MainActivity.this.startActivity(goToSearch);
         });
 
