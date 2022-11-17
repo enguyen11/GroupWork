@@ -1,10 +1,8 @@
 package com.example.groupwork.data;
 
-import com.example.groupwork.Sticker;
+import com.example.groupwork.Firebase.StickerStuff.Sticker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class DataSource {
 

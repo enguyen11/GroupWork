@@ -6,13 +6,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
+import com.example.groupwork.RPG_Model.Game;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 public class RpgBuddyMainMenu extends AppCompatActivity {
+
+    private ArrayList<Game> myGames;
+    private Button btnNewGame;
+    private Button btnNewSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +30,9 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
 
         changeFragment(new RpgBuddyGameMainMenu());
 
+        btnNewGame = findViewById(R.id.button_newGame);
+
+
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.RpgBuddyBottomNav);
         bottomNav.setOnItemSelectedListener(item -> {
@@ -28,7 +40,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
             if (R.id.rpgBuddyGameMainMenu == itemId) {
                 changeFragment(new RpgBuddyGameMainMenu());
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {
-                changeFragment(new RpgBuddyGameMainMenu());
+                changeFragment(new RpgBuddyCharacterEditor());
             } else if (R.id.rpgBuddyDiceRoller == itemId) {
                 changeFragment(new rpgBuddyDiceRoller());
             }
