@@ -1,8 +1,11 @@
 package com.example.groupwork.RPG_Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Parcelable {
 
     private ArrayList<SheetType> sheets;
     private ArrayList<Player> friends;
@@ -64,5 +67,35 @@ public class Player {
         this.sheets.add(defaultSheet);
 
 
+    }
+
+    protected Player(Parcel in) {
+        friends = in.createTypedArrayList(Player.CREATOR);
+    }
+
+    public static final Creator<Player> CREATOR = new Creator<Player>() {
+        @Override
+        public Player createFromParcel(Parcel in) {
+            return new Player(in);
+        }
+
+        @Override
+        public Player[] newArray(int size) {
+            return new Player[size];
+        }
+    };
+
+    public ArrayList<SheetType> getSheets(){
+        return this.sheets;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeTypedList(friends);
     }
 }

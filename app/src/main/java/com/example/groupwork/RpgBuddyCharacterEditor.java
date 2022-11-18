@@ -1,12 +1,23 @@
 package com.example.groupwork;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.example.groupwork.RPG_Model.Player;
+import com.example.groupwork.RPG_Model.SheetType;
+import com.example.groupwork.RecyclerViewStuff.MySheetsAdapter;
+import com.example.groupwork.RecyclerViewStuff.MySheetsViewHolder;
+
+import javax.annotation.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +25,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class RpgBuddyCharacterEditor extends Fragment {
+
+    private Button btnNewSheet;
+    private RecyclerView sheetView;
+    private Player user;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,6 +68,10 @@ public class RpgBuddyCharacterEditor extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        Bundle args = getArguments();
+        if(args != null) {
+            user = (Player) args.getParcelable("player");
+        }
     }
 
     @Override
@@ -61,4 +80,25 @@ public class RpgBuddyCharacterEditor extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_rpg_buddy_character_editor, container, false);
     }
+
+    public void onViewCreated(View view, @Nullable Bundle savedInstance){
+
+        btnNewSheet = getView().findViewById(R.id.button_new_sheet);
+        btnNewSheet.setOnClickListener(view1 -> {
+            SheetType newSheet = new SheetType();
+            newSheet.setName("Dummy Sheet");
+            System.out.println("sheet size: " + user.getSheets().size());
+            user.getSheets().add(newSheet);
+            sheetView.getAdapter().notifyDataSetChanged();
+            Intent goTo = new Intent(getActivity(), SheetBuilderActivity.class);
+            goTo.putExtra("player", user);
+            startActivity(goTo);
+        });
+
+        sheetView = getView().findViewById(R.id.recycler_sheet_list);
+        sheetView.setAdapter(new MySheetsAdapter(getContext(),user.getSheets()));
+        sheetView.setLayoutManager(new LinearLayoutManager(getContext()));
+        sheetView.getAdapter().notifyDataSetChanged();
+    }
+
 }

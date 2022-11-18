@@ -17,6 +17,9 @@
         android:theme="@style/Theme.GroupWork"
         tools:targetApi="31">
         <activity
+            android:name=".CreateGameActivity"
+            android:exported="false" />
+        <activity
             android:name=".SheetBuilderActivity"
             android:exported="false" />
         <activity

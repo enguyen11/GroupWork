@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.groupwork.RPG_Model.Game;
+import com.example.groupwork.RPG_Model.Player;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -22,6 +23,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
     private ArrayList<Game> myGames;
     private Button btnNewGame;
     private Button btnNewSheet;
+    private Player user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,22 +32,30 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
 
         changeFragment(new RpgBuddyGameMainMenu());
 
-        btnNewGame = findViewById(R.id.button_newGame);
+        user = new Player();
 
 
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.RpgBuddyBottomNav);
         bottomNav.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+            Fragment fragment;
             if (R.id.rpgBuddyGameMainMenu == itemId) {
-                changeFragment(new RpgBuddyGameMainMenu());
+                fragment = new RpgBuddyGameMainMenu();
+                changeFragment(fragment);
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {
-                changeFragment(new RpgBuddyCharacterEditor());
+                fragment = new RpgBuddyCharacterEditor();
+                Bundle args = new Bundle();
+                args.putParcelable("player", user);
+                fragment.setArguments(args);
+                changeFragment(fragment);
             } else if (R.id.rpgBuddyDiceRoller == itemId) {
-                changeFragment(new rpgBuddyDiceRoller());
+                fragment = new rpgBuddyDiceRoller();
+                changeFragment(fragment);
             }
             return true;
         });
+
     }
 
 

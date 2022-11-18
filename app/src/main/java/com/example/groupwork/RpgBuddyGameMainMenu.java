@@ -1,5 +1,6 @@
 package com.example.groupwork;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,8 @@ import com.example.groupwork.RPG_Model.Game;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nullable;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RpgBuddyGameMainMenu#newInstance} factory method to
@@ -20,7 +23,7 @@ import java.util.ArrayList;
  */
 public class RpgBuddyGameMainMenu extends Fragment {
 
-    private Button btnNewSheet;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,8 +34,7 @@ public class RpgBuddyGameMainMenu extends Fragment {
     private String mParam1;
     private String mParam2;
 
-
-
+    private Button btnNewGame;
 
 
     public RpgBuddyGameMainMenu() {
@@ -65,6 +67,7 @@ public class RpgBuddyGameMainMenu extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+
     }
 
     @Override
@@ -73,4 +76,14 @@ public class RpgBuddyGameMainMenu extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_rpg_buddy_game_main_menu, container, false);
     }
+
+    public void onViewCreated(View view, @Nullable Bundle savedInstance){
+            btnNewGame = getView().findViewById(R.id.button_newGame);
+            btnNewGame.setOnClickListener(view1 -> {
+                Intent goTo = new Intent(getActivity(), CreateGameActivity.class);
+                startActivity(goTo);
+            });
+
+        }
+
 }
