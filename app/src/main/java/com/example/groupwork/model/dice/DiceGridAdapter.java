@@ -1,15 +1,16 @@
 package com.example.groupwork.model.dice;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.groupwork.R;
-
 import java.util.ArrayList;
 
 public class DiceGridAdapter extends BaseAdapter {
@@ -38,9 +39,17 @@ public class DiceGridAdapter extends BaseAdapter {
         return 0;
     }
 
+
+    /**
+     * Note this gridView implementation is almost deprecated and shouldn't be used again in the
+     * codebase
+     * @param pos current item's position
+     * @param view the view of that item
+     * @param viewGroup
+     * @return
+     */
     @Override
     public View getView(int pos, View view, ViewGroup viewGroup) {
-        View cardView;
         // check if view exists
         if (layoutInflater == null){
             layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -50,6 +59,13 @@ public class DiceGridAdapter extends BaseAdapter {
             view = layoutInflater.inflate(R.layout.dicecard, null);
         }
 
+        DiceItem item = (DiceItem) this.getItem(pos);
+        // assign view to DiceItem
+        // this won't allow adding new items to the adapter
+        if (item.getView() == null){
+            item.setView(view);
+        }
+
         ImageView diceImage = view.findViewById(R.id.diceImage);
         TextView quantity = view.findViewById(R.id.quantity);
 
@@ -57,6 +73,6 @@ public class DiceGridAdapter extends BaseAdapter {
         Integer i = diceItems.get(pos).getQuantity();
         quantity.setText(i.toString());
 
-        return view;
+        return item.getView();
     }
 }

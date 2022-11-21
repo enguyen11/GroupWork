@@ -1,11 +1,13 @@
 package com.example.groupwork.model.dice;
 
-import java.util.ArrayList;
+import android.os.Build;
+
+import androidx.annotation.NonNull;
+
 import java.util.List;
-import java.util.Random;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+import java.util.Random;
 /**
  * This class represents a simple dice throw that has happened or has yet to be realized.
  */
@@ -15,16 +17,19 @@ public class DiceThrow {
     private Integer numberOfDice;
     private Integer[] results;
     private int lastResult;
-
+    private Random rand;
     /**
      * This is the basic constructor for the dice throw.
      * input is a map that describe the dice to be used and the amount. The format is Dice type and amount.
      *             For example: (20,5),(4,2) represents a group of 5 twenty sided dice and 2 four sided dice.
      */
     public DiceThrow(Map<Integer, Integer> dice){
+        rand = new Random();
         this.dice = dice;
-        this.numberOfDice = dice.keySet().stream()
-                .map(number -> dice.get(number)).collect(Collectors.summingInt(Integer::intValue));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.numberOfDice = dice.keySet().stream()
+                    .map(number -> dice.get(number)).collect(Collectors.summingInt(Integer::intValue));
+        }
         this.results = new Integer[this.numberOfDice];
         this.lastResult = -1;
     }
@@ -32,21 +37,22 @@ public class DiceThrow {
 
     /**
      * This class simulates a throw of this set of dice and returns an integer.
-     * @return
+     * @return a list of all the results from the last roll.
      */
     public List<Integer> throwDice(){
-        Random rand = new Random();
         int j = 0;
         lastResult = 0;
         for (int key: dice.keySet()){
-            for (int i = 0; i < dice.get(key);i++){
-                results[j] = rand.ints(1,1,key+1).sum();
-                lastResult += results[j];
+            int numberOfRolls = this.dice.get(key);
+            for (int i = 0; i < numberOfRolls;i++){
+                    results[j] = rand.nextInt(key) + 1;
+                    lastResult += results[j];
+                    j += 1;
+
             }
         }
-        return new ArrayList<Integer>(List.of(this.results));
+        return List.of(results);
     }
-
 
     /**
      * getter for the number of dice in the throw.
@@ -64,11 +70,39 @@ public class DiceThrow {
         return lastResult;
     }
 
+
+    /**
+     * Getter method for all the results
+     * @return an array list of all the results
+     */
+    public List<Integer> getResultList(){
+        return List.of(this.results);
+    }
+
+
     /**
      * Getter function for the dice involved in the last throw.
-     * @return
+     * @return dice
      */
     public Map<Integer, Integer> getDice(){
         return dice;
+    }
+
+
+    @NonNull
+    @Override
+    public String toString(){
+        StringBuilder finalString = new StringBuilder();
+        for (int j = 0; j < results.length; j++) {
+            if (j == results.length - 1){
+                finalString.append(results[j].toString());
+                finalString.append(" = ");
+            } else {
+                finalString.append(results[j].toString());
+                finalString.append(" + ");
+            }
+        }
+        finalString.append(lastResult);
+        return finalString.toString();
     }
 }

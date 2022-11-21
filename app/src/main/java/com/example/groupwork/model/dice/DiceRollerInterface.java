@@ -14,20 +14,13 @@ public interface DiceRollerInterface {
      * @param dice is a map that describe the dice to be used and the amount. The format is Dice type and amount.
      *             For example: (20,5),(4,2) represents a group of 5 twenty sided dice and 2 four sided dice.
      */
-    public void setupDice(Map<Integer, Integer> dice, int bonus, int target);
-
-    /**
-     * If the result is equal or larger than the target then the check is passed. Else
-     * it's not. This method only modifies the target.
-     * @param target an integer value representing the points needed to pass the check.
-     */
-    public void setTarget(Integer target);
+    public void setupDice(Map<Integer, Integer> dice);
 
     /**
      * Performs a die throw and result.
      * @return DiceThrow instance
      */
-    public DiceThrow throwDice();
+    public String throwDice();
 
 
     /**
