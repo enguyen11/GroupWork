@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.groupwork.model.dice.DiceGridAdapter;
 import com.example.groupwork.model.dice.DiceItem;
@@ -52,6 +53,9 @@ public class rpgBuddyDiceRoller extends Fragment {
     private Handler handler;
     private TextView resultView;
     private TextView clearBtn;
+    private RecyclerView recyclerView;
+    private R
+
 
 
     public rpgBuddyDiceRoller() {
@@ -108,11 +112,12 @@ public class rpgBuddyDiceRoller extends Fragment {
         helperObject = new threadedDiceThrow(this);
         secundaryThread = new Thread(helperObject);
 
-        // Inflate the layout for this fragment
-
+        // Define gridview
         GridView gridView = view.findViewById(R.id.diceRollerGrid);
         this.gridView = gridView;
-        FloatingActionButton throwButton = view.findViewById(R.id.throwButton);
+
+
+
         // add all of the items
         ArrayList<DiceItem> items = new ArrayList<>();
         items.add(new DiceItem(20, 0, R.drawable.d20_black));
@@ -124,7 +129,7 @@ public class rpgBuddyDiceRoller extends Fragment {
         gridView.setAdapter(new DiceGridAdapter(this.getContext(), items));
         gridView.setNumColumns(3);
 
-
+        // grid view on item listener
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -136,8 +141,7 @@ public class rpgBuddyDiceRoller extends Fragment {
             }
         });
 
-
-
+        //clear button
        clearBtn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
@@ -151,7 +155,7 @@ public class rpgBuddyDiceRoller extends Fragment {
            }
        });
 
-
+        //throw button
         FloatingActionButton throwDice = view.findViewById(R.id.throwButton);
         throwDice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,6 +186,7 @@ public class rpgBuddyDiceRoller extends Fragment {
 
     public void addToDiceMap(int dice) {
         if (diceMap.containsKey(dice)) {
+            // this is safe
             int num = diceMap.get(dice);
             diceMap.put(dice, num + 1);
         } else {
@@ -201,13 +206,17 @@ public class rpgBuddyDiceRoller extends Fragment {
 }
 
 /**
- * This method is helps process all the small calculations
- * required to return the result for the
+ * This class helps process all the small calculations
+ * required to return the result for every throw.
  */
 class threadedDiceThrow implements Runnable {
 
     rpgBuddyDiceRoller mainClass;
 
+    /**
+     * The current activity.
+     * @param mainClass our current fragment
+     */
     threadedDiceThrow(rpgBuddyDiceRoller mainClass) {
         this.mainClass = mainClass;
     }

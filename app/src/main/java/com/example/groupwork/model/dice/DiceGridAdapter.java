@@ -45,8 +45,8 @@ public class DiceGridAdapter extends BaseAdapter {
      * codebase
      * @param pos current item's position
      * @param view the view of that item
-     * @param viewGroup
-     * @return
+     * @param viewGroup current view group
+     * @return returns current view
      */
     @Override
     public View getView(int pos, View view, ViewGroup viewGroup) {
