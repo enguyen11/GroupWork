@@ -40,14 +40,6 @@ public class DiceGridAdapter extends BaseAdapter {
     }
 
 
-    /**
-     * Note this gridView implementation is almost deprecated and shouldn't be used again in the
-     * codebase
-     * @param pos current item's position
-     * @param view the view of that item
-     * @param viewGroup current view group
-     * @return returns current view
-     */
     @Override
     public View getView(int pos, View view, ViewGroup viewGroup) {
         // check if view exists

@@ -11,13 +11,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.groupwork.model.dice.DiceGridAdapter;
+import com.example.groupwork.model.dice.DiceHistoryAdapter;
 import com.example.groupwork.model.dice.DiceItem;
 import com.example.groupwork.model.dice.DiceRoller;
 import com.example.groupwork.model.dice.DiceThrow;
@@ -26,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -54,7 +58,8 @@ public class rpgBuddyDiceRoller extends Fragment {
     private TextView resultView;
     private TextView clearBtn;
     private RecyclerView recyclerView;
-    private R
+    private RecyclerView.Adapter historyAdapter;
+    private List<String> history;
 
 
 
@@ -165,6 +170,15 @@ public class rpgBuddyDiceRoller extends Fragment {
         });
 
 
+        // history recycler view
+        recyclerView = view.findViewById(R.id.historyView);
+        this.history = new LinkedList<>();
+        history.add("TESTING TESTING HEY");
+
+        historyAdapter = new DiceHistoryAdapter(history);
+        recyclerView.setAdapter(historyAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
         return view;
     }
 
@@ -198,10 +212,28 @@ public class rpgBuddyDiceRoller extends Fragment {
         return handler;
     }
 
-
     public void upadteResult(int res){
         lastResult = res;
         this.resultView.setText(lastResult.toString());
+    }
+
+    public RecyclerView.Adapter getAdapter() {
+        return historyAdapter;
+    }
+
+
+    public Integer getLastResult() {
+        return lastResult;
+    }
+
+
+    public List<String> getHistory() {
+        return history;
+    }
+
+
+    public void scrollUpHistory(){
+        recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount()-1);
     }
 }
 
@@ -228,6 +260,9 @@ class threadedDiceThrow implements Runnable {
             @Override
             public void run() {
                 mainClass.upadteResult(diceThrow.getResult());
+                mainClass.getHistory().add(diceThrow.toString());
+                mainClass.getAdapter().notifyDataSetChanged();
+                mainClass.scrollUpHistory();
             }
         });
     }
