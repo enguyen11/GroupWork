@@ -1,19 +1,15 @@
 package com.example.groupwork;
 
-import static com.example.groupwork.StickerSelectionFragment.TAG;
-
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,12 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.groupwork.model.dice.DiceGridAdapter;
 import com.example.groupwork.model.dice.DiceHistoryAdapter;
 import com.example.groupwork.model.dice.DiceItem;
-import com.example.groupwork.model.dice.DiceRoller;
 import com.example.groupwork.model.dice.DiceThrow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +38,7 @@ public class rpgBuddyDiceRoller extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private GridView gridView;
+    private EditText bonusInput;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -60,7 +55,6 @@ public class rpgBuddyDiceRoller extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter historyAdapter;
     private List<String> history;
-
 
 
     public rpgBuddyDiceRoller() {
@@ -109,6 +103,9 @@ public class rpgBuddyDiceRoller extends Fragment {
         this.resultView = view.findViewById(R.id.currentResult);
         this.clearBtn = view.findViewById(R.id.clearBtn);
 
+        // add bonus input
+        bonusInput = view.findViewById(R.id.bonusTextInput);
+
         // create handler
         handler = new Handler();
 
@@ -120,7 +117,6 @@ public class rpgBuddyDiceRoller extends Fragment {
         // Define gridview
         GridView gridView = view.findViewById(R.id.diceRollerGrid);
         this.gridView = gridView;
-
 
 
         // add all of the items
@@ -147,18 +143,18 @@ public class rpgBuddyDiceRoller extends Fragment {
         });
 
         //clear button
-       clearBtn.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               diceMap.clear();
-               for (int i = 0; i < gridView.getAdapter().getCount(); i++) {
-                   DiceItem item = (DiceItem) gridView.getAdapter().getItem(i);
-                   item.setQuantity(0);
-                   item.updateQuantity();
-               }
-               resultView.setText("0");
-           }
-       });
+        clearBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                diceMap.clear();
+                for (int i = 0; i < gridView.getAdapter().getCount(); i++) {
+                    DiceItem item = (DiceItem) gridView.getAdapter().getItem(i);
+                    item.setQuantity(0);
+                    item.updateQuantity();
+                }
+                resultView.setText("0");
+            }
+        });
 
         //throw button
         FloatingActionButton throwDice = view.findViewById(R.id.throwButton);
@@ -173,8 +169,6 @@ public class rpgBuddyDiceRoller extends Fragment {
         // history recycler view
         recyclerView = view.findViewById(R.id.historyView);
         this.history = new LinkedList<>();
-        history.add("TESTING TESTING HEY");
-
         historyAdapter = new DiceHistoryAdapter(history);
         recyclerView.setAdapter(historyAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -212,7 +206,7 @@ public class rpgBuddyDiceRoller extends Fragment {
         return handler;
     }
 
-    public void upadteResult(int res){
+    public void upadteResult(int res) {
         lastResult = res;
         this.resultView.setText(lastResult.toString());
     }
@@ -232,8 +226,17 @@ public class rpgBuddyDiceRoller extends Fragment {
     }
 
 
-    public void scrollUpHistory(){
-        recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount()-1);
+    public void scrollUpHistory() {
+        recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
+    }
+
+    public int getBonus() {
+        String bonus = bonusInput.getText().toString();
+
+        if (bonus == null) {
+            return 0;
+        }
+        return Integer.parseInt(bonus);
     }
 }
 
@@ -247,6 +250,7 @@ class threadedDiceThrow implements Runnable {
 
     /**
      * The current activity.
+     *
      * @param mainClass our current fragment
      */
     threadedDiceThrow(rpgBuddyDiceRoller mainClass) {
@@ -259,7 +263,7 @@ class threadedDiceThrow implements Runnable {
         mainClass.getHandler().post(new Runnable() {
             @Override
             public void run() {
-                mainClass.upadteResult(diceThrow.getResult());
+                mainClass.upadteResult(diceThrow.getResult() + mainClass.getBonus());
                 mainClass.getHistory().add(diceThrow.toString());
                 mainClass.getAdapter().notifyDataSetChanged();
                 mainClass.scrollUpHistory();
