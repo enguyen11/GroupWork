@@ -3,7 +3,10 @@ package com.example.groupwork.RPG_Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class Player implements Parcelable {
 
@@ -23,46 +26,55 @@ public class Player implements Parcelable {
         info.add("Class");
         info.add("Background");
         defaultSheet.setInfo(info);
-        ArrayList<String[]> statTypes = new ArrayList<>();
-        statTypes.add(new String[]{"Level"});
-        statTypes.add(new String[]{"Hit Points"});
-        statTypes.add(new String[]{"Armor Class"});
-        statTypes.add(new String[]{"Walking Speed", "Swimming Speed", "Flying Speed"});
-        String[] abilityScores = new String[6];
-        abilityScores[0] = "Strength";
-        abilityScores[1] = "Dexterity";
-        abilityScores[2] = "Constitution";
-        abilityScores[3] = "Intelligence";
-        abilityScores[4] = "Wisdom";
-        abilityScores[5] = "Charisma";
-        statTypes.add(abilityScores);
-        String[] modifiers = new String[6];
-        modifiers[0] = "Strength";
-        modifiers[1] = "Dexterity";
-        modifiers[2] = "Constitution";
-        modifiers[3] = "Intelligence";
-        modifiers[4] = "Wisdom";
-        modifiers[5] = "Charisma";
-        statTypes.add(modifiers);
-        String[] skills = new String[16];
-        skills[0] = "Acrobatics";
-        skills[1] = "Animal Handling";
-        skills[2] = "Athletics";
-        skills[3] = "Arcana";
-        skills[4] = "Deception";
-        skills[5] = "History";
-        skills[6] = "Intimidation";
-        skills[7] = "Investigation";
-        skills[8] = "Medicine";
-        skills[9] = "Nature";
-        skills[10] = "Perception";
-        skills[11] = "Performance";
-        skills[12] = "Persuasion";
-        skills[13] = "Sleight of Hand";
-        skills[14] = "Stealth";
-        skills[15] = "Survival";
-        statTypes.add(skills);
-        statTypes.add(new String[]{"Proficiency"});
+
+        HashMap<String, ArrayList<String>> statList = new HashMap<>(100);
+        ArrayList<String> level = new ArrayList<>(
+            Arrays.asList("Level"));
+        statList.put("Level", level);
+
+        ArrayList<String> hp = new ArrayList<>(
+                Arrays.asList("Maximum Hit Points",
+                        "Current Hit Points", "Temporary Hit Points", "Hit Dice")
+        );
+        statList.put("Hit Points", hp);
+
+        ArrayList<String> ac = new ArrayList<>(
+                Arrays.asList("Armor Class")
+        );
+        statList.put("Armor Class", ac);
+
+        ArrayList<String> speed = new ArrayList<>(
+                Arrays.asList("Walking Speed", "Swimming Speed",
+                        "Climbing Speed", "Flying Speed")
+        );
+        statList.put("Speed", speed);
+
+        ArrayList<String> abilities = new ArrayList<>(
+                Arrays.asList("Strength", "Dexterity", "Constitution",
+                        "Intelligence", "Wisdom", "Charisma")
+        );
+        statList.put("Ability Scores", abilities);
+
+        ArrayList<String> modifiers = new ArrayList<>(
+                Arrays.asList("Strength", "Dexterity", "Constitution",
+                        "Intelligence", "Wisdom", "Charisma")
+        );
+        statList.put("Ability Modifiers", modifiers);
+
+        ArrayList<String> skills = new ArrayList<>(
+                Arrays.asList("Acrobatics", "Athletics", "Arcana",
+                        "Deception", "History", "Intimidation",
+                        "Investigation", "Medicine", "Nature",
+                        "Perception", "Performance", "Persuasion",
+                        "Sleight of Hand", "Stealth", "Survival")
+        );
+        statList.put("Skills", skills);
+        ArrayList<String> prof = new ArrayList<>(
+                Arrays.asList("Proficiency Bonus")
+        );
+        statList.put("Proficiency Bonus", prof);
+
+        defaultSheet.setStats(statList);
 
         this.sheets.add(defaultSheet);
 
