@@ -233,7 +233,7 @@ public class rpgBuddyDiceRoller extends Fragment {
     public int getBonus() {
         String bonus = bonusInput.getText().toString();
 
-        if (bonus == null) {
+        if (bonus == null || bonus.compareTo("") == 0) {
             return 0;
         }
         return Integer.parseInt(bonus);
