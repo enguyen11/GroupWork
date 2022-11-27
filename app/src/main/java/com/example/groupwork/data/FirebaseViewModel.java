@@ -4,11 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.groupwork.Sticker;
-import com.example.groupwork.StickerMessage;
-
-import java.util.List;
-
 public class FirebaseViewModel extends ViewModel {
 
     // Expose screen UI state
