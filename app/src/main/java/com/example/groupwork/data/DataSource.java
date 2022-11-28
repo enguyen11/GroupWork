@@ -1,6 +1,8 @@
 package com.example.groupwork.data;
 
-import com.example.groupwork.Firebase.StickerStuff.Sticker;
+
+
+import com.example.groupwork.StickerActivity.Sticker;
 
 import java.util.ArrayList;
 
