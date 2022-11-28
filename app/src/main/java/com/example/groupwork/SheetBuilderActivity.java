@@ -19,9 +19,12 @@ public class SheetBuilderActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            user = (Player) extras.getParcelable("player");
-            //System.out.println("******************************" + user.getSheets().get(0).getName());
+            user = extras.getParcelable("player");
+            Intent goTo = new Intent(SheetBuilderActivity.this, CharacterSheetActivity.class);
+            goTo.putExtra("player", user);
+            startActivity(goTo);
         }
+
     }
 
     @Override

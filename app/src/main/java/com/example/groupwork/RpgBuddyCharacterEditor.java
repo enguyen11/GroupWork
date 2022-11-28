@@ -72,6 +72,7 @@ public class RpgBuddyCharacterEditor extends Fragment {
         if(args != null) {
             user = (Player) args.getParcelable("player");
         }
+        System.out.println("sheet name: " + user.getSheets().get(0).getName());
     }
 
     @Override
@@ -92,6 +93,7 @@ public class RpgBuddyCharacterEditor extends Fragment {
             sheetView.getAdapter().notifyDataSetChanged();
             Intent goTo = new Intent(getActivity(), SheetBuilderActivity.class);
             goTo.putExtra("player", user);
+            System.out.println("**********************user: " + user);
             startActivity(goTo);
         });
 

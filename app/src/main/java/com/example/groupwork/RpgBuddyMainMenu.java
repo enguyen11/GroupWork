@@ -33,6 +33,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
         changeFragment(new RpgBuddyGameMainMenu());
 
         user = new Player();
+        System.out.println("**********************user: " + user);
 
 
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
