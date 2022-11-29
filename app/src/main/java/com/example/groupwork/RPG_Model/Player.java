@@ -1,15 +1,10 @@
 package com.example.groupwork.RPG_Model;
 
-import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.groupwork.SheetBuilderActivity;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class Player implements Parcelable {
