@@ -17,48 +17,40 @@
         android:theme="@style/Theme.GroupWork"
         tools:targetApi="31">
         <activity
-            android:name=".CharacterSheetActivity"
+            android:name=".StickerActivity.Messages"
             android:exported="false" />
         <activity
-            android:name=".CreateGameActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SheetBuilderActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Firebase.Messages"
-            android:exported="false" />
-        <activity
-            android:name=".Firebase.StickerStuff.DisplayClickedSticker"
+            android:name=".StickerActivity.DisplayClickedSticker"
             android:exported="false" />
         <activity
             android:name=".About"
             android:exported="false" />
         <activity
-            android:name=".Firebase.Friends"
+            android:name=".StickerActivity.Friends"
             android:exported="false" />
         <activity
-            android:name=".Firebase.StickerStuff.ShowSticker"
+            android:name=".StickerActivity.ShowSticker"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
-            android:name=".Firebase.Chat"
+            android:name=".StickerActivity.Chat"
             android:configChanges="orientation|screenSize"
             android:exported="false"
             android:label="@string/title_activity_chat"
             android:theme="@style/Theme.GroupWork.NoActionBar" />
         <activity
-            android:name=".Firebase.StickerStuff.StickerAccount"
+            android:name=".StickerActivity.StickerAccount"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
+
         <activity
-            android:name=".RpgBuddyMainMenu"
+            android:name=".Menus.RpgBuddyMainMenu"
             android:exported="false" />
         <activity
-            android:name=".Firebase.Firebase"
+            android:name=".StickerActivity.Firebase"
             android:exported="false" />
         <activity
-            android:name=".Firebase.DndAPIActivity"
+            android:name=".DndApiActivity.DndAPIActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

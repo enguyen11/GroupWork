@@ -7,15 +7,18 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+<<<<<<<< HEAD:app/src/main/java/com/example/groupwork/Menus/RpgBuddyMainMenu.java
+
+import com.example.groupwork.R;
+import com.example.groupwork.DiceRoller.rpgBuddyDiceRoller;
+========
 import android.view.View;
 import android.widget.Button;
-
-import com.example.groupwork.CharacterEditor.RpgBuddyCharacterEditor;
-import com.example.groupwork.R;
 
 import com.example.groupwork.RPG_Model.Game;
 import com.example.groupwork.RPG_Model.Player;
 import com.google.android.material.bottomappbar.BottomAppBar;
+>>>>>>>> 566eb70864a6a82622a3238bfd38d4d79d6f0dcc:app/src/main/java/com/example/groupwork/RpgBuddyMainMenu.java
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -53,7 +56,8 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
                 fragment.setArguments(args);
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyDiceRoller == itemId) {
-
+                fragment = new rpgBuddyDiceRoller();
+                changeFragment(fragment);
             }
             return true;
         });

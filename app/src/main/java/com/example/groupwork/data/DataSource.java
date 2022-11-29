@@ -1,7 +1,5 @@
 package com.example.groupwork.data;
 
-
-
 import com.example.groupwork.StickerActivity.Sticker;
 
 import java.util.ArrayList;
