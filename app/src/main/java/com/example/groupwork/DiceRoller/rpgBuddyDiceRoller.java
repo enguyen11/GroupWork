@@ -28,6 +28,7 @@ import com.example.groupwork.model.dice.DiceThrow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -202,8 +203,8 @@ public class rpgBuddyDiceRoller extends Fragment {
                             Log.d("SENSOR", "onSensorChanged: sensor movement detected" + String.format("%f %f %f", xAcc, yAcc, zAcc));
                             if ((zAcc > 8 && xAcc > 8) ||  (yAcc > 8 && xAcc > 8) || (zAcc > 8 && yAcc > 8)){
                                 Log.d("TRIGGER", "onSensorChanged: sensor movement detected" + String.format("%f %f %f", xAcc, yAcc, zAcc));
+                                secundaryThread.run();
                             }
-
 
                         }
                     }
@@ -293,8 +294,8 @@ public class rpgBuddyDiceRoller extends Fragment {
  */
 class threadedDiceThrow implements Runnable {
 
-    rpgBuddyDiceRoller mainClass;
-
+    private rpgBuddyDiceRoller mainClass;
+    private long cooldown = 0L;
     /**
      * The current activity.
      *
@@ -306,10 +307,15 @@ class threadedDiceThrow implements Runnable {
 
     @Override
     public void run() {
+
+
         DiceThrow diceThrow = calculateThrow(mainClass.getDiceMap());
         mainClass.getHandler().post(new Runnable() {
             @Override
             public void run() {
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - cooldown <= 3000.00 && cooldown != 0L) return;
+                cooldown = currentTime;
                 mainClass.upadteResult(diceThrow.getResult() + mainClass.getBonus());
                 mainClass.getHistory().add(diceThrow.toString());
                 mainClass.getAdapter().notifyDataSetChanged();
