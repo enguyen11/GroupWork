@@ -1,8 +1,14 @@
 package com.example.groupwork.DiceRoller;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +64,10 @@ public class rpgBuddyDiceRoller extends Fragment {
     private RecyclerView.Adapter historyAdapter;
     private List<String> history;
 
+    // shake feature
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private boolean sensorEnabled = false;
 
     public rpgBuddyDiceRoller() {
         // Required empty public constructor
@@ -175,6 +185,41 @@ public class rpgBuddyDiceRoller extends Fragment {
         recyclerView.setAdapter(historyAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        // sensor
+        this.sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        if (this.sensorManager != null) {
+            Sensor temp = this.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            if (temp != null) {
+                this.accelerometer = temp;
+                sensorEnabled = true;
+                SensorEventListener listener = new SensorEventListener() {
+                    @Override
+                    public void onSensorChanged(SensorEvent sensorEvent) {
+                        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                            double xAcc = sensorEvent.values[0];
+                            double yAcc = sensorEvent.values[1];
+                            double zAcc = sensorEvent.values[2];
+                            Log.d("SENSOR", "onSensorChanged: sensor movement detected" + String.format("%f %f %f", xAcc, yAcc, zAcc));
+                            if ((zAcc > 8 && xAcc > 8) ||  (yAcc > 8 && xAcc > 8) || (zAcc > 8 && yAcc > 8)){
+                                Log.d("TRIGGER", "onSensorChanged: sensor movement detected" + String.format("%f %f %f", xAcc, yAcc, zAcc));
+                            }
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onAccuracyChanged(Sensor sensor, int i) {
+
+                    }
+                };
+                sensorManager.registerListener(listener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+                Log.d("SENSOR", "onCreateView: SENSOR ENABLED");
+            }
+        }
+
+
+        // end of onCreateView, return the current view
         return view;
     }
 
