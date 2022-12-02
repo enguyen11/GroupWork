@@ -1,13 +1,17 @@
 package com.example.groupwork.CharacterEditor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Barrier;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
+import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Player;
 import com.example.groupwork.RPG_Model.Resource;
 import com.example.groupwork.RPG_Model.SheetType;
@@ -26,6 +30,8 @@ public class CharacterSheetActivity extends AppCompatActivity {
     private ArrayList<EditText> infoViews;
     private ArrayList<EditText> statViews;
     private ArrayList<EditText> resourceViews;
+    private ConstraintLayout layout;
+    private RecyclerView infoRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,42 +40,72 @@ public class CharacterSheetActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         if (extras != null) {
             user = extras.getParcelable("player");
-            System.out.println("user sheets: " + user.getSheets());
         }
+        setContentView(R.layout.activity_character_sheet);
         infoViews = new ArrayList<>();
         statViews = new ArrayList<>();
         resourceViews = new ArrayList<>();
         sheetType = user.getSheets().get(0);
         sheetName = sheetType.getName();
-        System.out.println("sheet name: " + sheetName);
         infoFields = sheetType.getInfo();
         stats = sheetType.getStats();
-        System.out.println("info: " + infoFields);
+        System.out.println("Stats: " + stats);
         resources = sheetType.getResources();
-        RelativeLayout layout = new RelativeLayout(this);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        //params.addRule(RelativeLayout.CENTER_IN_PARENT);
+       /* layout = new ConstraintLayout(this);
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+        );*/
+        //params.addRule(ConstraintLayout.CENTER_IN_PARENT);
+        infoRecycler = findViewById(R.id.recyclerView2);
+
+
 
         int n = 0;
+        /*
         while (n < infoFields.size()){
             EditText edit = new EditText(this);
             edit.setId(n);
             edit.setHint(infoFields.get(n));
             edit.setLayoutParams(params);
             if(n > 0){
-                RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                p.addRule(RelativeLayout.ALIGN_RIGHT, n-1);
+                ConstraintLayout.LayoutParams p = new ConstraintLayout.LayoutParams(
+                        ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                        ConstraintLayout.LayoutParams.WRAP_CONTENT);
                 edit.setLayoutParams(p);
             }
-            layout.addView(edit);
+            //layout.addView(edit);
             infoViews.add(edit);
             n++;
-        }
+        }*/
+
+        SheetAdapter adapter = new SheetAdapter(this, infoFields);
+        infoRecycler.setAdapter(adapter);
+        infoRecycler.setLayoutManager(new GridLayoutManager(this, 2));
+        adapter.notifyDataSetChanged();
+        RecyclerView copy1 = findViewById(R.id.recyclerView3);
+        RecyclerView copy2 = findViewById(R.id.recyclerView4);
+        copy1.setAdapter(adapter);
+        copy2.setAdapter(adapter);
+        copy1.setLayoutManager(new GridLayoutManager(this, 3));
+        copy2.setLayoutManager(new GridLayoutManager(this, 2));
+
+
+        //ConstraintSet conSet = new ConstraintSet();
+        //conSet.connect(infoRecycler.getId(),3, copy1.getId(), 4);
+        //conSet.connect(copy1.getId(),4, copy2.getId(), 3);
+        //conSet.constrainPercentHeight(infoRecycler.getId(), 33);
+        //conSet.constrainPercentHeight(copy1.getId(), 33);
+       // conSet.constrainPercentHeight(copy2.getId(), 33);
+        //layout.setConstraintSet(conSet);
+       // layout.addView(infoRecycler);
+       //layout.addView(copy1);
+        //layout.addView(copy2);
+
+
+
+
+
 /*
         n = 0;
         while (n < stats.size()){
@@ -87,7 +123,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
             resourceViews.add(edit);
             n++;
         }*/
-        setContentView(layout, params);
+       //setContentView(layout, params);
 
     }
 }

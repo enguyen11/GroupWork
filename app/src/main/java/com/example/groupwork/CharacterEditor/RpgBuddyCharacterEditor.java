@@ -93,7 +93,7 @@ public class RpgBuddyCharacterEditor extends Fragment {
             System.out.println("sheet size: " + user.getSheets().size());
             user.getSheets().add(newSheet);
             sheetView.getAdapter().notifyDataSetChanged();
-            Intent goTo = new Intent(getActivity(), SheetBuilderActivity.class);
+            Intent goTo = new Intent(getActivity(), CharacterSheetActivity.class);
             goTo.putExtra("player", user);
             System.out.println("**********************user: " + user);
             startActivity(goTo);

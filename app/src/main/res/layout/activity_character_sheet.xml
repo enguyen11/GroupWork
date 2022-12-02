@@ -4,42 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CharacterSheetActivity">
+    tools:context=".CharacterEditor.CharacterSheetActivity">
 
-    <EditText
-        android:id="@+id/editTextInfo"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".10" />
+        app:layout_constraintBottom_toTopOf="@id/recyclerView3"/>
 
-    <EditText
-        android:id="@+id/editTextStats"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@id/editTextResources"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView2"
+        app:layout_constraintBottom_toTopOf="@id/recyclerView4"
+        app:layout_constraintVertical_chainStyle="spread"/>
 
-    <EditText
-        android:id="@+id/editTextResources"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextStats" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
