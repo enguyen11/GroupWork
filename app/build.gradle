@@ -6,6 +6,17 @@ plugins {
 android {
     compileSdk 32
 
+    signingConfigs {
+        release{
+            keyAlias 'key2'
+            keyPassword '123456'
+            storeFile file('C:\\Users\\roger\\AndroidStudioProjects\\groupwork_ks2.jks')
+            storePassword '123456'
+            v1SigningEnabled false
+            v2SigningEnabled true
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.groupwork"
         minSdk 21
