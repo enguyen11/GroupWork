@@ -143,6 +143,7 @@ public class rpgBuddyDiceRoller extends Fragment {
         gridView.setAdapter(new DiceGridAdapter(this.getContext(), items));
         gridView.setNumColumns(3);
 
+
         // grid view on item listener
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -152,6 +153,22 @@ public class rpgBuddyDiceRoller extends Fragment {
                 item.setQuantity(number);
                 item.updateQuantity();
                 addToDiceMap(item.getType());
+            }
+        });
+
+        // reduce the item's number
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                DiceItem item = (DiceItem) adapterView.getItemAtPosition(i);
+                if (item.getQuantity() > 0){
+                    int number = item.getQuantity() - 1;
+                    item.setQuantity(number);
+                    item.updateQuantity();
+                    addToDiceMap(item.getType());
+                    return true;
+                }
+                return false;
             }
         });
 
