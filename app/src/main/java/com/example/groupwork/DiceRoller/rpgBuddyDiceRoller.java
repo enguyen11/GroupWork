@@ -64,6 +64,9 @@ public class rpgBuddyDiceRoller extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter historyAdapter;
     private List<String> history;
+    private Integer modifier;
+    private TextView modifierLeft;
+    private TextView modifierRight;
 
     // shake feature
     private SensorManager sensorManager;
@@ -106,6 +109,9 @@ public class rpgBuddyDiceRoller extends Fragment {
                              Bundle savedInstanceState) {
 
 
+        // modifier
+        modifier = 0;
+
         View view = inflater.inflate(R.layout.fragment_rpg_buddy_dice_roller, container, false);
         //last result
         lastResult = 0;
@@ -116,8 +122,6 @@ public class rpgBuddyDiceRoller extends Fragment {
         this.resultView = view.findViewById(R.id.currentResult);
         this.clearBtn = view.findViewById(R.id.clearBtn);
 
-        // add bonus input
-        bonusInput = view.findViewById(R.id.bonusTextInput);
 
         // create handler
         handler = new Handler();
@@ -131,6 +135,8 @@ public class rpgBuddyDiceRoller extends Fragment {
         GridView gridView = view.findViewById(R.id.diceRollerGrid);
         this.gridView = gridView;
 
+
+        // define buttons
 
         // add all of the items
         ArrayList<DiceItem> items = new ArrayList<>();
@@ -161,7 +167,7 @@ public class rpgBuddyDiceRoller extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 DiceItem item = (DiceItem) adapterView.getItemAtPosition(i);
-                if (item.getQuantity() > 0){
+                if (item.getQuantity() > 0) {
                     int number = item.getQuantity() - 1;
                     item.setQuantity(number);
                     item.updateQuantity();
@@ -218,7 +224,7 @@ public class rpgBuddyDiceRoller extends Fragment {
                             double yAcc = sensorEvent.values[1];
                             double zAcc = sensorEvent.values[2];
                             Log.d("SENSOR", "onSensorChanged: sensor movement detected" + String.format("%f %f %f", xAcc, yAcc, zAcc));
-                            if ((zAcc > 8 && xAcc > 8) ||  (yAcc > 8 && xAcc > 8) || (zAcc > 8 && yAcc > 8)){
+                            if ((zAcc > 8 && xAcc > 8) || (yAcc > 8 && xAcc > 8) || (zAcc > 8 && yAcc > 8)) {
                                 Log.d("TRIGGER", "onSensorChanged: sensor movement detected" + String.format("%f %f %f", xAcc, yAcc, zAcc));
                                 secundaryThread.run();
                             }
@@ -234,6 +240,32 @@ public class rpgBuddyDiceRoller extends Fragment {
                 sensorManager.registerListener(listener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
                 Log.d("SENSOR", "onCreateView: SENSOR ENABLED");
             }
+
+            //set chrevon
+            View chevronLeft = view.findViewById(R.id.chevronLeft);
+            View chevronRight = view.findViewById(R.id.chevronRight);
+            // modifiers
+            modifierLeft = view.findViewById(R.id.modLeft);
+            modifierRight = view.findViewById(R.id.modRight);
+
+            chevronLeft.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setModifier(getModifier() -1);
+                    upadateResult(getLastResult());
+                    updateModifierViews();
+                }
+            });
+
+            chevronRight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setModifier(getModifier() + 1);
+                    upadateResult(getLastResult());
+                    updateModifierViews();
+                }
+            });
+
         }
 
 
@@ -271,8 +303,8 @@ public class rpgBuddyDiceRoller extends Fragment {
         return handler;
     }
 
-    public void upadteResult(int res) {
-        lastResult = res;
+    public void upadateResult(int res) {
+        lastResult = res + this.modifier;
         this.resultView.setText(lastResult.toString());
     }
 
@@ -295,13 +327,25 @@ public class rpgBuddyDiceRoller extends Fragment {
         recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
     }
 
-    public int getBonus() {
-        String bonus = bonusInput.getText().toString();
+    public int getModifier() {
+        return modifier;
+    }
 
-        if (bonus == null || bonus.compareTo("") == 0) {
-            return 0;
+    public void setModifier(int newMod) {
+        modifier = newMod;
+    }
+
+    public void updateModifierViews(){
+        if (modifier == 0){
+            modifierRight.setText("+0");
+            modifierLeft.setText("-0");
+        }else if (modifier > 0){
+            modifierRight.setText("+" + modifier.toString());
+            modifierLeft.setText("+0");
+        }else{
+            modifierRight.setText("+0");
+            modifierLeft.setText(modifier.toString());
         }
-        return Integer.parseInt(bonus);
     }
 }
 
@@ -313,6 +357,7 @@ class threadedDiceThrow implements Runnable {
 
     private rpgBuddyDiceRoller mainClass;
     private long cooldown = 0L;
+
     /**
      * The current activity.
      *
@@ -331,9 +376,9 @@ class threadedDiceThrow implements Runnable {
             @Override
             public void run() {
                 long currentTime = System.currentTimeMillis();
-                if (currentTime - cooldown <= 3000.00 && cooldown != 0L) return;
+                if (currentTime - cooldown <= 200.00 && cooldown != 0L) return;
                 cooldown = currentTime;
-                mainClass.upadteResult(diceThrow.getResult() + mainClass.getBonus());
+                mainClass.upadateResult(diceThrow.getResult());
                 mainClass.getHistory().add(diceThrow.toString());
                 mainClass.getAdapter().notifyDataSetChanged();
                 mainClass.scrollUpHistory();
