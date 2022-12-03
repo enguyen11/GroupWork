@@ -7,7 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +28,6 @@ import com.example.groupwork.model.dice.DiceThrow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -67,6 +66,7 @@ public class rpgBuddyDiceRoller extends Fragment {
     private Integer modifier;
     private TextView modifierLeft;
     private TextView modifierRight;
+    private Vibrator vibrator; //insert joke here
 
     // shake feature
     private SensorManager sensorManager;
@@ -117,6 +117,9 @@ public class rpgBuddyDiceRoller extends Fragment {
         lastResult = 0;
         //initialize dice map
         diceMap = new HashMap<>();
+
+        //vibrator;
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
         // result text View and clear btn
         this.resultView = view.findViewById(R.id.currentResult);
@@ -347,6 +350,10 @@ public class rpgBuddyDiceRoller extends Fragment {
             modifierLeft.setText(modifier.toString());
         }
     }
+
+    public Vibrator getVibrator(){
+        return vibrator;
+    }
 }
 
 /**
@@ -376,12 +383,15 @@ class threadedDiceThrow implements Runnable {
             @Override
             public void run() {
                 long currentTime = System.currentTimeMillis();
-                if (currentTime - cooldown <= 200.00 && cooldown != 0L) return;
+                if (currentTime - cooldown <= 400.00 && cooldown != 0L) return;
                 cooldown = currentTime;
                 mainClass.upadateResult(diceThrow.getResult());
                 mainClass.getHistory().add(diceThrow.toString());
                 mainClass.getAdapter().notifyDataSetChanged();
                 mainClass.scrollUpHistory();
+                if (mainClass.getVibrator() != null){
+                    mainClass.getVibrator().vibrate(100);
+                }
             }
         });
     }
