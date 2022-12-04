@@ -6,17 +6,17 @@ import android.os.Parcelable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 
 public class SheetType implements Parcelable {
     private String sheetName;
     private ArrayList<String> infoFields;
-    private LinkedHashMap<String, ArrayList<String>> stats;
-    private LinkedHashMap<String, Resource> resources;
+    private HashMap<String, ArrayList<String>> stats;
+    private HashMap<String, Resource> resources;
 
     public SheetType(){
-        stats = new LinkedHashMap<>(100);
-        resources = new LinkedHashMap<>(100);
+        stats = new HashMap<>(100);
+        resources = new HashMap<>(100);
 
     }
 
@@ -55,22 +55,22 @@ public class SheetType implements Parcelable {
     public void setInfo(ArrayList<String> info){
         this.infoFields = info;
     }
-    public LinkedHashMap<String, ArrayList<String>> getStats(){
+    public HashMap<String, ArrayList<String>> getStats(){
         return this.stats;
     }
     public void addStat(String statType, ArrayList<String> statNames){
         this.stats.put(statType, statNames);
     }
-    public void setStats(LinkedHashMap<String, ArrayList<String>> stats){
-        this.stats = stats;
+    public void setStats(HashMap<String, ArrayList<String>> stats){
+        this.stats = (HashMap<String, ArrayList<String>>)stats;
     }
     public void addResource(String statType, Resource statNames){
         this.resources.put(statType, statNames);
     }
-    public void setResources(LinkedHashMap<String, Resource> stats){
+    public void setResources(HashMap<String, Resource> stats){
         this.resources = stats;
     }
-    public LinkedHashMap<String, Resource> getResources(){
+    public HashMap<String, Resource> getResources(){
         return this.resources;
     }
 

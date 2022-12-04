@@ -5,16 +5,19 @@ import android.os.Parcelable;
 
 public class Resource implements Parcelable {
     private String name;
-    private String[] attributes;
+   // private String[] attributes;
 
     public Resource(String name, int num){
         this.name = name;
-        this.attributes = new String[num];
+       // this.attributes = new String[num];
+    }
+    public Resource(){
+
     }
 
     protected Resource(Parcel in) {
         name = in.readString();
-        attributes = in.createStringArray();
+       // attributes = in.createStringArray();
     }
 
     public static final Creator<Resource> CREATOR = new Creator<Resource>() {
@@ -35,12 +38,12 @@ public class Resource implements Parcelable {
     public void setName(String name){
         this.name = name;
     }
-    public String[] getAttributes(){
-        return this.attributes;
-    }
-    public void setAttributes(String[] attributes){
-        this.attributes = attributes;
-    }
+   // public String[] getAttributes(){
+       // return this.attributes;
+   // }
+    //public void setAttributes(String[] attributes){
+      //  this.attributes = attributes;
+   // }
 
     @Override
     public int describeContents() {
@@ -50,6 +53,6 @@ public class Resource implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
-        parcel.writeStringArray(attributes);
+       // parcel.writeStringArray(attributes);
     }
 }

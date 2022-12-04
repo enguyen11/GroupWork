@@ -19,6 +19,8 @@ import com.example.groupwork.RPG_Model.Player;
 import com.google.android.material.bottomappbar.BottomAppBar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,8 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
     private Button btnNewGame;
     private Button btnNewSheet;
     private Player user;
+    private FirebaseDatabase db;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +39,10 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_rpg_buddy_main_menu);
 
         changeFragment(new RpgBuddyGameMainMenu());
-
-        user = new Player();
-        System.out.println("**********************user: " + user);
-
+        db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
+        mDatabase = db.getReference("Users");
+        user = new Player("User");
+        mDatabase.child("User").setValue(user);
 
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.RpgBuddyBottomNav);
@@ -51,7 +55,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {
                 fragment = new RpgBuddyCharacterEditor();
                 Bundle args = new Bundle();
-                args.putParcelable("player", user);
+                args.putString("userID", user.getName());
                 fragment.setArguments(args);
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyDiceRoller == itemId) {

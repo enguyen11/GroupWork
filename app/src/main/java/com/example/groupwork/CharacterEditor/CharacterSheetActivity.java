@@ -1,5 +1,6 @@
 package com.example.groupwork.CharacterEditor;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Barrier;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -7,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -15,42 +17,56 @@ import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Player;
 import com.example.groupwork.RPG_Model.Resource;
 import com.example.groupwork.RPG_Model.SheetType;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 
 public class CharacterSheetActivity extends AppCompatActivity {
     private Player user;
+    private String username;
     private SheetType sheetType;
     private String sheetName;
     private ArrayList<String> infoFields;
-    private LinkedHashMap<String, ArrayList<String>> stats;
-    private LinkedHashMap<String, Resource> resources;
+    private HashMap<String, ArrayList<String>> stats;
+    private HashMap<String, Resource> resources;
     private ArrayList<EditText> infoViews;
     private ArrayList<EditText> statViews;
     private ArrayList<EditText> resourceViews;
     private ConstraintLayout layout;
     private RecyclerView infoRecycler;
+    private FirebaseDatabase db;
+    private DatabaseReference mDatabase;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
+        db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
+        mDatabase = db.getReference("Users");
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            user = extras.getParcelable("player");
+            username = extras.getString("player");
         }
         setContentView(R.layout.activity_character_sheet);
         infoViews = new ArrayList<>();
         statViews = new ArrayList<>();
         resourceViews = new ArrayList<>();
-        sheetType = user.getSheets().get(0);
-        sheetName = sheetType.getName();
-        infoFields = sheetType.getInfo();
-        stats = sheetType.getStats();
+
+        //sheetType = user.getSheets().get(0);
+        //sheetType = mDatabase.child(username).child("sheets").child("0").get
+     //   sheetName = sheetType.getName();
+     //   infoFields = sheetType.getInfo();
+     //   stats = sheetType.getStats();
         System.out.println("Stats: " + stats);
-        resources = sheetType.getResources();
+     //   resources = sheetType.getResources();
        /* layout = new ConstraintLayout(this);
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.WRAP_CONTENT,
@@ -79,16 +95,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
             n++;
         }*/
 
-        SheetAdapter adapter = new SheetAdapter(this, infoFields);
-        infoRecycler.setAdapter(adapter);
-        infoRecycler.setLayoutManager(new GridLayoutManager(this, 2));
-        adapter.notifyDataSetChanged();
-        RecyclerView copy1 = findViewById(R.id.recyclerView3);
-        RecyclerView copy2 = findViewById(R.id.recyclerView4);
-        copy1.setAdapter(adapter);
-        copy2.setAdapter(adapter);
-        copy1.setLayoutManager(new GridLayoutManager(this, 3));
-        copy2.setLayoutManager(new GridLayoutManager(this, 2));
+
 
 
         //ConstraintSet conSet = new ConstraintSet();
@@ -124,6 +131,36 @@ public class CharacterSheetActivity extends AppCompatActivity {
             n++;
         }*/
        //setContentView(layout, params);
+    mDatabase.child(username).addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (user == null) {
+                user = snapshot.getValue(Player.class);
+                System.out.println("Username in charactersheetactivity " + user.getName());
 
+            }
+            else {
+                System.out.println("Username from charactersheetactivity: " + user.getName());
+            }
+            sheetType = user.getSheets().get(0);
+            infoFields = sheetType.getInfo();
+             SheetAdapter adapter = new SheetAdapter(context, infoFields);
+             infoRecycler.setAdapter(adapter);
+             infoRecycler.setLayoutManager(new GridLayoutManager(context, 2));
+             adapter.notifyDataSetChanged();
+            RecyclerView copy1 = findViewById(R.id.recyclerView3);
+            RecyclerView copy2 = findViewById(R.id.recyclerView4);
+             copy1.setAdapter(adapter);
+             copy2.setAdapter(adapter);
+            copy1.setLayoutManager(new GridLayoutManager(context, 3));
+              copy2.setLayoutManager(new GridLayoutManager(context, 2));
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    });
     }
+
 }

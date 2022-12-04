@@ -3,12 +3,14 @@ package com.example.groupwork.RPG_Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 public class Player implements Parcelable {
 
+    private String username;
     private ArrayList<SheetType> sheets;
     private ArrayList<Player> friends;
     private ArrayList<Character> characters;
@@ -16,11 +18,28 @@ public class Player implements Parcelable {
     private ArrayList<Map> maps;
 
     public Player(){
+        System.out.println("**************Making Player*********************");
+    }
+    public Player(String username){
+        this.username = username;
         sheets = new ArrayList<>();
         SheetType defaultSheet = makeDefault();
         this.sheets.add(defaultSheet);
 
     }
+    public String getName(){
+        return this.username;
+    }
+    public void setName(String name){
+        this.username = name;
+    }
+    public void setSheets(ArrayList<SheetType> sheets){
+        this.sheets = sheets;
+    }
+    public ArrayList<SheetType> getSheets(){
+        return this.sheets;
+    }
+
 
     private SheetType makeDefault(){
         SheetType defaultSheet = new SheetType();
@@ -88,11 +107,11 @@ public class Player implements Parcelable {
 
         LinkedHashMap<String, Resource> resourceList = new LinkedHashMap<>(100);
         Resource money = new Resource("Currency", 5);
-        money.setAttributes(new String[]{"cp", "sp", "ep", "gp", "pp"});
+       // money.setAttributes(new String[]{"cp", "sp", "ep", "gp", "pp"});
         resourceList.put("Currency", money);
 
         Resource attacks = new Resource("Attacks", 4);
-        attacks.setAttributes(new String[]{"Name", "Attack Bonus", "Damage", "Type"});
+       // attacks.setAttributes(new String[]{"Name", "Attack Bonus", "Damage", "Type"});
         resourceList.put("Attacks", attacks);
         defaultSheet.setResources(resourceList);
         return defaultSheet;
@@ -118,9 +137,7 @@ public class Player implements Parcelable {
         }
     };
 
-    public ArrayList<SheetType> getSheets(){
-        return this.sheets;
-    }
+
 
     @Override
     public int describeContents() {
