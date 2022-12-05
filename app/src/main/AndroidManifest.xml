@@ -55,6 +55,12 @@
             android:name=".StickerActivity.Firebase"
             android:exported="false" />
         <activity
+            android:name=".CharacterEditor.SheetBuilderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CharacterEditor.CharacterSheetActivity"
+            android:exported="false" />
+        <activity
             android:name=".DndApiActivity.DndAPIActivity"
             android:exported="false">
             <meta-data

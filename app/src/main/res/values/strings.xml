@@ -62,6 +62,10 @@
     <string name="prompt_throw">Test your fate!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="new_game">New Game</string>
+    <string name="new_sheet">New Sheet</string>
+    <string name="statHint">Stat entry field</string>
+
     <string name="email">Email</string>
     <string name="new_user2">New User</string>
     <string name="login">Login</string>
