@@ -43,6 +43,8 @@ public class Account_Creation extends AppCompatActivity {
                                     Toast.makeText(Account_Creation.this,
                                             "Account was successfully made!" +
                                                     "\nPlease Login to continue", Toast.LENGTH_SHORT).show();
+                                    Intent goToSearch = new Intent(Account_Creation.this, Login.class);
+                                    Account_Creation.this.startActivity(goToSearch);
                                 }
                                 else if (task.isCanceled()){
                                     Toast.makeText(Account_Creation.this,
@@ -54,8 +56,7 @@ public class Account_Creation extends AppCompatActivity {
                                 }
                             }
                         });
-                Intent goToSearch = new Intent(Account_Creation.this, Login.class);
-                Account_Creation.this.startActivity(goToSearch);
+
             }
         });
     }
