@@ -1,5 +1,6 @@
 package com.example.groupwork.Menus;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.example.groupwork.CreateGameActivity;
+import com.example.groupwork.RPG_Model.Game;
+
+import java.util.ArrayList;
+
+import javax.annotation.Nullable;
 
 import com.example.groupwork.R;
 
@@ -17,6 +26,8 @@ import com.example.groupwork.R;
  */
 public class RpgBuddyGameMainMenu extends Fragment {
 
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -25,6 +36,9 @@ public class RpgBuddyGameMainMenu extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Button btnNewGame;
+
 
     public RpgBuddyGameMainMenu() {
         // Required empty public constructor
@@ -55,6 +69,8 @@ public class RpgBuddyGameMainMenu extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -63,4 +79,14 @@ public class RpgBuddyGameMainMenu extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_rpg_buddy_game_main_menu, container, false);
     }
+
+    public void onViewCreated(View view, @Nullable Bundle savedInstance){
+            btnNewGame = getView().findViewById(R.id.button_newGame);
+            btnNewGame.setOnClickListener(view1 -> {
+                Intent goTo = new Intent(getActivity(), CreateGameActivity.class);
+                startActivity(goTo);
+            });
+
+        }
+
 }
