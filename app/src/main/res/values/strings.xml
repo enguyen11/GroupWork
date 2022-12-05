@@ -66,5 +66,9 @@
     <string name="new_sheet">New Sheet</string>
     <string name="statHint">Stat entry field</string>
 
+    <string name="email">Email</string>
+    <string name="new_user2">New User</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
 
 </resources>
