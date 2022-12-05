@@ -7,6 +7,13 @@ android {
 
     compileSdk 32
 
+    signingConfigs {
+        release{
+            v1SigningEnabled false
+            v2SigningEnabled true
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.groupwork"
         minSdk 21
