@@ -57,7 +57,7 @@ public class rpgBuddyDiceRoller extends Fragment {
 
     public HashMap<Integer, Integer> diceMap;
     private threadedDiceThrow helperObject;
-    private Thread secundaryThread;
+    private Thread secondaryThread;
     private Handler handler;
     private TextView resultView;
 
@@ -136,7 +136,7 @@ public class rpgBuddyDiceRoller extends Fragment {
 
         // helper processor
         helperObject = new threadedDiceThrow(this);
-        secundaryThread = new Thread(helperObject);
+        secondaryThread = new Thread(helperObject);
 
         // Define gridview
         GridView gridView = view.findViewById(R.id.diceRollerGrid);
@@ -211,7 +211,7 @@ public class rpgBuddyDiceRoller extends Fragment {
         throwDice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                secundaryThread.run();
+                secondaryThread.run();
             }
         });
 
@@ -240,7 +240,7 @@ public class rpgBuddyDiceRoller extends Fragment {
                             Log.d("SENSOR", "onSensorChanged: sensor movement detected" + String.format("%f %f %f", xAcc, yAcc, zAcc));
                             if ((zAcc > 8 && xAcc > 8) || (yAcc > 8 && xAcc > 8) || (zAcc > 8 && yAcc > 8)) {
                                 Log.d("TRIGGER", "onSensorChanged: sensor movement detected" + String.format("%f %f %f", xAcc, yAcc, zAcc));
-                                secundaryThread.run();
+                                secondaryThread.run();
                             }
 
                         }
@@ -266,7 +266,7 @@ public class rpgBuddyDiceRoller extends Fragment {
                 @Override
                 public void onClick(View view) {
                     setModifier(getModifier() -1);
-                    upadateResult(getLastResult());
+                    updateResult(getLastResult());
                     updateModifierViews();
                 }
             });
@@ -275,7 +275,7 @@ public class rpgBuddyDiceRoller extends Fragment {
                 @Override
                 public void onClick(View view) {
                     setModifier(getModifier() + 1);
-                    upadateResult(getLastResult());
+                    updateResult(getLastResult());
                     updateModifierViews();
                 }
             });
@@ -317,7 +317,7 @@ public class rpgBuddyDiceRoller extends Fragment {
         return handler;
     }
 
-    public void upadateResult(int res) {
+    public void updateResult(int res) {
         lastResult = res;
         Integer currentResult = res + this.modifier;
         this.resultView.setText(currentResult.toString());
@@ -398,7 +398,7 @@ class threadedDiceThrow implements Runnable {
                 long currentTime = System.currentTimeMillis();
                 if (currentTime - cooldown <= 400.00 && cooldown != 0L) return;
                 cooldown = currentTime;
-                mainClass.upadateResult(diceThrow.getResult());
+                mainClass.updateResult(diceThrow.getResult());
                 mainClass.getHistory().add(diceThrow.toString());
                 mainClass.getAdapter().notifyDataSetChanged();
                 mainClass.scrollUpHistory();
