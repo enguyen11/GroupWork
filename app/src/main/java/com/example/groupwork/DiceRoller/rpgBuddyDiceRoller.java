@@ -145,8 +145,6 @@ public class rpgBuddyDiceRoller extends Fragment {
 
         // define buttons
 
-        // EXAMPLE DIE
-        //TODO put more pleasing looking images, and correct mistakes in the labels. (one label is wrong)
         ArrayList<DiceItem> items = new ArrayList<>();
         items.add(new DiceItem(20, 0, R.drawable.sticker_d20_die_emote));
         items.add(new DiceItem(12, 0, R.drawable.sticker_d12_die_emote));

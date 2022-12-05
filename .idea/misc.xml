@@ -52,9 +52,15 @@
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_dnd_apiactivity.xml" value="0.152" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_main2.xml" value="0.15081521739130435" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_rpg_buddy_main_menu.xml" value="0.1802536231884058" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_sheet_builder.xml" value="0.1802536231884058" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dice_roll_history_item.xml" value="0.1802536231884058" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dicecard.xml" value="0.4651539708265802" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dnd_api_menu.xml" value="0.32472826086956524" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/equipment_arrange.xml" value="0.264" />
-        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_dice_roller.xml" value="0.4" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_character_editor.xml" value="0.1802536231884058" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_dice_roller.xml" value="0.2" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_game_main_menu.xml" value="0.1802536231884058" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/item_card.xml" value="0.536" />
       </map>
     </option>
