@@ -5,13 +5,33 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.groupwork.CharacterEditor.RpgBuddyCharacterEditor;
 import com.example.groupwork.R;
 import com.example.groupwork.DiceRoller.rpgBuddyDiceRoller;
+import android.view.View;
+import android.widget.Button;
+
+import com.example.groupwork.RPG_Model.Game;
+import com.example.groupwork.RPG_Model.Player;
+import com.google.android.material.bottomappbar.BottomAppBar;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class RpgBuddyMainMenu extends AppCompatActivity {
+
+    private ArrayList<Game> myGames;
+    private Button btnNewGame;
+    private Button btnNewSheet;
+    private Player user;
+    private FirebaseDatabase db;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,20 +39,32 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_rpg_buddy_main_menu);
 
         changeFragment(new RpgBuddyGameMainMenu());
+        db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
+        mDatabase = db.getReference("Users");
+        user = new Player("User");
+        mDatabase.child("User").setValue(user);
 
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.RpgBuddyBottomNav);
         bottomNav.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+            Fragment fragment;
             if (R.id.rpgBuddyGameMainMenu == itemId) {
-                changeFragment(new RpgBuddyGameMainMenu());
+                fragment = new RpgBuddyGameMainMenu();
+                changeFragment(fragment);
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {
-                changeFragment(new RpgBuddyGameMainMenu());
+                fragment = new RpgBuddyCharacterEditor();
+                Bundle args = new Bundle();
+                args.putString("userID", user.getName());
+                fragment.setArguments(args);
+                changeFragment(fragment);
             } else if (R.id.rpgBuddyDiceRoller == itemId) {
-                changeFragment(new rpgBuddyDiceRoller());
+                fragment = new rpgBuddyDiceRoller();
+                changeFragment(fragment);
             }
             return true;
         });
+
     }
 
 
