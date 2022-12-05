@@ -61,7 +61,11 @@ public class DiceGridAdapter extends BaseAdapter {
         ImageView diceImage = view.findViewById(R.id.diceImage);
         TextView quantity = view.findViewById(R.id.quantity);
 
+        diceImage.setAdjustViewBounds(true);
+        diceImage.setScaleType(ImageView.ScaleType.FIT_START);
+        diceImage.setMaxWidth(5);
         diceImage.setImageResource(diceItems.get(pos).getResource());
+
         Integer i = diceItems.get(pos).getQuantity();
         quantity.setText(i.toString());
 

@@ -25,11 +25,12 @@
         android:id="@+id/throwButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:contentDescription="@string/prompt_throw"
         android:src="@drawable/perspective_dice_six_faces_two"
-        app:layout_constraintEnd_toEndOf="@+id/rollsText3"
-        app:layout_constraintTop_toBottomOf="@+id/rollsText3" />
+        app:layout_constraintEnd_toEndOf="@+id/roll_info"
+        app:layout_constraintTop_toBottomOf="@+id/roll_info" />
 
     <TextView
         android:id="@+id/clearBtn"
@@ -56,14 +57,15 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/rollsText3"
+        android:id="@+id/roll_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Shake or press button to roll:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/rollsText"
-        app:layout_constraintTop_toTopOf="@+id/rollsText" />
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <TextView
         android:id="@+id/total_label"
@@ -79,8 +81,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/historyView"
-        android:layout_width="395dp"
+        android:layout_width="0dp"
         android:layout_height="154dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -92,23 +96,9 @@
         android:layout_height="wrap_content"
         android:text="Scroll to see past rolls"
         app:layout_constraintBottom_toTopOf="@+id/historyView"
-        app:layout_constraintEnd_toStartOf="@+id/rollsText3"
+        app:layout_constraintEnd_toStartOf="@+id/roll_info"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <GridView
-        android:id="@+id/diceRollerGrid"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.421"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.545">
-
-    </GridView>
 
     <ImageView
         android:id="@+id/chevronLeft"
@@ -173,5 +163,19 @@
         app:layout_constraintBottom_toTopOf="@+id/modLeft"
         app:layout_constraintEnd_toStartOf="@+id/chevronLeft"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <GridView
+        android:id="@+id/diceRollerGrid"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.543">
+
+    </GridView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
