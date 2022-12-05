@@ -53,14 +53,19 @@ public class rpgBuddyDiceRoller extends Fragment {
     private String mParam2;
 
     // normal fields
-    private Integer lastResult;
+    private Integer lastResult; // this int contains the last UNMODIFIED result, no modifiers applied.
+
     public HashMap<Integer, Integer> diceMap;
     private threadedDiceThrow helperObject;
     private Thread secundaryThread;
     private Handler handler;
     private TextView resultView;
+
+
+    //TODO style this button to look like one
     private TextView clearBtn;
     private RecyclerView recyclerView;
+
     private RecyclerView.Adapter historyAdapter;
     private List<String> history;
     private Integer modifier;
@@ -104,11 +109,10 @@ public class rpgBuddyDiceRoller extends Fragment {
         }
     }
 
+    // this works like onCreate but in a fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         // modifier
         modifier = 0;
 
@@ -141,7 +145,8 @@ public class rpgBuddyDiceRoller extends Fragment {
 
         // define buttons
 
-        // add all of the items
+        // EXAMPLE DIE
+        //TODO put more pleasing looking images, and correct mistakes in the labels. (one label is wrong)
         ArrayList<DiceItem> items = new ArrayList<>();
         items.add(new DiceItem(20, 0, R.drawable.d20_black));
         items.add(new DiceItem(12, 0, R.drawable.d12_black));
@@ -153,7 +158,7 @@ public class rpgBuddyDiceRoller extends Fragment {
         gridView.setNumColumns(3);
 
 
-        // grid view on item listener
+        // grid view listener controls when a die is pressed
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -163,7 +168,7 @@ public class rpgBuddyDiceRoller extends Fragment {
                 item.updateQuantity();
                 addToDiceMap(item.getType());
                 if (getVibrator() != null){
-                    getVibrator().vibrate(60);
+                    getVibrator().vibrate(20);
                 }
             }
         });
@@ -179,7 +184,7 @@ public class rpgBuddyDiceRoller extends Fragment {
                     item.updateQuantity();
                     addToDiceMap(item.getType());
                     if (getVibrator() != null){
-                        getVibrator().vibrate(100);
+                        getVibrator().vibrate(50);
                     }
                     return true;
                 }
@@ -218,7 +223,7 @@ public class rpgBuddyDiceRoller extends Fragment {
         recyclerView.setAdapter(historyAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        // sensor
+        // sensor for the rollers
         this.sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         if (this.sensorManager != null) {
             Sensor temp = this.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -313,8 +318,9 @@ public class rpgBuddyDiceRoller extends Fragment {
     }
 
     public void upadateResult(int res) {
-        lastResult = res + this.modifier;
-        this.resultView.setText(lastResult.toString());
+        lastResult = res;
+        Integer currentResult = res + this.modifier;
+        this.resultView.setText(currentResult.toString());
     }
 
     public RecyclerView.Adapter getAdapter() {
@@ -344,6 +350,7 @@ public class rpgBuddyDiceRoller extends Fragment {
         modifier = newMod;
     }
 
+    // updates the numbers that are next to the final result
     public void updateModifierViews(){
         if (modifier == 0){
             modifierRight.setText("+0");
@@ -364,7 +371,7 @@ public class rpgBuddyDiceRoller extends Fragment {
 
 /**
  * This class helps process all the small calculations
- * required to return the result for every throw.
+ * required to return the result for every roll.
  */
 class threadedDiceThrow implements Runnable {
 
