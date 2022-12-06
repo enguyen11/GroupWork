@@ -6,12 +6,18 @@ import androidx.constraintlayout.widget.Barrier;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Player;
@@ -22,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +51,9 @@ public class CharacterSheetActivity extends AppCompatActivity {
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
     private Context context;
+    private TableLayout infoTable;
+    private TableLayout statTable;
+    private TableLayout resourceTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +66,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
         if (extras != null) {
             username = extras.getString("player");
         }
-        setContentView(R.layout.activity_character_sheet);
+        setContentView(R.layout.activity_character_sheet2);
         infoViews = new ArrayList<>();
         statViews = new ArrayList<>();
         resourceViews = new ArrayList<>();
@@ -144,6 +155,9 @@ public class CharacterSheetActivity extends AppCompatActivity {
             }
             sheetType = user.getSheets().get(0);
             infoFields = sheetType.getInfo();
+            stats = sheetType.getStats();
+
+            /*
              SheetAdapter adapter = new SheetAdapter(context, infoFields);
              infoRecycler.setAdapter(adapter);
              infoRecycler.setLayoutManager(new GridLayoutManager(context, 2));
@@ -153,7 +167,47 @@ public class CharacterSheetActivity extends AppCompatActivity {
              copy1.setAdapter(adapter);
              copy2.setAdapter(adapter);
             copy1.setLayoutManager(new GridLayoutManager(context, 3));
-              copy2.setLayoutManager(new GridLayoutManager(context, 2));
+              copy2.setLayoutManager(new GridLayoutManager(context, 2));*/
+
+            infoTable = findViewById(R.id.infoTable);
+            TableRow row = findViewById(R.id.firstRow);
+            TableRow secondrow = new TableRow(context);
+            infoTable.addView(secondrow);
+
+            infoTable.setStretchAllColumns(true);
+            //TableLayout.LayoutParams params = new TableLayout.LayoutParams();
+            int n = 0;
+            for(String field : infoFields){
+                TextView view = new TextView(context);
+                view.setText(field);
+                row.addView(view);
+                TextView eview = new EditText(context);
+                secondrow.addView(eview);
+            }
+
+
+
+            statTable = findViewById(R.id.statTable);
+            //statTable.setStretchAllColumns(true);
+            row = new TableRow(context);
+            secondrow = new TableRow(context);
+            statTable.addView(row);
+            statTable.addView(secondrow);
+            for (String key : stats.keySet()){
+                System.out.println("Adding key: " + key);
+                TextView view = new TextView(context);
+                view.setText(key);
+                row.addView(view);
+                RecyclerView rview = new RecyclerView(context);
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                rview.setLayoutParams(params);
+                rview.setAdapter(new SheetAdapter(context, stats.get(key)));
+                rview.setLayoutManager(new LinearLayoutManager(context));
+               // view.setText(stats.get(key).toString());
+                secondrow.addView(rview);
+            }
+            statTable.addView(new TableRow(context));
+            //statTable.addView(row);
         }
 
         @Override

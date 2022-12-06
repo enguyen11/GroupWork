@@ -3,14 +3,12 @@ package com.example.groupwork.CharacterEditor;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.groupwork.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SheetAdapter extends RecyclerView.Adapter<SheetViewHolder> {
@@ -24,7 +22,7 @@ public class SheetAdapter extends RecyclerView.Adapter<SheetViewHolder> {
     @NonNull
     @Override
     public SheetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new SheetViewHolder(LayoutInflater.from(context).inflate(R.layout.sheet_stat_card, null));
+        return new SheetViewHolder(LayoutInflater.from(context).inflate(R.layout.sheet_info_card, null));
     }
 
     @Override

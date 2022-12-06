@@ -65,6 +65,6 @@
     <string name="new_game">New Game</string>
     <string name="new_sheet">New Sheet</string>
     <string name="statHint">Stat entry field</string>
-
+    <string name="infoHint">Enter</string>
 
 </resources>
