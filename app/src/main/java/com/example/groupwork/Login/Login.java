@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.groupwork.Chat.Chat;
 import com.example.groupwork.Menus.RpgBuddyMainMenu;
 import com.example.groupwork.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,7 +48,7 @@ public class Login extends AppCompatActivity {
                                 if (task.isSuccessful()){
                                     Toast.makeText(Login.this,
                                             "Login was successful", Toast.LENGTH_SHORT).show();
-                                    Intent goToSearch = new Intent(Login.this, RpgBuddyMainMenu.class);
+                                    Intent goToSearch = new Intent(Login.this, Chat.class);
                                     goToSearch.putExtra("user", email.getText().toString());
                                     Login.this.startActivity(goToSearch);
                                 }

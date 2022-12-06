@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
+import com.example.groupwork.Chat.Chat;
 import com.example.groupwork.DndApiActivity.DndAPIActivity;
 import com.example.groupwork.Login.Login;
 import com.example.groupwork.Menus.RpgBuddyMainMenu;
@@ -44,5 +46,6 @@ public class MainActivity extends AppCompatActivity {
             Intent goToSearch = new Intent(MainActivity.this, About.class);
             MainActivity.this.startActivity(goToSearch);
         });
+
     }
 }

@@ -67,4 +67,10 @@
     <string name="login">Login</string>
     <string name="password">Password</string>
 
+    <string name="senderEmail">senderEmail</string>
+    <string name="some_message">Some Message</string>
+    <string name="go_to_chat">Go To Chat</string>
+    <string name="please_enter_your_message_here">Please enter your message here</string>
+    <string name="enter_your_message_here">Enter your message here</string>
+
 </resources>
