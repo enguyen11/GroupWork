@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="222dp" />
+        app:layout_constraintGuide_begin="206dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/throwButton"
@@ -35,11 +35,24 @@
         app:layout_constraintTop_toBottomOf="@+id/roll_info" />
 
     <TextView
+        android:id="@+id/roll_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/string_shake_or_press_button_to_roll"
+        app:layout_constraintBottom_toBottomOf="@+id/diceRollerGrid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/rollsText"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <TextView
         android:id="@+id/clearBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/string_clear"
+        android:textColor="#311B92"
         app:layout_constraintBottom_toTopOf="@+id/currentResult"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/total_label"
@@ -59,17 +72,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/roll_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/string_shake_or_press_button_to_roll"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/rollsText"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
-
-    <TextView
         android:id="@+id/total_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,7 +86,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/historyView"
         android:layout_width="0dp"
-        android:layout_height="154dp"
+        android:layout_height="100dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toBottomOf="parent"

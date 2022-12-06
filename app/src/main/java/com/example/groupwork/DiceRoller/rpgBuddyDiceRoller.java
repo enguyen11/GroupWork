@@ -71,7 +71,7 @@ public class rpgBuddyDiceRoller extends Fragment {
     private Integer modifier;
     private TextView modifierLeft;
     private TextView modifierRight;
-    private Vibrator vibrator; //insert joke here
+    private Vibrator vibrator;
 
     // shake feature
     private SensorManager sensorManager;
@@ -200,6 +200,9 @@ public class rpgBuddyDiceRoller extends Fragment {
                     item.setQuantity(0);
                     item.updateQuantity();
                 }
+                lastResult = 0;
+                setModifier(0);
+                updateModifierViews();
                 resultView.setText("0");
             }
         });
