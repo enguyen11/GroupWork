@@ -10,10 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.groupwork.CreateGameActivity;
-import com.example.groupwork.RPG_Model.Game;
-
-import java.util.ArrayList;
+import com.example.groupwork.GameCreation.CreateGameActivity;
 
 import javax.annotation.Nullable;
 

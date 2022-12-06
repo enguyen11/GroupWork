@@ -32,46 +32,41 @@
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/fix/GroupWork/app/src/main/res/layout/activity_final_project.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/fix/GroupWork/app/src/main/res/layout/activity_main.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.193" />
-        <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/drawable/d6_black.xml" value="0.193" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/drawable/ic_launcher_background.xml" value="0.193" />
-        <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_character_sheet.xml" value="0.33" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_chat.xml" value="0.34601449275362317" />
-        <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_create_game.xml" value="0.33" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_dnd_apiactivity.xml" value="0.34601449275362317" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_firebase.xml" value="0.34601449275362317" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_friends.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_messages.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_messaging_main.xml" value="0.34601449275362317" />
-        <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_rpg_buddy_main_menu.xml" value="0.34601449275362317" />
-        <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_sheet_builder.xml" value="0.34601449275362317" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_show_sticker.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_show_stickers.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_sticker_account.xml" value="0.34601449275362317" />
-        <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/blank.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_character_editor.xml" value="0.34601449275362317" />
-        <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_game_main_menu.xml" value="0.34601449275362317" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_sticker_selection.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/friend_card.xml" value="0.2" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/message_card.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sheet_stat_card.xml" value="0.34601449275362317" />
-        <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sheet_type_card.xml" value="0.34601449275362317" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card2.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card_with_sender.xml" value="0.34601449275362317" />
-        <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/menu/rpg_buddy_bottom_nav_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/drawable/d10_black.xml" value="0.2215" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_dnd_apiactivity.xml" value="0.152" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_game_creation.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_main2.xml" value="0.15081521739130435" />
-        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_rpg_buddy_main_menu.xml" value="0.1933876811594203" />
-        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dice_roll_history_item.xml" value="0.1933876811594203" />
-        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dicecard.xml" value="0.2477355072463768" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_player_join_game.xml" value="0.2164855072463768" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_rpg_buddy_main_menu.xml" value="0.1802536231884058" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_sheet_builder.xml" value="0.1802536231884058" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dialog_dm_or_player.xml" value="0.2164855072463768" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dice_roll_history_item.xml" value="0.1802536231884058" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dicecard.xml" value="0.4651539708265802" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dnd_api_menu.xml" value="0.32472826086956524" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/equipment_arrange.xml" value="0.264" />
-        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_character_editor.xml" value="0.2477355072463768" />
-        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_dice_roller.xml" value="0.4" />
-        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_game_main_menu.xml" value="0.2477355072463768" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_character_editor.xml" value="0.1802536231884058" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_dice_roller.xml" value="0.2" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_game_main_menu.xml" value="0.4" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_sticker_selection.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/item_card.xml" value="0.536" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/message_card.xml" value="0.1539855072463768" />
       </map>
     </option>
   </component>

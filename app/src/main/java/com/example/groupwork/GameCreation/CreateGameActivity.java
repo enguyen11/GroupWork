@@ -1,8 +1,10 @@
-package com.example.groupwork;
+package com.example.groupwork.GameCreation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.groupwork.R;
 
 public class CreateGameActivity extends AppCompatActivity {
 

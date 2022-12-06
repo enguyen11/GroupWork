@@ -70,5 +70,14 @@
     <string name="new_user2">New User</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="string_select_your_game">Select your game:</string>
+    <string name="string_number_of_players">Number of Players:</string>
+    <string name="string_set_description">Set Description</string>
+    <string name="string_save">Save</string>
+    <string name="string_campaign_name">Campaign Name</string>
+    <string name="string_rpg_system">RPG System</string>
+    <string name="string_0">0</string>
+    <string name="string_select_system">Select System:</string>
+    <string name="string_description">Description</string>
 
 </resources>
