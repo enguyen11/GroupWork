@@ -79,5 +79,10 @@
     <string name="string_0">0</string>
     <string name="string_select_system">Select System:</string>
     <string name="string_description">Description</string>
+    <string name="string_notes">Notes</string>
+    <string name="string_select_character">Select Character</string>
+    <string name="string_campaign_id">Campaign ID:</string>
+    <string name="join_game">Join Game</string>
+    <string name="string_new_character">New Character</string>
 
 </resources>

@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="@string/string_set_description"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/num_players_label" />
 
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_select_system" />
 
     <EditText
-        android:id="@+id/editTextNumber"
+        android:id="@+id/editText_numPlayers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -89,12 +89,12 @@
         android:minHeight="48dp"
         android:text="@string/string_description"
         app:layout_constraintBottom_toBottomOf="@+id/set_descr_label"
-        app:layout_constraintEnd_toEndOf="@+id/editTextNumber"
-        app:layout_constraintStart_toStartOf="@+id/editTextNumber"
+        app:layout_constraintEnd_toEndOf="@+id/editText_numPlayers"
+        app:layout_constraintStart_toStartOf="@+id/editText_numPlayers"
         app:layout_constraintTop_toTopOf="@+id/set_descr_label" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/string_save"
@@ -117,7 +117,7 @@
         android:id="@+id/spinner3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/string_rpg_systen"
+        android:contentDescription="@string/string_rpg_system"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="@+id/text_select_system"
         app:layout_constraintEnd_toEndOf="@+id/editText_campaignName"
