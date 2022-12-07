@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:text="@string/string_number_of_players"
         app:layout_constraintBottom_toTopOf="@+id/set_descr_label"
-        app:layout_constraintStart_toStartOf="@+id/set_descr_label"
+        app:layout_constraintEnd_toStartOf="@+id/editText_numPlayers"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
@@ -45,13 +47,12 @@
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
+        android:hint="@string/string_campaign_name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="@string/string_campaign_name"
         app:layout_constraintBottom_toBottomOf="@+id/textView11"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
-        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="@+id/editText_numPlayers"
+        app:layout_constraintStart_toStartOf="@+id/editText_numPlayers"
         app:layout_constraintTop_toTopOf="@+id/textView11"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
@@ -68,15 +69,16 @@
         android:id="@+id/editText_numPlayers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/string_0"
         android:inputType="number"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="@+id/num_players_label"
-        app:layout_constraintEnd_toEndOf="@+id/editText_campaignName"
-        app:layout_constraintStart_toStartOf="@+id/editText_campaignName"
-        app:layout_constraintTop_toTopOf="@+id/num_players_label"
-        android:autofillHints="" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/num_players_label"
+        app:layout_constraintTop_toTopOf="@+id/num_players_label" />
 
     <EditText
         android:id="@+id/editTextTextPersonName3"
@@ -84,10 +86,10 @@
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
+        android:hint="@string/string_description"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="@string/string_description"
         app:layout_constraintBottom_toBottomOf="@+id/set_descr_label"
         app:layout_constraintEnd_toEndOf="@+id/editText_numPlayers"
         app:layout_constraintStart_toStartOf="@+id/editText_numPlayers"

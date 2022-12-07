@@ -1,10 +1,12 @@
 package com.example.groupwork.Menus;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,9 @@ import com.example.groupwork.GameCreation.CreateGameActivity;
 
 import javax.annotation.Nullable;
 
+import com.example.groupwork.GameCreation.GMGameCreation;
+import com.example.groupwork.GameCreation.PlayerJoinGame;
+import com.example.groupwork.GameCreation.SelectPlayerTypeDialog;
 import com.example.groupwork.R;
 
 /**
@@ -21,14 +26,15 @@ import com.example.groupwork.R;
  * Use the {@link RpgBuddyGameMainMenu#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RpgBuddyGameMainMenu extends Fragment {
+public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeDialog.OnInputListener{
 
-
+    private static final String TAG = "RpgBuddyGameMainMenu";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -80,10 +86,22 @@ public class RpgBuddyGameMainMenu extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstance){
             btnNewGame = getView().findViewById(R.id.button_newGame);
             btnNewGame.setOnClickListener(view1 -> {
-                Intent goTo = new Intent(getActivity(), CreateGameActivity.class);
-                startActivity(goTo);
+                new SelectPlayerTypeDialog().show(getActivity().getSupportFragmentManager(), TAG);
             });
 
         }
 
+    @Override
+    public void sendInput(String selection) {
+        Intent i = null;
+        Context context = getActivity().getApplicationContext();
+        if(selection == "gm") {
+            i = new Intent(context, GMGameCreation.class);
+        } else if(selection == "player"){
+            i = new Intent(context, PlayerJoinGame.class);
+        } else {
+            return;
+        }
+        startActivity(i);
+    }
 }

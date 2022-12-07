@@ -58,10 +58,11 @@
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
+        android:hint="@string/string_description"
         android:importantForAutofill="no"
-        android:inputType="textPersonName"
+        android:inputType="textLongMessage"
         android:minHeight="48dp"
-        android:text="@string/string_description"
+        android:textColorHint="#757575"
         app:layout_constraintBottom_toBottomOf="@+id/notes_label"
         app:layout_constraintStart_toStartOf="@+id/spinner3"
         app:layout_constraintTop_toTopOf="@+id/notes_label" />

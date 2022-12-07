@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,6 +17,8 @@ import com.example.groupwork.Login.Login;
 import com.example.groupwork.MainActivity;
 import com.example.groupwork.R;
 import com.example.groupwork.DiceRoller.rpgBuddyDiceRoller;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -72,7 +75,6 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
             return true;
         });
 
-        new SelectPlayerTypeDialog().show(getSupportFragmentManager(), TAG);
 
     }
 
@@ -89,15 +91,16 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
     }
 
     @Override
-    public void sendInput(boolean isGM) {
-        Intent goToSearch;
-        if(isGM) {
-            goToSearch = new Intent(RpgBuddyMainMenu.this, GMGameCreation.class);
+    public void sendInput(String selection) {
+        Intent i = null;
+        Context context = getApplicationContext();
+        if(selection == "gm") {
+            i = new Intent(context, GMGameCreation.class);
+        } else if(selection == "player"){
+            i = new Intent(context, PlayerJoinGame.class);
+        } else {
+            return;
         }
-        else {
-            goToSearch = new Intent(RpgBuddyMainMenu.this, PlayerJoinGame.class);
-        }
-        RpgBuddyMainMenu.this.startActivity(goToSearch);
-
+        startActivity(i);
     }
 };

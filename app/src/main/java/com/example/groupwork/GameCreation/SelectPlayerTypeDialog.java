@@ -19,7 +19,7 @@ public class SelectPlayerTypeDialog extends DialogFragment {
     public static String TAG = "SelectPlayerTypeDialog";
 
     public interface OnInputListener {
-        void sendInput(boolean isGM);
+        void sendInput(String selection);
     }
 
     public OnInputListener onInputListener;
@@ -32,7 +32,7 @@ public class SelectPlayerTypeDialog extends DialogFragment {
 
         actionCancel = view.findViewById(R.id.action_cancel);
         selectPlayer = view.findViewById(R.id.action_party_member);
-        selectGM = view.findViewById(R.id.action_party_member);
+        selectGM = view.findViewById(R.id.action_gm);
 
         actionCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +45,7 @@ public class SelectPlayerTypeDialog extends DialogFragment {
         selectPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onInputListener.sendInput(false);
+                onInputListener.sendInput("player");
                 getDialog().dismiss();
             }
         });
@@ -53,7 +53,7 @@ public class SelectPlayerTypeDialog extends DialogFragment {
         selectGM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onInputListener.sendInput(true);
+                onInputListener.sendInput("gm");
                 getDialog().dismiss();
             }
         });
