@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/string_number_of_players"
         app:layout_constraintBottom_toTopOf="@+id/set_descr_label"
-        app:layout_constraintEnd_toStartOf="@+id/editText_numPlayers"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/picker_numPlayers"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -21,10 +20,9 @@
         android:id="@+id/set_descr_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:text="@string/string_set_description"
         app:layout_constraintBottom_toTopOf="@+id/btn_save"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/num_players_label"
         app:layout_constraintTop_toBottomOf="@+id/num_players_label" />
 
     <TextView
@@ -51,10 +49,10 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView11"
-        app:layout_constraintEnd_toEndOf="@+id/editText_numPlayers"
-        app:layout_constraintStart_toStartOf="@+id/editText_numPlayers"
+        app:layout_constraintEnd_toEndOf="@+id/picker_numPlayers"
+        app:layout_constraintStart_toStartOf="@+id/picker_numPlayers"
         app:layout_constraintTop_toTopOf="@+id/textView11"
-        tools:ignore="DuplicateSpeakableTextCheck" />
+        tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
 
     <TextView
         android:id="@+id/textView11"
@@ -65,10 +63,10 @@
         app:layout_constraintStart_toStartOf="@+id/num_players_label"
         app:layout_constraintTop_toBottomOf="@+id/text_select_system" />
 
-    <EditText
-        android:id="@+id/editText_numPlayers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <NumberPicker
+        android:id="@+id/picker_numPlayers"
+        android:layout_width="103dp"
+        android:layout_height="69dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/string_0"
@@ -81,7 +79,7 @@
         app:layout_constraintTop_toTopOf="@+id/num_players_label" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/editText_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints=""
@@ -91,8 +89,8 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="@+id/set_descr_label"
-        app:layout_constraintEnd_toEndOf="@+id/editText_numPlayers"
-        app:layout_constraintStart_toStartOf="@+id/editText_numPlayers"
+        app:layout_constraintEnd_toEndOf="@+id/picker_numPlayers"
+        app:layout_constraintStart_toStartOf="@+id/picker_numPlayers"
         app:layout_constraintTop_toTopOf="@+id/set_descr_label" />
 
     <Button
@@ -116,7 +114,7 @@
         app:layout_constraintTop_toBottomOf="@+id/new_game_title" />
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/characterSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:contentDescription="@string/string_rpg_system"

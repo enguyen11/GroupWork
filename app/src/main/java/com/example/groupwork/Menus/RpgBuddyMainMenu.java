@@ -40,6 +40,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
     private Player user;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
+    private String userEmail;
 
     public static String TAG = "RpgBuddyMainMenu";
 
@@ -49,9 +50,15 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         setContentView(R.layout.activity_rpg_buddy_main_menu);
 
         changeFragment(new RpgBuddyGameMainMenu());
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userEmail = extras.getString("user");
+        }
+
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         mDatabase = db.getReference("Users");
-        user = new Player("User");
+        user = new Player(userEmail);
         mDatabase.child("User").setValue(user);
 
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
@@ -101,6 +108,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         } else {
             return;
         }
+        i.putExtra("user", user.getName());
         startActivity(i);
     }
 };

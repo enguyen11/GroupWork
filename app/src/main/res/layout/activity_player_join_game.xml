@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_numPlayers"
+        android:id="@+id/picker_numPlayers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints=""
@@ -39,8 +39,8 @@
         android:inputType="number"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="@+id/campaign_id_label"
-        app:layout_constraintEnd_toEndOf="@+id/spinner3"
-        app:layout_constraintStart_toStartOf="@+id/spinner3"
+        app:layout_constraintEnd_toEndOf="@+id/characterSpinner"
+        app:layout_constraintStart_toStartOf="@+id/characterSpinner"
         app:layout_constraintTop_toTopOf="@+id/campaign_id_label" />
 
     <TextView
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/join_game_title" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/editText_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints=""
@@ -64,7 +64,7 @@
         android:minHeight="48dp"
         android:textColorHint="#757575"
         app:layout_constraintBottom_toBottomOf="@+id/notes_label"
-        app:layout_constraintStart_toStartOf="@+id/spinner3"
+        app:layout_constraintStart_toStartOf="@+id/characterSpinner"
         app:layout_constraintTop_toTopOf="@+id/notes_label" />
 
     <Button
@@ -79,7 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/notes_label" />
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/characterSpinner"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
@@ -97,8 +97,8 @@
         android:text="@string/string_new_character"
         android:textColor="#0277BD"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/spinner3"
-        app:layout_constraintTop_toBottomOf="@+id/spinner3" />
+        app:layout_constraintEnd_toEndOf="@+id/characterSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/characterSpinner" />
 
     <TextView
         android:id="@+id/text_select_character"
@@ -106,7 +106,7 @@
         android:layout_height="wrap_content"
         android:text="@string/string_select_character"
         app:layout_constraintBottom_toTopOf="@+id/notes_label"
-        app:layout_constraintEnd_toStartOf="@+id/spinner3"
+        app:layout_constraintEnd_toStartOf="@+id/characterSpinner"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/campaign_id_label" />
