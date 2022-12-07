@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import com.example.groupwork.GameCreation.CreateGameActivity;
+import android.widget.TextView;
 
 import javax.annotation.Nullable;
 
@@ -29,6 +28,10 @@ import com.example.groupwork.R;
 public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeDialog.OnInputListener{
 
     private static final String TAG = "RpgBuddyGameMainMenu";
+
+    private RecyclerView games_recyclerView;
+    private TextView emptyView;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
