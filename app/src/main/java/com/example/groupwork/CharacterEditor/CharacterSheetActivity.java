@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -54,6 +55,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
     private TableLayout infoTable;
     private TableLayout statTable;
     private TableLayout resourceTable;
+    private RecyclerView statRec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,23 +190,43 @@ public class CharacterSheetActivity extends AppCompatActivity {
 
 
             statTable = findViewById(R.id.statTable);
-            //statTable.setStretchAllColumns(true);
+            statRec = findViewById(R.id.statRecycler);
+            //************************************************Try this idea *****************************
+            statTable.setShrinkAllColumns(true);
+
             row = new TableRow(context);
             secondrow = new TableRow(context);
             statTable.addView(row);
             statTable.addView(secondrow);
             for (String key : stats.keySet()){
                 System.out.println("Adding key: " + key);
+                System.out.println("N: " + n);
                 TextView view = new TextView(context);
                 view.setText(key);
+                if(n > 3){
+                    System.out.println("Making new rows!");
+                    row = new TableRow(context);
+                    secondrow = new TableRow(context);
+                    statTable.addView(row);
+                    statTable.addView(secondrow);
+                    n = -1;
+                }
+                ViewGroup.LayoutParams tableParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                row.setLayoutParams(tableParams);
+                secondrow.setLayoutParams(tableParams);
                 row.addView(view);
                 RecyclerView rview = new RecyclerView(context);
-                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                rview.setLayoutParams(params);
+                rview.setHasFixedSize(true);
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                //params.height = 50;
+               // rview.setLayoutParams(params);
                 rview.setAdapter(new SheetAdapter(context, stats.get(key)));
                 rview.setLayoutManager(new LinearLayoutManager(context));
                // view.setText(stats.get(key).toString());
+               // EditText edit = new EditText(context);
+
                 secondrow.addView(rview);
+                n++;
             }
             statTable.addView(new TableRow(context));
             //statTable.addView(row);
