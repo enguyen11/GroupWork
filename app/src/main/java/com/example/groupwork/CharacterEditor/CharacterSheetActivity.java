@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -30,11 +31,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashMap;
+
 
 public class CharacterSheetActivity extends AppCompatActivity {
     private Player user;
@@ -60,6 +59,9 @@ public class CharacterSheetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("CHARACTER SHEET", "onCreate: ON CHARACTER SHEET ACTIVITY");
+        // s
+        setContentView(R.layout.activity_character_sheet2);
         context = this;
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         mDatabase = db.getReference("Users");
@@ -68,7 +70,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
         if (extras != null) {
             username = extras.getString("player");
         }
-        setContentView(R.layout.activity_character_sheet2);
+
         infoViews = new ArrayList<>();
         statViews = new ArrayList<>();
         resourceViews = new ArrayList<>();
