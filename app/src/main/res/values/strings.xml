@@ -80,5 +80,6 @@
     <string name="string_apply_modifiers_label">Apply Modifiers:</string>
     <string name="string_add_modifier">add modifier</string>
     <string name="string_subtract_modifier">subtract modifier</string>
+    <string name="string_please_enter_your_username">Please enter your username</string>
 
 </resources>

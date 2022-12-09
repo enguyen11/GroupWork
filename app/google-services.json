@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "14411872947",
-    "project_id": "cs5220-dndapp",
-    "storage_bucket": "cs5220-dndapp.appspot.com"
+    "project_number": "539527223036",
+    "firebase_url": "https://dndapp-b52b2-default-rtdb.firebaseio.com",
+    "project_id": "dndapp-b52b2",
+    "storage_bucket": "dndapp-b52b2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:14411872947:android:900759157831249026cec6",
+        "mobilesdk_app_id": "1:539527223036:android:f92a5bdc12a79a3b102979",
         "android_client_info": {
           "package_name": "com.example.groupwork"
         }
       },
       "oauth_client": [
         {
-          "client_id": "14411872947-du1dkbg36apq4prpn939n6csokktiqmv.apps.googleusercontent.com",
+          "client_id": "539527223036-alobfd86g9cr0bp8qik22543sga7h2v0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBbY1ZB5Dl3V1h-rDHphn7e9agvRJNljKU"
+          "current_key": "AIzaSyDtbg5jOxpRec96EeASfZ5m9zKMUfwjIo4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "14411872947-du1dkbg36apq4prpn939n6csokktiqmv.apps.googleusercontent.com",
+              "client_id": "539527223036-alobfd86g9cr0bp8qik22543sga7h2v0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
