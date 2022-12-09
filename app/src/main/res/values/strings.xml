@@ -85,5 +85,6 @@
     <string name="join_game">Join Game</string>
     <string name="string_new_character">New Character</string>
     <string name="string_no_games_to_display">No Games to Display</string>
+    <string name="string_please_enter_your_username">Please enter your username</string>
 
 </resources>

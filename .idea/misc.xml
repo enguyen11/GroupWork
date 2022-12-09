@@ -49,11 +49,16 @@
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/conno/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card2.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/drawable/d10_black.xml" value="0.2215" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_account_creation.xml" value="0.2509057971014493" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_create_game.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_dnd_apiactivity.xml" value="0.152" />
-        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_game_creation.xml" value="0.2164855072463768" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_dndlogin.xml" value="0.2509057971014493" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_firebase.xml" value="0.2509057971014493" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_game_creation.xml" value="0.264" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_login.xml" value="0.2509057971014493" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_main2.xml" value="0.15081521739130435" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_messages.xml" value="0.2509057971014493" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_player_join_game.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_rpg_buddy_main_menu.xml" value="0.1802536231884058" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_sheet_builder.xml" value="0.1802536231884058" />
