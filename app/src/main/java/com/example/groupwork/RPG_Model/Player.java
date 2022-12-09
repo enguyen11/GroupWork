@@ -12,7 +12,7 @@ public class Player implements Parcelable {
 
     private String username;
     private ArrayList<SheetType> sheets;
-    private ArrayList<Player> friends;
+    private ArrayList<String> friends;
     private ArrayList<Character> characters;
     private ArrayList<Game> games;
     private ArrayList<Map> maps;
@@ -39,6 +39,7 @@ public class Player implements Parcelable {
     public ArrayList<SheetType> getSheets(){
         return this.sheets;
     }
+    public void addFriend(String friend) {this.friends.add(friend);}
 
 
     private SheetType makeDefault(){
@@ -121,7 +122,7 @@ public class Player implements Parcelable {
 
 
     protected Player(Parcel in) {
-        friends = in.createTypedArrayList(Player.CREATOR);
+        friends = in.createStringArrayList();  //in.createTypedArrayList(String);
         sheets = in.createTypedArrayList(SheetType.CREATOR);
     }
 
@@ -146,7 +147,8 @@ public class Player implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeTypedList(friends);
+        //parcel.writeTypedList(friends);
+        parcel.writeStringList(friends);
         parcel.writeTypedList(sheets);
     }
 }
