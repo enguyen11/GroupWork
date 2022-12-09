@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.groupwork.DNDChat.Message;
 import com.example.groupwork.Menus.RpgBuddyMainMenu;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Player;
@@ -55,6 +57,7 @@ public class DnDLogin extends AppCompatActivity {
             mDatabase = db.getReference("Users");
             Player user = new Player(username);
             checkIfNew(user);
+            Toast.makeText(DnDLogin.this,"Login was successful", Toast.LENGTH_SHORT).show();
             DnDLogin.this.startActivity(openAccount);
         });
 
@@ -79,12 +82,27 @@ public class DnDLogin extends AppCompatActivity {
                         }
                     }
                 }
+                if(isNew){
+                    makeNew(user);
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+    }
+
+    /**
+     * Adds some default values to the user object
+     * Creates a new user in the database
+     * @param user The User instance for the person logging in
+     */
+    private void makeNew(Player user){
+        user.addFriendToMsgList("User1");
+        Message message = new Message("User1", user.getName(), "Start of a conversation");
+        user.addMessageToList(message);
+        mDatabase.child(user.getName()).setValue(user);
     }
 
 }
