@@ -34,10 +34,10 @@ public class DnDLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_firebase);
+        setContentView(R.layout.activity_dndlogin);
 
-        login_button = findViewById(R.id.button_enter_login);
-        username_entry = findViewById(R.id.editText_Username);
+        login_button = findViewById(R.id.button_DnD_login);
+        username_entry = findViewById(R.id.editText_DnDUsername);
         username_list = new ArrayList<>();
 
 

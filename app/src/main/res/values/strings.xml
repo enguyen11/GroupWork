@@ -70,5 +70,6 @@
     <string name="new_user2">New User</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="string_please_enter_your_username">Please enter your username</string>
 
 </resources>
