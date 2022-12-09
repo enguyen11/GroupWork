@@ -62,7 +62,6 @@
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_player_join_game.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_rpg_buddy_main_menu.xml" value="0.1802536231884058" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_sheet_builder.xml" value="0.1802536231884058" />
-        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/activity_sticker_account.xml" value="0.2509057971014493" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dialog_dm_or_player.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dice_roll_history_item.xml" value="0.1802536231884058" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/dicecard.xml" value="0.4651539708265802" />
@@ -76,6 +75,7 @@
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/item_card.xml" value="0.536" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/message_card.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sheet_stat_card.xml" value="0.2164855072463768" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/menu/rpg_buddy_bottom_nav_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

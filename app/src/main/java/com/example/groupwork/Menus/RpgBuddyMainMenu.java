@@ -13,18 +13,14 @@ import com.example.groupwork.CharacterEditor.RpgBuddyCharacterEditor;
 import com.example.groupwork.GameCreation.GMGameCreation;
 import com.example.groupwork.GameCreation.PlayerJoinGame;
 import com.example.groupwork.GameCreation.SelectPlayerTypeDialog;
-import com.example.groupwork.Login.Login;
-import com.example.groupwork.MainActivity;
 import com.example.groupwork.R;
 import com.example.groupwork.DiceRoller.rpgBuddyDiceRoller;
 
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import com.example.groupwork.RPG_Model.Game;
 import com.example.groupwork.RPG_Model.Player;
-import com.google.android.material.bottomappbar.BottomAppBar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +36,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
     private Player user;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
-    private String userEmail;
+    private String username;
 
     public static String TAG = "RpgBuddyMainMenu";
 
@@ -53,12 +49,12 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            userEmail = extras.getString("user");
+            username = extras.getString("username");
         }
 
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         mDatabase = db.getReference("Users");
-        user = new Player(userEmail);
+        user = new Player(username);
         mDatabase.child("User").setValue(user);
 
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
@@ -109,6 +105,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
             return;
         }
         i.putExtra("user", user.getName());
+        String s = i.getStringExtra("user");
         startActivity(i);
     }
 };

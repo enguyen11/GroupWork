@@ -19,7 +19,7 @@ public class Player implements Parcelable {
     private ArrayList<SheetType> sheets;
     private ArrayList<String> friends;
     private ArrayList<Character> characters;
-    private ArrayList<Game> games;
+    private ArrayList<String> games;
     private ArrayList<Boolean> isGameGM;
     private ArrayList<Map> maps;
     private ArrayList<Message> messageList;
@@ -33,6 +33,8 @@ public class Player implements Parcelable {
         sheets = new ArrayList<>();
         messageList = new ArrayList<>();
         friendsList = new ArrayList<>();
+        games = new ArrayList<>();
+        this.games.add("");
         SheetType defaultSheet = makeDefault();
         this.sheets.add(defaultSheet);
 
@@ -58,6 +60,7 @@ public class Player implements Parcelable {
     public void addFriendToMsgList(String friend) {
         this.friendsList.add(friend);
     }
+    public void addGame(String campaignName) {this.games.add(campaignName);}
 
     public void addMessageToList(Message myMessage){
         this.messageList.add(myMessage);

@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.groupwork.Login.Login;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Game;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +35,8 @@ public class GMGameCreation extends AppCompatActivity {
     private String descr;
 
     private FirebaseDatabase db;
-    private DatabaseReference mDatabase;
+    private DatabaseReference userDatabase;
+    private DatabaseReference gameDatabase;
     private Game game;
 
     @Override
@@ -43,12 +46,14 @@ public class GMGameCreation extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            Log.d(TAG, extras.getString("user"));
+            Log.d(TAG, "extras: " + extras.toString());
             user = extras.getString("user");
+            Log.d(TAG, "User: " + user);
         }
 
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
-        mDatabase = db.getReference("Users");
+        userDatabase = db.getReference("Users");
+        gameDatabase = db.getReference("Games");
 
         edittext_campaignName = findViewById(R.id.editText_campaignName);
         gameSystemSpinner = findViewById(R.id.characterSpinner);
@@ -68,7 +73,6 @@ public class GMGameCreation extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 String text;
                 text = adapterView.getItemAtPosition(position).toString();
-                Log.d(TAG, "onItemSelected: " + text);
             }
 
             @Override
@@ -84,18 +88,26 @@ public class GMGameCreation extends AppCompatActivity {
         saveGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 campaignName = edittext_campaignName.getText().toString();
                 numPlayers = picker_numPlayers.getValue();
                 game = new Game(campaignName, user, selectedSystem, numPlayers);
                 if(user != null){
-                    mDatabase.child("User").child(user).child("games").setValue(game);
+                    if(campaignName == "" || campaignName == null)  {
+                        Toast.makeText(GMGameCreation.this,
+                                "Campaign Name required", Toast.LENGTH_SHORT).show();
+                    } else if(numPlayers == 0) {
+                        Toast.makeText(GMGameCreation.this,
+                                "Campaign must have a party of size 1 to 10", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(true); //add game to player
+                        gameDatabase.child(campaignName).setValue(game);
+                    }
+                } else {
+                    Log.e(TAG, "user is null");
                 }
-                if(user != null){
-                    mDatabase.child("User").child(user).child("gameRole").push().setValue(true);
-                }
-
             }
-
         });
     }
 
