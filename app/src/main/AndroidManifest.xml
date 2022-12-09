@@ -31,6 +31,9 @@
             android:name=".Login.Login"
             android:exported="false" />
         <activity
+            android:name=".Login.DnDLogin"
+            android:exported="false" />
+        <activity
             android:name=".StickerActivity.Messages"
             android:exported="false" />
         <activity

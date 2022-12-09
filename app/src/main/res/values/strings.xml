@@ -84,9 +84,18 @@
     <string name="join_game">Join Game</string>
     <string name="string_new_character">New Character</string>
     <string name="string_no_games_to_display">No Games to Display</string>
-
     <string-array name="available_systems">
         <item>Dungeons and Dragons 5e</item>
     </string-array>
+    <string name="string_clear">Clear</string>
+    <string name="string_shake_or_press_button_to_roll">Shake or press button to roll:</string>
+    <string name="string_minus0">-0</string>
+    <string name="string_scroll_to_see_past_rolls">Scroll to see past rolls</string>
+    <string name="string_total_label">Total:</string>
+    <string name="string_add0">+0</string>
+    <string name="string_apply_modifiers_label">Apply Modifiers:</string>
+    <string name="string_add_modifier">add modifier</string>
+    <string name="string_subtract_modifier">subtract modifier</string>
+    <string name="string_please_enter_your_username">Please enter your username</string>
 
 </resources>
