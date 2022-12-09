@@ -36,6 +36,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
     private Player user;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase2;
     private String username;
 
     public static String TAG = "RpgBuddyMainMenu";
@@ -55,7 +56,13 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         mDatabase = db.getReference("Users");
         user = new Player(username);
-        mDatabase.child("User").setValue(user);
+        if(mDatabase.child(username) == null) {
+            mDatabase.child(username).setValue(user);
+        }
+        mDatabase2 = db.getReference("Games");
+        if(mDatabase2 == null) {
+            mDatabase2.setValue("default");
+        }
 
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.RpgBuddyBottomNav);

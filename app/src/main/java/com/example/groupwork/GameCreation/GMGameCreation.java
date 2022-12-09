@@ -63,6 +63,7 @@ public class GMGameCreation extends AppCompatActivity {
         gameDescription = findViewById(R.id.editText_description);
         saveGame = findViewById(R.id.btn_save);
 
+        selectedSystem = null;
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.available_systems, android.R.layout.simple_spinner_item);
@@ -72,17 +73,16 @@ public class GMGameCreation extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 String text;
-                text = adapterView.getItemAtPosition(position).toString();
+                selectedSystem = adapterView.getItemAtPosition(position).toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 gameSystemSpinner.setPrompt(getString(R.string.categories));
-                selectedSystem = null;
+                selectedSystem = adapterView.getItemAtPosition(0).toString();
             }
         });
 
-        selectedSystem = null;
 
 
         saveGame.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +92,7 @@ public class GMGameCreation extends AppCompatActivity {
                 campaignName = edittext_campaignName.getText().toString();
                 numPlayers = picker_numPlayers.getValue();
                 game = new Game(campaignName, user, selectedSystem, numPlayers);
+                game.setDescr(gameDescription.getText().toString());
                 if(user != null){
                     if(campaignName == "" || campaignName == null)  {
                         Toast.makeText(GMGameCreation.this,
@@ -116,12 +117,17 @@ public class GMGameCreation extends AppCompatActivity {
         campaignName = savedInstanceState.getString("campaignName");
         numPlayers = savedInstanceState.getInt("numPlayers");
         selectedSystem = savedInstanceState.getString("system");
+        descr = savedInstanceState.getString("description");
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
+        campaignName = edittext_campaignName.getText().toString();
+        numPlayers = picker_numPlayers.getValue();
+        descr = gameDescription.getText().toString();
         savedInstanceState.putString("campaignName",campaignName);
         savedInstanceState.putInt("numPlayers",numPlayers);
         savedInstanceState.putString("system",selectedSystem);
+        savedInstanceState.putString("description",descr);
     }
 }
