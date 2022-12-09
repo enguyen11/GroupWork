@@ -90,6 +90,10 @@ public class GMGameCreation extends AppCompatActivity {
                 if(user != null){
                     mDatabase.child("User").child(user).child("games").setValue(game);
                 }
+                if(user != null){
+                    mDatabase.child("User").child(user).child("gameRole").push().setValue(true);
+                }
+
             }
 
         });

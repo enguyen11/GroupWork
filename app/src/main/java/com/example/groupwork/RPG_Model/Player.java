@@ -15,6 +15,7 @@ public class Player implements Parcelable {
     private ArrayList<Player> friends;
     private ArrayList<Character> characters;
     private ArrayList<Game> games;
+    private ArrayList<Boolean> isGameGM;
     private ArrayList<Map> maps;
 
     public Player(){
@@ -38,6 +39,9 @@ public class Player implements Parcelable {
     }
     public ArrayList<SheetType> getSheets(){
         return this.sheets;
+    }
+    public void addGameRole(boolean isGM){
+        this.isGameGM.add(isGM);
     }
 
 
