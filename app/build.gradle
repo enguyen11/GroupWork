@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.groupwork"
-        minSdk 21
+        minSdk 30
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -39,6 +39,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    ndkVersion "25.1.8937393"
 }
 
 dependencies {
@@ -60,4 +61,5 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation project(':unityBoard')
 }
