@@ -1,14 +1,16 @@
-package com.example.groupwork;
+package com.example.groupwork.GameCreation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class CreateGameActivity extends AppCompatActivity {
+import com.example.groupwork.R;
+
+public class PlayerJoinGame extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_game);
+        setContentView(R.layout.activity_player_join_game);
     }
 }

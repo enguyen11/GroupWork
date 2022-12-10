@@ -5,12 +5,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.groupwork.CharacterEditor.RpgBuddyCharacterEditor;
+import com.example.groupwork.GameCreation.GMGameCreation;
+import com.example.groupwork.GameCreation.PlayerJoinGame;
+import com.example.groupwork.GameCreation.SelectPlayerTypeDialog;
+import com.example.groupwork.Login.Login;
+import com.example.groupwork.MainActivity;
 import com.example.groupwork.R;
 import com.example.groupwork.DiceRoller.rpgBuddyDiceRoller;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -24,7 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class RpgBuddyMainMenu extends AppCompatActivity {
+public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerTypeDialog.OnInputListener{
 
     private ArrayList<Game> myGames;
     private Button btnNewGame;
@@ -32,6 +40,8 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
     private Player user;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
+
+    public static String TAG = "RpgBuddyMainMenu";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +75,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
             return true;
         });
 
+
     }
 
 
@@ -79,4 +90,17 @@ public class RpgBuddyMainMenu extends AppCompatActivity {
 
     }
 
+    @Override
+    public void sendInput(String selection) {
+        Intent i = null;
+        Context context = getApplicationContext();
+        if(selection == "gm") {
+            i = new Intent(context, GMGameCreation.class);
+        } else if(selection == "player"){
+            i = new Intent(context, PlayerJoinGame.class);
+        } else {
+            return;
+        }
+        startActivity(i);
+    }
 };
