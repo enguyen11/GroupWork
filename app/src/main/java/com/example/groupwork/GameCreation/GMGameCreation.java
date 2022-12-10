@@ -111,7 +111,7 @@ public class GMGameCreation extends AppCompatActivity {
                 }else{
                     numPlayers = picker_numPlayers.getValue();
                     game = new Game(campaignName, user, selectedSystem, numPlayers);
-                    game.setDescr(gameDescription.getText().toString());
+                    descr = gameDescription.getText().toString();
                     if(user != null){
                         if(campaignName == "" || campaignName == null)  {
                             Toast.makeText(GMGameCreation.this,
@@ -121,6 +121,7 @@ public class GMGameCreation extends AppCompatActivity {
                                     "Campaign must have a party of size 1 to 10", Toast.LENGTH_SHORT).show();
                         }
                         else {
+                            game.setDescr(descr);
                             userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(true); //add game to player
                             gameDatabase.child(campaignName).setValue(game);
                             Context context = getApplicationContext();
@@ -130,13 +131,17 @@ public class GMGameCreation extends AppCompatActivity {
                         }
                     } else {
                         Log.e(TAG, "user is null");
+                        Toast.makeText(GMGameCreation.this,
+                                "Unable to create game. ", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.e(TAG, databaseError.getMessage());
+                Toast.makeText(GMGameCreation.this,
+                        "Unable to create game.", Toast.LENGTH_SHORT).show();
             }
         });
     }
