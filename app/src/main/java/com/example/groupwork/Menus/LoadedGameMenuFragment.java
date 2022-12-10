@@ -12,10 +12,10 @@ import com.example.groupwork.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link fragment_loaded_game_menu#newInstance} factory method to
+ * Use the {@link LoadedGameMenuFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_loaded_game_menu extends Fragment {
+public class LoadedGameMenuFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class fragment_loaded_game_menu extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public fragment_loaded_game_menu() {
+    public LoadedGameMenuFragment() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class fragment_loaded_game_menu extends Fragment {
      * @return A new instance of fragment fragment_loaded_game_menu.
      */
     // TODO: Rename and change types and number of parameters
-    public static fragment_loaded_game_menu newInstance(String param1, String param2) {
-        fragment_loaded_game_menu fragment = new fragment_loaded_game_menu();
+    public static LoadedGameMenuFragment newInstance(String param1, String param2) {
+        LoadedGameMenuFragment fragment = new LoadedGameMenuFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
