@@ -17,14 +17,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewForStats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintHeight_max="wrap"
-        app:layout_constraintHeight_percent=".50"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="wrap"
+        app:layout_constraintHeight_percent=".50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewStatGroup"/>
+        app:layout_constraintTop_toBottomOf="@+id/textViewStatGroup" />
 
     <Button
         android:id="@+id/removeGroupButton"

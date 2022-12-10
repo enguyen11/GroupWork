@@ -15,6 +15,8 @@ import android.widget.EditText;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Player;
 import com.example.groupwork.RPG_Model.SheetType;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +25,7 @@ import java.util.Random;
 public class SheetBuilderActivity extends AppCompatActivity {
 
     private Player user;
+    private String username;
     RecyclerView infoRecycler;
     ArrayList<String> infoList;
     EditText infoField;
@@ -33,6 +36,11 @@ public class SheetBuilderActivity extends AppCompatActivity {
     EditText statGroupField;
     RecyclerView statRecycler;
     HashMap<String, ArrayList<String>> statGroups;
+    Button buildSheetButton;
+    EditText sheetName;
+    FirebaseDatabase db;
+    DatabaseReference mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +48,10 @@ public class SheetBuilderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sheet_builder);
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
+        db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
+        mDatabase = db.getReference("Users");
         if (extras != null) {
-            user = extras.getParcelable("player");
+            username = extras.getString("player");
             // Intent goTo = new Intent(SheetBuilderActivity.this, CharacterSheetActivity.class);
             // goTo.putExtra("player", user);
             // startActivity(goTo);
@@ -49,12 +59,14 @@ public class SheetBuilderActivity extends AppCompatActivity {
         newSheet = new SheetType();
         infoField = findViewById(R.id.editTextInfoAdd);
         infoList = new ArrayList<>();
+        sheetName = findViewById(R.id.editTextSheetName);
         statGroupList = new ArrayList<>();
         statGroups = new HashMap<>(100);
         infoRecycler = findViewById(R.id.recyclerInfoToAdd);
         infoRecycler.setAdapter(new ListBuilderAdapter(this, infoList));
         infoRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         addButton = findViewById(R.id.addInfoButton);
+        buildSheetButton = findViewById(R.id.buildSheetButton);
         addButton.setOnClickListener(view -> {
         String info = infoField.getText().toString();
         if(info != null){
@@ -74,6 +86,15 @@ public class SheetBuilderActivity extends AppCompatActivity {
             statGroups.put(statGroupField.getText().toString(), list);
             statRecycler.getAdapter().notifyDataSetChanged();
             statGroupField.setText(null);
+        });
+        buildSheetButton.setOnClickListener(view -> {
+            newSheet.setStatCats(statGroupList);
+            newSheet.setStats(statGroups);
+            newSheet.setInfo(infoList);
+            newSheet.setName(sheetName.getText().toString());
+            //user.getSheets().add(newSheet);
+            mDatabase.child(username).child("sheets").push().setValue(newSheet);
+
         });
     }
 

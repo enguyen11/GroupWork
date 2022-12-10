@@ -12,6 +12,7 @@ public class SheetType implements Parcelable {
     private String sheetName;
     private ArrayList<String> infoFields;
     private HashMap<String, ArrayList<String>> stats;
+    private ArrayList<String> statCats;
     private HashMap<String, Resource> resources;
 
     public SheetType(){
@@ -72,6 +73,12 @@ public class SheetType implements Parcelable {
     }
     public HashMap<String, Resource> getResources(){
         return this.resources;
+    }
+    public void setStatCats(ArrayList<String> list){
+        this.statCats = list;
+    }
+    public ArrayList<String> getStatCats(){
+        return this.statCats;
     }
 
 

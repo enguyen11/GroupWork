@@ -21,8 +21,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerInfoToAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/editTextStatAdd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,11 +62,35 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerStatsToAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextStatAdd" />
+
+    <Button
+        android:id="@+id/buildSheetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save And Build"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias=".99"
+        app:layout_constraintVertical_bias=".01"/>
+
+    <EditText
+        android:id="@+id/editTextSheetName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="@+id/buildSheetButton"
+        app:layout_constraintEnd_toStartOf="@+id/buildSheetButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buildSheetButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

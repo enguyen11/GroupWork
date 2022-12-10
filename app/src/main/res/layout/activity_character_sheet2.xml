@@ -25,28 +25,6 @@
 
     </TableLayout>
 
-    <TableLayout
-        android:id="@+id/statTable"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent=".5"
-        app:layout_constraintWidth_percent=".9"
-        android:background="#CC0808"
-        app:layout_constraintBottom_toTopOf="@id/resourceTable"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/infoTable"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <TableLayout
-        android:id="@+id/resourceTable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/statTable"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/statRecyclerConstraint"
         android:layout_width="wrap_content"

@@ -78,6 +78,7 @@ public class RpgBuddyCharacterEditor extends Fragment {
         super.onCreate(savedInstanceState);
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         mDatabase = db.getReference("Users");
+        mDatabase.child("New User!!!").setValue(new Player());
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -86,17 +87,15 @@ public class RpgBuddyCharacterEditor extends Fragment {
         if(args != null) {
             username = args.getString("userID");
         }
-        //System.out.println("sheet name: " + user.getSheets().get(0).getName());
+
         mDatabase.child(username).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (user == null) {
                     user = snapshot.getValue(Player.class);
-                    System.out.println("*************Making user: " + user.getSheets());
                 }
-                System.out.println(snapshot.getValue().toString());
-               // System.out.println(snapshot.child("Name").getValue().toString());
-                 System.out.println(user.getSheets());
+                System.out.println("***************USERNAME: " + user.getName());
+                System.out.println("sheet name: " + user.getSheets().get(0).getName());
                   sheetView.setAdapter(new MySheetsAdapter(getContext(),user.getSheets()));
                   sheetView.setLayoutManager(new LinearLayoutManager(getContext()));
                   sheetView.getAdapter().notifyDataSetChanged();
