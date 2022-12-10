@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toTopOf="@+id/set_descr_label"
         app:layout_constraintEnd_toStartOf="@+id/picker_numPlayers"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/text_campaign_name_label_creation" />
 
     <TextView
         android:id="@+id/set_descr_label"
@@ -47,15 +47,16 @@
         android:ems="10"
         android:hint="@string/string_campaign_name"
         android:inputType="textPersonName"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintBottom_toBottomOf="@+id/text_campaign_name_label_creation"
         app:layout_constraintEnd_toEndOf="@+id/picker_numPlayers"
         app:layout_constraintStart_toStartOf="@+id/picker_numPlayers"
-        app:layout_constraintTop_toTopOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/text_campaign_name_label_creation"
         tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/text_campaign_name_label_creation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/string_campaign_name"
@@ -68,7 +69,7 @@
         android:layout_width="103dp"
         android:layout_height="69dp"
         android:autofillHints=""
-        android:ems="10"
+        android:ems="8"
         android:hint="@string/string_1"
         android:inputType="number"
         android:minHeight="48dp"
@@ -88,6 +89,7 @@
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textColorHint="#757575"
         app:layout_constraintBottom_toBottomOf="@+id/set_descr_label"
         app:layout_constraintEnd_toEndOf="@+id/picker_numPlayers"
         app:layout_constraintStart_toStartOf="@+id/picker_numPlayers"
@@ -109,8 +111,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/string_select_system"
-        app:layout_constraintBottom_toTopOf="@+id/textView11"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintBottom_toTopOf="@+id/text_campaign_name_label_creation"
+        app:layout_constraintStart_toStartOf="@+id/text_campaign_name_label_creation"
         app:layout_constraintTop_toBottomOf="@+id/new_game_title" />
 
     <Spinner
@@ -123,4 +125,13 @@
         app:layout_constraintEnd_toEndOf="@+id/editText_campaignName"
         app:layout_constraintStart_toStartOf="@+id/editText_campaignName"
         app:layout_constraintTop_toTopOf="@+id/text_select_system" />
+
+    <TextView
+        android:id="@+id/text_limit_campaignname_chars"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/string_please_only_use_alphanumeric_characters"
+        app:layout_constraintEnd_toEndOf="@+id/editText_campaignName"
+        app:layout_constraintStart_toStartOf="@+id/editText_campaignName"
+        app:layout_constraintTop_toBottomOf="@+id/editText_campaignName" />
 </androidx.constraintlayout.widget.ConstraintLayout>
