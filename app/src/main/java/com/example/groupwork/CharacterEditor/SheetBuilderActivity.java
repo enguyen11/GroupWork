@@ -92,9 +92,9 @@ public class SheetBuilderActivity extends AppCompatActivity {
             newSheet.setStats(statGroups);
             newSheet.setInfo(infoList);
             newSheet.setName(sheetName.getText().toString());
+            //newSheet.setResources(statGroups);
             //user.getSheets().add(newSheet);
-            mDatabase.child(username).child("sheets").push().setValue(newSheet);
-
+            mDatabase.child(username).child("sheets").child("1").setValue(newSheet);
         });
     }
 

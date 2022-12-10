@@ -40,6 +40,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
     private Player user;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
+    private String username;
 
     public static String TAG = "RpgBuddyMainMenu";
 
@@ -51,8 +52,13 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         changeFragment(new RpgBuddyGameMainMenu());
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         mDatabase = db.getReference("Users");
-        user = new Player("User");
-        mDatabase.child("User").setValue(user);
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if(extras != null){
+            username = extras.getString("userID");
+        }
+       // user = new Player("User");
+        //mDatabase.child("User").setValue(user);
 
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.RpgBuddyBottomNav);
@@ -65,7 +71,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {
                 fragment = new RpgBuddyCharacterEditor();
                 Bundle args = new Bundle();
-                args.putString("userID", user.getName());
+                args.putString("userID", username);
                 fragment.setArguments(args);
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyDiceRoller == itemId) {

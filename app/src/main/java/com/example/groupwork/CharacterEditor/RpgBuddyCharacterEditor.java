@@ -78,7 +78,7 @@ public class RpgBuddyCharacterEditor extends Fragment {
         super.onCreate(savedInstanceState);
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         mDatabase = db.getReference("Users");
-        mDatabase.child("New User!!!").setValue(new Player());
+       // mDatabase.child("New User!!!").setValue(new Player());
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
