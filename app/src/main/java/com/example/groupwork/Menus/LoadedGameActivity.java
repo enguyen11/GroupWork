@@ -68,12 +68,13 @@ public class LoadedGameActivity extends AppCompatActivity {
             if (R.id.loadedGameMainMenu == itemId) {
                 fragment = new LoadedGameMenuFragment();
                 changeFragment(fragment);
-            } else if (R.id.rpgBuddyCharacterEditor == itemId) {
-                fragment = new RpgBuddyCharacterEditor();
-                Bundle args = new Bundle();
-                args.putString("userID", user.getName());
-                fragment.setArguments(args);
-                changeFragment(fragment);
+            } else if (R.id.currentCharacterSheet == itemId) {
+                //character sheet
+//                fragment = new RpgBuddyCharacterEditor();
+//                Bundle args = new Bundle();
+//                args.putString("user", user.getName());
+//                fragment.setArguments(args);
+//                changeFragment(fragment);
             } else if (R.id.rpgBuddyDiceRoller == itemId) {
                 fragment = new rpgBuddyDiceRoller();
                 changeFragment(fragment);

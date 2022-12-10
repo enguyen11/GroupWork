@@ -6,9 +6,9 @@
         android:icon="@drawable/wooden_door"
         android:title="Menu" />
     <item
-        android:id="@+id/rpgBuddyCharacterEditor"
+        android:id="@+id/currentCharacterSheet"
         android:icon="@drawable/round_shield"
-        android:title="Characters" />
+        android:title="My Character" />
     <item
         android:id="@+id/rpgBuddyDiceRoller"
         android:title="Dice"
