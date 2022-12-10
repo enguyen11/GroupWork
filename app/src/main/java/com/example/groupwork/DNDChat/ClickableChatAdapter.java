@@ -35,7 +35,7 @@ public class ClickableChatAdapter extends RecyclerView.Adapter<ClickableChatView
 
     @Override
     public void onBindViewHolder(@NonNull ClickableChatViewHolder holder, int position) {
-        holder.chat.setText(String.valueOf(chatList.get(position).getChatName()));
+        holder.chat.setText(String.valueOf(chatList.get(position).getCampaignName()));
     }
 
     @Override

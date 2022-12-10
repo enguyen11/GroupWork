@@ -79,10 +79,10 @@ public class ChatSelection extends AppCompatActivity implements ChatSelectionRec
     @Override
     public void onChatClick(int position) {
         Intent goToChat = new Intent(ChatSelection.this, DnDChat.class);
-        String chatName = chatList.get(position).getChatName();
-        System.out.println("Chat Name: " + chatName);
+        String campaignName = chatList.get(position).getCampaignName();
+        System.out.println("Campaign Name: " + campaignName);
         goToChat.putExtra("userID", SENDER);
-        goToChat.putExtra("chatName", chatName);
+        goToChat.putExtra("campaignName", campaignName);
         ChatSelection.this.startActivity(goToChat);
 
     }

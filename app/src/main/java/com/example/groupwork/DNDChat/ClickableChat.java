@@ -1,22 +1,22 @@
 package com.example.groupwork.DNDChat;
 
 public class ClickableChat {
-    String chatName;
+    String campaignName;
 
-    public ClickableChat (String chatName){
-        this.chatName = chatName;
+    public ClickableChat (String campaignName){
+        this.campaignName = campaignName;
     }
 
-    public String getChatName() {
-        return chatName;
+    public String getCampaignName() {
+        return campaignName;
     }
 
-    public void setChatName(String chatName) {
-        this.chatName = chatName;
+    public void setChatName(String campaignName) {
+        this.campaignName = campaignName;
     }
 
     @Override
     public String toString() {
-        return chatName;
+        return campaignName;
     }
 }
