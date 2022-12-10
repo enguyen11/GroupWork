@@ -13,18 +13,26 @@ public class Game {
     private ArrayList<String> partyCharacters;
 
 
-
+    public Game(){
+        System.out.println("**************Making Game*********************");
+    }
     public Game(String name, String gameMaster, String system, int numPlayers){
         this.name = name;
         this.gameMaster = gameMaster;
         this.system = system;
         this.numPlayers = numPlayers;
         this.descr = "";
+        this.partyPlayers = new ArrayList<>();
+        partyPlayers.add(gameMaster);
+        this.partyCharacters = new ArrayList<>();
     }
 
     public void addPlayer(String player) {
-        if (partyPlayers.size() < numPlayers) {
-            partyPlayers.add(player);
+        if(this.partyPlayers == null) {
+            this.partyPlayers = new ArrayList<>();
+        }
+        if (this.partyPlayers.size() < numPlayers) {
+            this.partyPlayers.add(player);
         }
     }
 
@@ -40,6 +48,7 @@ public class Game {
     public int getNumPlayers() {return this.numPlayers;}
     public void setDescr(String s) {this.descr = s;}
     public String getDescr() {return this.descr;}
+    public ArrayList<String> getPartyPlayers() {return this.partyPlayers;}
 
     public ArrayList<String> getParty() {
         return partyPlayers;

@@ -97,25 +97,26 @@ public class PlayerJoinGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 campaignName = edittext_campaignName.getText().toString();
-                boolean res = joinGame(campaignName);
-                if(!res) {
-                    Toast.makeText(PlayerJoinGame.this,
-                            "Please have your GM create your campaign before you join.", Toast.LENGTH_SHORT).show();
-                } else if (selectedCharacter == null){
-                    Toast.makeText(PlayerJoinGame.this,
-                            "Please select a character for your campaign.", Toast.LENGTH_SHORT).show();
-                } else {
-                    game.addPlayer(user);
-                    game.addCharacter(selectedCharacter);
-                    userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(false);
-                }
+                joinGame(campaignName);
+//                Log.d(TAG, "onclick " + game.getName());
+//                if(game == null || game.getName() != campaignName) {
+//                    Toast.makeText(PlayerJoinGame.this,
+//                            "Please have your GM create your campaign before you join.", Toast.LENGTH_SHORT).show();
+//                } else if (selectedCharacter == null){
+//                    Toast.makeText(PlayerJoinGame.this,
+//                            "Please select a character for your campaign.", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    game.addPlayer(user);
+//                    game.addCharacter(selectedCharacter);
+//                    userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(false);
+//                }
             }
         });
 
     }
 
     private ArrayList getCharacters() {
-        FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
+        FirebaseDatabase db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         DatabaseReference mDatabase = db.getReference("Users");
 
         ArrayList<String> arr = new ArrayList<>();
@@ -136,25 +137,18 @@ public class PlayerJoinGame extends AppCompatActivity {
         return arr;
     }
 
-    private boolean joinGame(String name) {
-        FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
-        DatabaseReference mDatabase = db.getReference("Games").child(name);
-        final boolean[] gameExists = {false};
-
-
-        ArrayList<String> arr = new ArrayList<>();
-        mDatabase.addValueEventListener (new ValueEventListener() {
+    private void joinGame(String name) {
+        gameDatabase.addListenerForSingleValueEvent (new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Game g = dataSnapshot.getValue(Game.class);
-//                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-//                    Game g = dataSnapshot.getValue(Game.class);
-//                    Log.d(TAG, g.getName());
-//                    if (name == g.getName()) {
-//                        game = g;
-//                        gameExists[0] = true;
-//                    }
-//                }
+                game = dataSnapshot.getValue(Game.class);
+                Log.d(TAG, "join game " + game.getName());
+
+                game.addPlayer(user);
+//                game.addCharacter(selectedCharacter);
+                gameDatabase.child(campaignName).child("partyPlayers").child(user).setValue(user);
+                userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(false);
+
             }
 
             @Override
@@ -162,7 +156,6 @@ public class PlayerJoinGame extends AppCompatActivity {
                 Log.w(TAG, "loadPost:onCancelled " + error.toString());
             }
         });
-        return gameExists[0];
     }
 }
 
