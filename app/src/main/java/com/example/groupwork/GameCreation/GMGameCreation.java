@@ -2,6 +2,8 @@ package com.example.groupwork.GameCreation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -102,6 +104,8 @@ public class GMGameCreation extends AppCompatActivity {
                     else {
                         userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(true); //add game to player
                         gameDatabase.child(campaignName).setValue(game);
+                        Context context = getApplicationContext();
+                        Intent i = new Intent(context, GMGameCreation.class);
                     }
                 } else {
                     Log.e(TAG, "user is null");
