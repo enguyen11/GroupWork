@@ -28,8 +28,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-        holder.sender.setText(String.valueOf(messageList.get(position).getSender()));
-        holder.senderMessage.setText(String.valueOf(messageList.get(position).getContent()));
+        holder.sender.setText("Sender: " + String.valueOf(messageList.get(position).getSender()));
+        holder.senderMessage.setText("Message: " + String.valueOf(messageList.get(position).getContent()));
     }
 
     @Override

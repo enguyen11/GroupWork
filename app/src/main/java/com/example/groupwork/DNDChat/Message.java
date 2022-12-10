@@ -6,7 +6,11 @@ public class Message {
     //private String receiver;
     private String content;
 
-    public Message(String sender, String receiver, String content){
+    public Message(){
+        
+    }
+
+    public Message(String sender, String content){
         this.sender = sender;
         //this.receiver = receiver;
         this.content = content;

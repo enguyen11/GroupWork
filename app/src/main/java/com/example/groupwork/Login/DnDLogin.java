@@ -102,19 +102,24 @@ public class DnDLogin extends AppCompatActivity {
      */
     private void makeNew(Player user){
         //user.addFriendToMsgList("User1");
-        Message message = new Message("User1", user.getName(), "Start of a conversation");
+        Message message = new Message("User1", "Start of a conversation");
         user.addMessageToList(message);
         mDatabase.child(user.getName()).setValue(user);
+
+        //Move all of the below code to the appropriate class when done
+
         //Dummy Campaigns
         mDatabase.child(user.getName()).child("CampaignList").
                 child("Campaigns").push().setValue("Eric's Campaign");
 
         //Dummy Chat
         DatabaseReference mDatabase2 = db.getReference("Games");
-        mDatabase2.child("Eric's Campaign").child("ChatRoom").push().setValue("ChatRoom1");
-        mDatabase2.child("Eric's Campaign").child("ChatRoom").push().setValue("ChatRoom2");
-        mDatabase2.child("Eric's Campaign").child("ChatRoom").push().setValue("ChatRoom3");
-        mDatabase2.child("Eric's Campaign").child("ChatRoom").push().setValue("ChatRoom4");
+        Message systemMsg1 = new Message("System", "This is the start to the In-Game Chat");
+        Message systemMsg2 = new Message("System", "This is the start to the Out-of-Game Chat");
+        mDatabase2.child("Eric's Campaign").child("ChatRoom")
+                .child("In-Game Chat").setValue(systemMsg1);
+        mDatabase2.child("Eric's Campaign").child("ChatRoom")
+                .child("Out-of-Game Chat").setValue(systemMsg2);
     }
 
 }

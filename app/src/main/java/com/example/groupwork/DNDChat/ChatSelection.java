@@ -57,11 +57,12 @@ public class ChatSelection extends AppCompatActivity implements ChatSelectionRec
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot mySnapShot: snapshot.getChildren()){
+                    System.out.println("Key: " + mySnapShot.getKey());
                     System.out.println("Value: " + mySnapShot.getValue());
-                    ChatSelection.chatList.add(new ClickableChat(String.valueOf(mySnapShot.getValue())));
+                    ChatSelection.chatList.add(new ClickableChat(String.valueOf(mySnapShot.getKey())));
                     chatListAdapter.notifyDataSetChanged();
                 }
-                System.out.println("My List: " + Arrays.toString(chatList.toArray()));
+                //System.out.println("My List: " + Arrays.toString(chatList.toArray()));
             }
 
             @Override
@@ -82,6 +83,7 @@ public class ChatSelection extends AppCompatActivity implements ChatSelectionRec
         String chatName = chatList.get(position).getChatName();
         //System.out.println("chat Name: " + chatName);
         goToChat.putExtra("userID", SENDER);
+        goToChat.putExtra("campaignName", CAMPAIGN_NAME);
         goToChat.putExtra("chatName", chatName);
         ChatSelection.this.startActivity(goToChat);
 
