@@ -1,5 +1,6 @@
 package com.example.groupwork.GameCreation;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -19,8 +20,11 @@ import com.example.groupwork.Login.Login;
 import com.example.groupwork.Menus.LoadedGameActivity;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Game;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class GMGameCreation extends AppCompatActivity {
 
@@ -89,30 +93,50 @@ public class GMGameCreation extends AppCompatActivity {
         saveGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 campaignName = edittext_campaignName.getText().toString();
-                numPlayers = picker_numPlayers.getValue();
-                game = new Game(campaignName, user, selectedSystem, numPlayers);
-                game.setDescr(gameDescription.getText().toString());
-                if(user != null){
-                    if(campaignName == "" || campaignName == null)  {
-                        Toast.makeText(GMGameCreation.this,
-                                "Campaign Name required", Toast.LENGTH_SHORT).show();
-                    } else if(numPlayers == 0) {
-                        Toast.makeText(GMGameCreation.this,
-                                "Campaign must have a party of size 1 to 10", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "current campaign name: " + campaignName);
+                createGame(campaignName);
+
+            }
+        });
+    }
+
+    private void createGame(String name) {
+        gameDatabase.child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    Toast.makeText(GMGameCreation.this,
+                            "Campaign Name already exists", Toast.LENGTH_SHORT).show();
+                }else{
+                    numPlayers = picker_numPlayers.getValue();
+                    game = new Game(campaignName, user, selectedSystem, numPlayers);
+                    game.setDescr(gameDescription.getText().toString());
+                    if(user != null){
+                        if(campaignName == "" || campaignName == null)  {
+                            Toast.makeText(GMGameCreation.this,
+                                    "Campaign Name required", Toast.LENGTH_SHORT).show();
+                        } else if(numPlayers == 0) {
+                            Toast.makeText(GMGameCreation.this,
+                                    "Campaign must have a party of size 1 to 10", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(true); //add game to player
+                            gameDatabase.child(campaignName).setValue(game);
+                            Context context = getApplicationContext();
+                            Intent i = new Intent(context, LoadedGameActivity.class);
+                            i.putExtra("user", user);
+                            startActivity(i);
+                        }
+                    } else {
+                        Log.e(TAG, "user is null");
                     }
-                    else {
-                        userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(true); //add game to player
-                        gameDatabase.child(campaignName).setValue(game);
-                        Context context = getApplicationContext();
-                        Intent i = new Intent(context, LoadedGameActivity.class);
-                        i.putExtra("user", user);
-                        startActivity(i);
-                    }
-                } else {
-                    Log.e(TAG, "user is null");
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
