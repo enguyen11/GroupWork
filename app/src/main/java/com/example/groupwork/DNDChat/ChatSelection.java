@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.example.groupwork.R;
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +24,8 @@ import java.util.List;
 
 public class ChatSelection extends AppCompatActivity implements ChatSelectionRecyclerViewInterface{
 
-    private static ArrayList<ClickableChat> chatList = new ArrayList<>();;
+    private static ArrayList<ClickableChat> chatList;
+    private ClickableChatAdapter chatListAdapter;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
 
@@ -38,21 +40,28 @@ public class ChatSelection extends AppCompatActivity implements ChatSelectionRec
             this.SENDER = extras.getString("userID");
         }
 
-        this.chatList.add(new ClickableChat("Test"));
+        chatList = new ArrayList<>();
+        //this.chatList.add(new ClickableChat("Test"));
+
+        RecyclerView chatSelection = findViewById(R.id.chatSelection);
+        chatListAdapter = new ClickableChatAdapter(chatList, chatSelection.getContext(), this);
+        chatSelection.setAdapter(chatListAdapter);
+        chatSelection.setLayoutManager(new LinearLayoutManager(ChatSelection.this));
+
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com/");
         StringBuilder path = new StringBuilder("Users");
         path.append("/");
         path.append(SENDER);
         path.append("/CampaignList/Campaigns");
-        //System.out.println(path.toString());
+        System.out.println(path.toString());
         mDatabase = db.getReference(path.toString());
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot mySnapShot: snapshot.getChildren()){
-                    //System.out.println("Value: " + mySnapShot.getValue());
+                    System.out.println("Value: " + mySnapShot.getValue());
                     ChatSelection.chatList.add(new ClickableChat(String.valueOf(mySnapShot.getValue())));
-
+                    chatListAdapter.notifyDataSetChanged();
                 }
                 System.out.println("My List: " + Arrays.toString(chatList.toArray()));
             }
@@ -62,19 +71,16 @@ public class ChatSelection extends AppCompatActivity implements ChatSelectionRec
                 System.out.println("The read failed: " + error.getCode());
             }
         });
-        System.out.println("My List: " + Arrays.toString(chatList.toArray()));
 
 
-        RecyclerView chatSelection = findViewById(R.id.chatSelection);
-        chatSelection.setAdapter(new ClickableChatAdapter(chatList,
-                chatSelection.getContext(), this));
-        chatSelection.setLayoutManager(new LinearLayoutManager(ChatSelection.this));
+
     }
 
     @Override
     public void onChatClick(int position) {
         Intent goToChat = new Intent(ChatSelection.this, DnDChat.class);
         String chatName = chatList.get(position).getChatName();
+        System.out.println("Chat Name: " + chatName);
         goToChat.putExtra("userID", SENDER);
         goToChat.putExtra("chatName", chatName);
         ChatSelection.this.startActivity(goToChat);

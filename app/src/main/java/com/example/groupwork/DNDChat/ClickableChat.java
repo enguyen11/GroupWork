@@ -17,8 +17,6 @@ public class ClickableChat {
 
     @Override
     public String toString() {
-        return "ClickableChat{" +
-                "chatName='" + chatName + '\'' +
-                '}';
+        return chatName;
     }
 }
