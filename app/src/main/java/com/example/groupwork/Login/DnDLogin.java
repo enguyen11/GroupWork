@@ -105,6 +105,7 @@ public class DnDLogin extends AppCompatActivity {
         Message message = new Message("User1", user.getName(), "Start of a conversation");
         user.addMessageToList(message);
         mDatabase.child(user.getName()).setValue(user);
+        //Dummy Campaigns
         mDatabase.child(user.getName()).child("CampaignList").
                 child("Campaigns").push().setValue("Campaign 1");
         mDatabase.child(user.getName()).child("CampaignList").

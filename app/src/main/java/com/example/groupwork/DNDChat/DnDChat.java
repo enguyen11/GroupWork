@@ -41,6 +41,7 @@ public class DnDChat extends AppCompatActivity {
             this.SENDER = extras.getString("userID");
             this.CHATNAME = extras.getString("chatName");
         }
+        setTitle(CHATNAME);
         messageList = new ArrayList<>();
         this.messageArea = findViewById(R.id.messageBar);
         this.send = findViewById(R.id.send);
