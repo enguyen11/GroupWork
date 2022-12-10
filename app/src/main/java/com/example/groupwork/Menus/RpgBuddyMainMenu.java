@@ -70,6 +70,8 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
             int itemId = item.getItemId();
             Fragment fragment;
             if (R.id.loadedGameMainMenu == itemId) {
+                Bundle args = new Bundle();
+                args.putString("userID", user.getName());
                 fragment = new RpgBuddyGameMainMenu();
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {

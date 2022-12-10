@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -20,6 +22,17 @@ import com.example.groupwork.GameCreation.GMGameCreation;
 import com.example.groupwork.GameCreation.PlayerJoinGame;
 import com.example.groupwork.GameCreation.SelectPlayerTypeDialog;
 import com.example.groupwork.R;
+import com.example.groupwork.RPG_Model.Game;
+import com.example.groupwork.RecyclerViewStuff.GameCardAdapter;
+import com.example.groupwork.StickerActivity.MessageAdapter;
+import com.example.groupwork.StickerActivity.StickerMessage;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +45,8 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
 
     private RecyclerView games_recyclerView;
     private TextView emptyView;
+    private ArrayList<Game> gameList;
+    private GameCardAdapter gameCardAdapter;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -45,6 +60,8 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
     private String mParam2;
 
     private Button btnNewGame;
+    private FirebaseDatabase db;
+    private DatabaseReference mDatabase;
 
 
     public RpgBuddyGameMainMenu() {
@@ -77,7 +94,34 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        //user's created/joined games shown in a recyclerview
+        gameList = new ArrayList<>();
+        games_recyclerView = getActivity().findViewById(R.id.chat_history_recyclerview);
+        gameCardAdapter = new GameCardAdapter(gameList, this.getContext());
+        games_recyclerView.setAdapter(gameCardAdapter);
+        games_recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
+        mDatabase = db.getReference("Users");
+
+        mDatabase.child(userID).child("messageList").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                stickerMsgList.clear();
+                for(DataSnapshot child : snapshot.getChildren()){
+
+                    String sender = child.child("sender").getValue().toString();
+                    String receiver = child.child("receiver").getValue().toString();
+                    String content = child.child("content").getValue().toString();
+                    StickerMessage message = new StickerMessage(sender, receiver, content);
+                    stickerMsgList.add(message);
+                }
+                messageView.getAdapter().notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     @Override
