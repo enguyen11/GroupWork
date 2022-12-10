@@ -3,6 +3,11 @@ package com.example.groupwork.RPG_Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.groupwork.DNDChat.Message;
+import com.example.groupwork.StickerActivity.StickerMessage;
+
+import org.checkerframework.checker.units.qual.A;
+
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,10 +17,12 @@ public class Player implements Parcelable {
 
     private String username;
     private ArrayList<SheetType> sheets;
-    private ArrayList<Player> friends;
+    private ArrayList<String> friends;
     private ArrayList<Character> characters;
     private ArrayList<Game> games;
     private ArrayList<Map> maps;
+    private ArrayList<Message> messageList;
+    private ArrayList<String> friendsList;
 
     public Player(){
         System.out.println("**************Making Player*********************");
@@ -23,6 +30,8 @@ public class Player implements Parcelable {
     public Player(String username){
         this.username = username;
         sheets = new ArrayList<>();
+        messageList = new ArrayList<>();
+        friendsList = new ArrayList<>();
         SheetType defaultSheet = makeDefault();
         this.sheets.add(defaultSheet);
 
@@ -39,6 +48,17 @@ public class Player implements Parcelable {
     public ArrayList<SheetType> getSheets(){
         return this.sheets;
     }
+    public void addFriend(String friend) {
+        this.friends.add(friend);
+    }
+    public void addFriendToMsgList(String friend) {
+        this.friendsList.add(friend);
+    }
+
+    public void addMessageToList(Message myMessage){
+        this.messageList.add(myMessage);
+    }
+
 
 
     private SheetType makeDefault(){
@@ -132,7 +152,7 @@ public class Player implements Parcelable {
 
 
     protected Player(Parcel in) {
-        friends = in.createTypedArrayList(Player.CREATOR);
+        friends = in.createStringArrayList();  //in.createTypedArrayList(String);
         sheets = in.createTypedArrayList(SheetType.CREATOR);
     }
 
@@ -157,7 +177,8 @@ public class Player implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeTypedList(friends);
+        //parcel.writeTypedList(friends);
+        parcel.writeStringList(friends);
         parcel.writeTypedList(sheets);
     }
 }

@@ -12,115 +12,176 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.46" />
+        app:layout_constraintGuide_percent="0.54" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.81" />
-
-    <GridView
-        android:id="@+id/diceRollerGrid"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </GridView>
+        app:layout_constraintGuide_begin="206dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/throwButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:contentDescription="@string/prompt_throw"
+        android:focusable="true"
         android:src="@drawable/perspective_dice_six_faces_two"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:backgroundTint="#0097A7"
+        app:layout_constraintEnd_toEndOf="@+id/roll_info"
+        app:layout_constraintTop_toBottomOf="@+id/roll_info" />
+
+    <TextView
+        android:id="@+id/roll_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/string_shake_or_press_button_to_roll"
+        app:layout_constraintBottom_toBottomOf="@+id/diceRollerGrid"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline5"
-        app:layout_constraintVertical_bias="0.97" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/rollsText"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <TextView
         android:id="@+id/clearBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Clear"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp"
+        android:text="@string/string_clear"
+        android:textColor="#311B92"
+        app:layout_constraintBottom_toTopOf="@+id/currentResult"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toEndOf="@+id/total_label"
+        app:layout_constraintTop_toTopOf="@+id/total_label" />
 
     <TextView
         android:id="@+id/currentResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="0000"
+        android:layout_marginBottom="44dp"
+        android:text="@string/string_0"
         android:textColor="#343a40"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/historyView"
+        app:layout_constraintBottom_toTopOf="@+id/diceRollerGrid"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clearBtn"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/total_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_total_label"
+        android:textColor="#311B92"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/currentResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/historyView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline5" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/rollsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Scroll to see past rolls"
+        android:text="@string/string_scroll_to_see_past_rolls"
         app:layout_constraintBottom_toTopOf="@+id/historyView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentResult"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toStartOf="@+id/roll_info"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/bonusTextInput"
+    <ImageView
+        android:id="@+id/chevronLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:ems="6"
-        android:hint="Bonus Points"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/throwButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/string_subtract_modifier"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:src="@drawable/chevron_left"
+
+
+        android:theme="@style/Widget.AppCompat.ActionButton"
+        app:layout_constraintBottom_toTopOf="@+id/diceRollerGrid"
+        app:layout_constraintEnd_toStartOf="@+id/chevronRight"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/modLeft"
         app:layout_constraintTop_toBottomOf="@+id/currentResult"
-        app:layout_constraintVertical_bias="0.42000002" />
+        app:layout_constraintVertical_bias="0.937" />
+
+    <ImageView
+        android:id="@+id/chevronRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/string_add_modifier"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:src="@drawable/chevron_right"
+        android:theme="@style/Widget.AppCompat.ActionButton"
+        app:layout_constraintBottom_toTopOf="@+id/diceRollerGrid"
+        app:layout_constraintEnd_toStartOf="@+id/modRight"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/chevronLeft"
+        app:layout_constraintTop_toTopOf="@+id/modRight"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/modLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_minus0"
+        app:layout_constraintBottom_toBottomOf="@+id/chevronLeft"
+        app:layout_constraintEnd_toStartOf="@+id/chevronLeft"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/chevronLeft" />
+
+    <TextView
+        android:id="@+id/modRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_add0"
+        app:layout_constraintBottom_toBottomOf="@+id/modLeft"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/chevronRight" />
+
+    <TextView
+        android:id="@+id/text_modifierlabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_apply_modifiers_label"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/modLeft"
+        app:layout_constraintEnd_toStartOf="@+id/chevronLeft"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <GridView
+        android:id="@+id/diceRollerGrid"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.543">
+
+    </GridView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

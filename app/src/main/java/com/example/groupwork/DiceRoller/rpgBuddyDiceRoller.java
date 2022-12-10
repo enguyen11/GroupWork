@@ -1,8 +1,14 @@
 package com.example.groupwork.DiceRoller;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
+import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,17 +53,30 @@ public class rpgBuddyDiceRoller extends Fragment {
     private String mParam2;
 
     // normal fields
-    private Integer lastResult;
+    private Integer lastResult; // this int contains the last UNMODIFIED result, no modifiers applied.
+
     public HashMap<Integer, Integer> diceMap;
     private threadedDiceThrow helperObject;
-    private Thread secundaryThread;
+    private Thread secondaryThread;
     private Handler handler;
     private TextView resultView;
+
+
+    //TODO style this button to look like one
     private TextView clearBtn;
     private RecyclerView recyclerView;
+
     private RecyclerView.Adapter historyAdapter;
     private List<String> history;
+    private Integer modifier;
+    private TextView modifierLeft;
+    private TextView modifierRight;
+    private Vibrator vibrator;
 
+    // shake feature
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private boolean sensorEnabled = false;
 
     public rpgBuddyDiceRoller() {
         // Required empty public constructor
@@ -90,10 +109,12 @@ public class rpgBuddyDiceRoller extends Fragment {
         }
     }
 
+    // this works like onCreate but in a fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        // modifier
+        modifier = 0;
 
         View view = inflater.inflate(R.layout.fragment_rpg_buddy_dice_roller, container, false);
         //last result
@@ -101,12 +122,13 @@ public class rpgBuddyDiceRoller extends Fragment {
         //initialize dice map
         diceMap = new HashMap<>();
 
+        //vibrator;
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+
         // result text View and clear btn
         this.resultView = view.findViewById(R.id.currentResult);
         this.clearBtn = view.findViewById(R.id.clearBtn);
 
-        // add bonus input
-        bonusInput = view.findViewById(R.id.bonusTextInput);
 
         // create handler
         handler = new Handler();
@@ -114,25 +136,27 @@ public class rpgBuddyDiceRoller extends Fragment {
 
         // helper processor
         helperObject = new threadedDiceThrow(this);
-        secundaryThread = new Thread(helperObject);
+        secondaryThread = new Thread(helperObject);
 
         // Define gridview
         GridView gridView = view.findViewById(R.id.diceRollerGrid);
         this.gridView = gridView;
 
 
-        // add all of the items
+        // define buttons
+
         ArrayList<DiceItem> items = new ArrayList<>();
-        items.add(new DiceItem(20, 0, R.drawable.d20_black));
-        items.add(new DiceItem(12, 0, R.drawable.d12_black));
-        items.add(new DiceItem(10, 0, R.drawable.d10_black));
-        items.add(new DiceItem(8, 0, R.drawable.d8_black));
-        items.add(new DiceItem(6, 0, R.drawable.d6_black));
-        items.add(new DiceItem(3, 0, R.drawable.d3_black));
+        items.add(new DiceItem(20, 0, R.drawable.sticker_d20_die_emote));
+        items.add(new DiceItem(12, 0, R.drawable.sticker_d12_die_emote));
+        items.add(new DiceItem(10, 0, R.drawable.sticker_d10_die_emote));
+        items.add(new DiceItem(8, 0, R.drawable.sticker_d6_die_emote));
+        items.add(new DiceItem(6, 0, R.drawable.sticker_d6_die_emote));
+        items.add(new DiceItem(4, 0, R.drawable.sticker_d4_die_emote));
         gridView.setAdapter(new DiceGridAdapter(this.getContext(), items));
         gridView.setNumColumns(3);
 
-        // grid view on item listener
+
+        // grid view listener controls when a die is pressed
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -141,6 +165,28 @@ public class rpgBuddyDiceRoller extends Fragment {
                 item.setQuantity(number);
                 item.updateQuantity();
                 addToDiceMap(item.getType());
+                if (getVibrator() != null){
+                    getVibrator().vibrate(20);
+                }
+            }
+        });
+
+        // reduce the item's number
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                DiceItem item = (DiceItem) adapterView.getItemAtPosition(i);
+                if (item.getQuantity() > 0) {
+                    int number = item.getQuantity() - 1;
+                    item.setQuantity(number);
+                    item.updateQuantity();
+                    addToDiceMap(item.getType());
+                    if (getVibrator() != null){
+                        getVibrator().vibrate(50);
+                    }
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -154,6 +200,9 @@ public class rpgBuddyDiceRoller extends Fragment {
                     item.setQuantity(0);
                     item.updateQuantity();
                 }
+                lastResult = 0;
+                setModifier(0);
+                updateModifierViews();
                 resultView.setText("0");
             }
         });
@@ -163,7 +212,7 @@ public class rpgBuddyDiceRoller extends Fragment {
         throwDice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                secundaryThread.run();
+                secondaryThread.run();
             }
         });
 
@@ -175,6 +224,67 @@ public class rpgBuddyDiceRoller extends Fragment {
         recyclerView.setAdapter(historyAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        // sensor for the rollers
+        this.sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        if (this.sensorManager != null) {
+            Sensor temp = this.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            if (temp != null) {
+                this.accelerometer = temp;
+                sensorEnabled = true;
+                SensorEventListener listener = new SensorEventListener() {
+                    @Override
+                    public void onSensorChanged(SensorEvent sensorEvent) {
+                        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                            double xAcc = sensorEvent.values[0];
+                            double yAcc = sensorEvent.values[1];
+                            double zAcc = sensorEvent.values[2];
+                            Log.d("SENSOR", "onSensorChanged: sensor movement detected" + String.format("%f %f %f", xAcc, yAcc, zAcc));
+                            if ((zAcc > 8 && xAcc > 8) || (yAcc > 8 && xAcc > 8) || (zAcc > 8 && yAcc > 8)) {
+                                Log.d("TRIGGER", "onSensorChanged: sensor movement detected" + String.format("%f %f %f", xAcc, yAcc, zAcc));
+                                secondaryThread.run();
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onAccuracyChanged(Sensor sensor, int i) {
+
+                    }
+                };
+                sensorManager.registerListener(listener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+                Log.d("SENSOR", "onCreateView: SENSOR ENABLED");
+            }
+
+            //set chrevon
+            View chevronLeft = view.findViewById(R.id.chevronLeft);
+            View chevronRight = view.findViewById(R.id.chevronRight);
+            // modifiers
+            modifierLeft = view.findViewById(R.id.modLeft);
+            modifierRight = view.findViewById(R.id.modRight);
+
+            chevronLeft.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setModifier(getModifier() -1);
+                    updateResult(getLastResult());
+                    updateModifierViews();
+                }
+            });
+
+            chevronRight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setModifier(getModifier() + 1);
+                    updateResult(getLastResult());
+                    updateModifierViews();
+                }
+            });
+
+        }
+
+
+        // end of onCreateView, return the current view
         return view;
     }
 
@@ -208,9 +318,10 @@ public class rpgBuddyDiceRoller extends Fragment {
         return handler;
     }
 
-    public void upadteResult(int res) {
+    public void updateResult(int res) {
         lastResult = res;
-        this.resultView.setText(lastResult.toString());
+        Integer currentResult = res + this.modifier;
+        this.resultView.setText(currentResult.toString());
     }
 
     public RecyclerView.Adapter getAdapter() {
@@ -232,23 +343,41 @@ public class rpgBuddyDiceRoller extends Fragment {
         recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
     }
 
-    public int getBonus() {
-        String bonus = bonusInput.getText().toString();
+    public int getModifier() {
+        return modifier;
+    }
 
-        if (bonus == null || bonus.compareTo("") == 0) {
-            return 0;
+    public void setModifier(int newMod) {
+        modifier = newMod;
+    }
+
+    // updates the numbers that are next to the final result
+    public void updateModifierViews(){
+        if (modifier == 0){
+            modifierRight.setText("+0");
+            modifierLeft.setText("-0");
+        }else if (modifier > 0){
+            modifierRight.setText("+" + modifier.toString());
+            modifierLeft.setText("+0");
+        }else{
+            modifierRight.setText("+0");
+            modifierLeft.setText(modifier.toString());
         }
-        return Integer.parseInt(bonus);
+    }
+
+    public Vibrator getVibrator(){
+        return vibrator;
     }
 }
 
 /**
  * This class helps process all the small calculations
- * required to return the result for every throw.
+ * required to return the result for every roll.
  */
 class threadedDiceThrow implements Runnable {
 
-    rpgBuddyDiceRoller mainClass;
+    private rpgBuddyDiceRoller mainClass;
+    private long cooldown = 0L;
 
     /**
      * The current activity.
@@ -261,14 +390,22 @@ class threadedDiceThrow implements Runnable {
 
     @Override
     public void run() {
+
+
         DiceThrow diceThrow = calculateThrow(mainClass.getDiceMap());
         mainClass.getHandler().post(new Runnable() {
             @Override
             public void run() {
-                mainClass.upadteResult(diceThrow.getResult() + mainClass.getBonus());
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - cooldown <= 400.00 && cooldown != 0L) return;
+                cooldown = currentTime;
+                mainClass.updateResult(diceThrow.getResult());
                 mainClass.getHistory().add(diceThrow.toString());
                 mainClass.getAdapter().notifyDataSetChanged();
                 mainClass.scrollUpHistory();
+                if (mainClass.getVibrator() != null){
+                    mainClass.getVibrator().vibrate(100);
+                }
             }
         });
     }

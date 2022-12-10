@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.groupwork.DndApiActivity.DndAPIActivity;
+import com.example.groupwork.Login.DnDLogin;
+import com.example.groupwork.Login.Login;
 import com.example.groupwork.Menus.RpgBuddyMainMenu;
 import com.example.groupwork.StickerActivity.Firebase;
 
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         project = findViewById(R.id.button_final);
         project.setOnClickListener(view -> {
-            Intent goToSearch = new Intent(MainActivity.this, RpgBuddyMainMenu.class);
+            Intent goToSearch = new Intent(MainActivity.this, DnDLogin.class);
             MainActivity.this.startActivity(goToSearch);
         });
 
