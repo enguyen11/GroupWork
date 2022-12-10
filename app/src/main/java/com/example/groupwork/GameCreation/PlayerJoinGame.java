@@ -20,8 +20,10 @@ import com.example.groupwork.RPG_Model.SheetType;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -117,23 +119,18 @@ public class PlayerJoinGame extends AppCompatActivity {
         DatabaseReference mDatabase = db.getReference("Users");
 
         ArrayList<String> arr = new ArrayList<>();
-        mDatabase.child(user).child("Characters").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            /**
-             * This takes the ArrayLists and repopulates them with messages from the db
-             * Messages have three parts, hence the String[3]
-             * @param task
-             */
+        mDatabase.child(user).child("Characters").addValueEventListener (new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    Iterable<DataSnapshot> outer = task.getResult().getChildren();
-                    for (DataSnapshot inner : outer) {
-                        for (DataSnapshot part : inner.getChildren()) {
-                            arr.add(part.getValue().toString());
-                            Log.d(TAG, part.getValue().toString());
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                            arr.add(postSnapshot.getValue().toString());
+                            Log.d(TAG, postSnapshot.getValue().toString());
                         }
                     }
-                }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d(TAG, error.toString());
             }
         });
         return arr;
@@ -141,30 +138,28 @@ public class PlayerJoinGame extends AppCompatActivity {
 
     private boolean joinGame(String name) {
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://cs5220-dndapp-default-rtdb.firebaseio.com/");
-        DatabaseReference mDatabase = db.getReference("Games");
+        DatabaseReference mDatabase = db.getReference("Games").child(name);
         final boolean[] gameExists = {false};
 
 
         ArrayList<String> arr = new ArrayList<>();
-        mDatabase.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            /**
-             * This takes the ArrayLists and repopulates them with messages from the db
-             * Messages have three parts, hence the String[3]
-             * @param task
-             */
+        mDatabase.addValueEventListener (new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()) {
-                    Iterable<DataSnapshot> outer = task.getResult().getChildren();
-                    for (DataSnapshot inner : outer) {
-                        for (DataSnapshot part : inner.getChildren()) {
-                            if (name == part.getValue().toString()) {
-                                game = part.getValue(Game.class);
-                                gameExists[0] = true;
-                            }
-                        }
-                    }
-                }
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Game g = dataSnapshot.getValue(Game.class);
+//                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+//                    Game g = dataSnapshot.getValue(Game.class);
+//                    Log.d(TAG, g.getName());
+//                    if (name == g.getName()) {
+//                        game = g;
+//                        gameExists[0] = true;
+//                    }
+//                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "loadPost:onCancelled " + error.toString());
             }
         });
         return gameExists[0];
