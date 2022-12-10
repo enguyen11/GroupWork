@@ -98,5 +98,6 @@
     <string name="string_subtract_modifier">subtract modifier</string>
     <string name="string_please_enter_your_username">Please enter your username</string>
     <string name="string_please_only_use_alphanumeric_characters">Please only use alphanumeric characters.</string>
+    <string name="string_1">1</string>
 
 </resources>

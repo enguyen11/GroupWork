@@ -59,7 +59,7 @@ public class GMGameCreation extends AppCompatActivity {
         edittext_campaignName = findViewById(R.id.editText_campaignName);
         gameSystemSpinner = findViewById(R.id.characterSpinner);
         picker_numPlayers = findViewById(R.id.picker_numPlayers);
-        picker_numPlayers.setMinValue(0);
+        picker_numPlayers.setMinValue(1);
         picker_numPlayers.setMaxValue(10);
         gameDescription = findViewById(R.id.editText_description);
         saveGame = findViewById(R.id.btn_save);
