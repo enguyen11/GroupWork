@@ -1,34 +1,30 @@
 package com.example.groupwork.Menus;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-
 import com.example.groupwork.CharacterEditor.RpgBuddyCharacterEditor;
+import com.example.groupwork.DiceRoller.rpgBuddyDiceRoller;
 import com.example.groupwork.GameCreation.GMGameCreation;
 import com.example.groupwork.GameCreation.PlayerJoinGame;
 import com.example.groupwork.GameCreation.SelectPlayerTypeDialog;
 import com.example.groupwork.R;
-import com.example.groupwork.DiceRoller.rpgBuddyDiceRoller;
-
-import android.util.Log;
-import android.widget.Button;
-
 import com.example.groupwork.RPG_Model.Game;
 import com.example.groupwork.RPG_Model.Player;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerTypeDialog.OnInputListener{
+public class LoadedGameActivity extends AppCompatActivity {
 
     private ArrayList<Game> myGames;
     private Button btnNewGame;
@@ -39,18 +35,18 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
     private DatabaseReference mDatabase2;
     private String username;
 
-    public static String TAG = "RpgBuddyMainMenu";
+    public static String TAG = "LoadedGameActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rpg_buddy_main_menu);
+        setContentView(R.layout.activity_loaded_game_main_menu);
 
-        changeFragment(new RpgBuddyGameMainMenu());
+        changeFragment(new LoadedGameMenuFragment());
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            username = extras.getString("username");
+            username = extras.getString("user");
         }
 
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
@@ -65,12 +61,12 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         }
 
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
-        BottomNavigationView bottomNav = findViewById(R.id.RpgBuddyBottomNav);
+        BottomNavigationView bottomNav = findViewById(R.id.loadedGame_bottomNav);
         bottomNav.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             Fragment fragment;
             if (R.id.loadedGameMainMenu == itemId) {
-                fragment = new RpgBuddyGameMainMenu();
+                fragment = new LoadedGameMenuFragment();
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {
                 fragment = new RpgBuddyCharacterEditor();
@@ -98,20 +94,5 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         transaction.replace(R.id.fragmentContainerView, fragment);
         transaction.commit();
 
-    }
-
-    @Override
-    public void sendInput(String selection) {
-        Intent i = null;
-        Context context = getApplicationContext();
-        if(selection == "gm") {
-            i = new Intent(context, GMGameCreation.class);
-        } else if(selection == "player"){
-            i = new Intent(context, PlayerJoinGame.class);
-        } else {
-            return;
-        }
-        i.putExtra("user", user.getName());
-        startActivity(i);
     }
 };

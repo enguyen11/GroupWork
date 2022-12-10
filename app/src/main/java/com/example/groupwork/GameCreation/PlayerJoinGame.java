@@ -3,6 +3,8 @@ package com.example.groupwork.GameCreation;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.groupwork.Menus.LoadedGameActivity;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Character;
 import com.example.groupwork.RPG_Model.Game;
@@ -146,9 +149,13 @@ public class PlayerJoinGame extends AppCompatActivity {
 
                 game.addPlayer(user);
 //                game.addCharacter(selectedCharacter);
-                gameDatabase.child(campaignName).child("partyPlayers").child(user).setValue(user);
+                gameDatabase.child(campaignName).child("party").child(user).setValue(user);
                 userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(false);
 
+                Context context = getApplicationContext();
+                Intent i = new Intent(context, LoadedGameActivity.class);
+                i.putExtra("user", user);
+                startActivity(i);
             }
 
             @Override

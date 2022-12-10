@@ -8,7 +8,7 @@ public class Game {
     private String gameMaster;
     private String system;
     private int numPlayers;
-    private ArrayList<String> partyPlayers;
+    private ArrayList<String> party;
     private String descr;
     private ArrayList<String> partyCharacters;
 
@@ -22,22 +22,22 @@ public class Game {
         this.system = system;
         this.numPlayers = numPlayers;
         this.descr = "";
-        this.partyPlayers = new ArrayList<>();
-        partyPlayers.add(gameMaster);
+        this.party = new ArrayList<>();
+        party.add(gameMaster);
         this.partyCharacters = new ArrayList<>();
     }
 
     public void addPlayer(String player) {
-        if(this.partyPlayers == null) {
-            this.partyPlayers = new ArrayList<>();
+        if(this.party == null) {
+            this.party = new ArrayList<>();
         }
-        if (this.partyPlayers.size() < numPlayers) {
-            this.partyPlayers.add(player);
+        if (this.party.size() < numPlayers) {
+            this.party.add(player);
         }
     }
 
     public void addCharacter(String character) {
-        if (partyPlayers.size() == partyCharacters.size() - 1) {
+        if (party.size() == partyCharacters.size() - 1) {
             partyCharacters.add(character);
         }
     }
@@ -48,9 +48,9 @@ public class Game {
     public int getNumPlayers() {return this.numPlayers;}
     public void setDescr(String s) {this.descr = s;}
     public String getDescr() {return this.descr;}
-    public ArrayList<String> getPartyPlayers() {return this.partyPlayers;}
+    public ArrayList<String> getParty() {return this.party;}
 
-    public ArrayList<String> getParty() {
-        return partyPlayers;
+    public ArrayList<String> partyCharacters() {
+        return this.partyCharacters;
     }
 }

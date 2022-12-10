@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.groupwork.Login.Login;
+import com.example.groupwork.Menus.LoadedGameActivity;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Game;
 import com.google.firebase.database.DatabaseReference;
@@ -105,7 +106,9 @@ public class GMGameCreation extends AppCompatActivity {
                         userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(true); //add game to player
                         gameDatabase.child(campaignName).setValue(game);
                         Context context = getApplicationContext();
-                        Intent i = new Intent(context, GMGameCreation.class);
+                        Intent i = new Intent(context, LoadedGameActivity.class);
+                        i.putExtra("user", user);
+                        startActivity(i);
                     }
                 } else {
                     Log.e(TAG, "user is null");
