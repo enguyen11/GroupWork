@@ -18,6 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GroupWork"
         tools:targetApi="31">
+
+        <activity
+            android:name=".DNDChat.DnDChat"
+            android:exported="false" />
         <activity
             android:name=".GameCreation.PlayerJoinGame"
             android:exported="false" />

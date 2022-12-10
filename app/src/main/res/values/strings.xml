@@ -86,5 +86,9 @@
     <string name="string_new_character">New Character</string>
     <string name="string_no_games_to_display">No Games to Display</string>
     <string name="string_please_enter_your_username">Please enter your username</string>
+    <string name="please_enter_your_message_here">Please enter your message here</string>
+    <string name="enter_your_message_here">Enter your message here</string>
+    <string name="sender">sender</string>
+    <string name="some_message">Some Message</string>
 
 </resources>
