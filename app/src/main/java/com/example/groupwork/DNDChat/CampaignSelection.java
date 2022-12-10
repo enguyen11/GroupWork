@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ChatSelection extends AppCompatActivity implements ChatSelectionRecyclerViewInterface{
+public class CampaignSelection extends AppCompatActivity implements CampaignSelectionRecyclerViewInterface{
 
-    private static ArrayList<ClickableChat> chatList;
-    private ClickableChatAdapter chatListAdapter;
+    private static ArrayList<ClickableCampaign> campaignList;
+    private ClickableCampaignAdapter campaignListAdapter;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
 
@@ -33,20 +33,20 @@ public class ChatSelection extends AppCompatActivity implements ChatSelectionRec
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_selection);
+        setContentView(R.layout.activity_campaign_selection);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             this.SENDER = extras.getString("userID");
         }
 
-        chatList = new ArrayList<>();
-        //this.chatList.add(new ClickableChat("Test"));
+        campaignList = new ArrayList<>();
+        //this.campaignList.add(new Clickablecampaign("Test"));
 
-        RecyclerView chatSelection = findViewById(R.id.chatSelection);
-        chatListAdapter = new ClickableChatAdapter(chatList, chatSelection.getContext(), this);
-        chatSelection.setAdapter(chatListAdapter);
-        chatSelection.setLayoutManager(new LinearLayoutManager(ChatSelection.this));
+        RecyclerView campaignSelection = findViewById(R.id.campaignSelection);
+        campaignListAdapter = new ClickableCampaignAdapter(campaignList, campaignSelection.getContext(), this);
+        campaignSelection.setAdapter(campaignListAdapter);
+        campaignSelection.setLayoutManager(new LinearLayoutManager(CampaignSelection.this));
 
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com/");
         StringBuilder path = new StringBuilder("Users");
@@ -60,10 +60,10 @@ public class ChatSelection extends AppCompatActivity implements ChatSelectionRec
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot mySnapShot: snapshot.getChildren()){
                     System.out.println("Value: " + mySnapShot.getValue());
-                    ChatSelection.chatList.add(new ClickableChat(String.valueOf(mySnapShot.getValue())));
-                    chatListAdapter.notifyDataSetChanged();
+                    CampaignSelection.campaignList.add(new ClickableCampaign(String.valueOf(mySnapShot.getValue())));
+                    campaignListAdapter.notifyDataSetChanged();
                 }
-                System.out.println("My List: " + Arrays.toString(chatList.toArray()));
+                System.out.println("My List: " + Arrays.toString(campaignList.toArray()));
             }
 
             @Override
@@ -77,13 +77,13 @@ public class ChatSelection extends AppCompatActivity implements ChatSelectionRec
     }
 
     @Override
-    public void onChatClick(int position) {
-        Intent goToChat = new Intent(ChatSelection.this, DnDChat.class);
-        String campaignName = chatList.get(position).getCampaignName();
+    public void onCampaignClick(int position) {
+        Intent goToCampaign = new Intent(CampaignSelection.this, DnDChat.class);
+        String campaignName = campaignList.get(position).getCampaignName();
         System.out.println("Campaign Name: " + campaignName);
-        goToChat.putExtra("userID", SENDER);
-        goToChat.putExtra("campaignName", campaignName);
-        ChatSelection.this.startActivity(goToChat);
+        goToCampaign.putExtra("userID", SENDER);
+        goToCampaign.putExtra("campaignName", campaignName);
+        CampaignSelection.this.startActivity(goToCampaign);
 
     }
 }

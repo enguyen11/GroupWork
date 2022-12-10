@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DNDChat.ChatSelection">
+    tools:context=".DNDChat.CampaignSelection">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatSelection"
+        android:id="@+id/campaignSelection"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="13dp"

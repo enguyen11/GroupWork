@@ -1,9 +1,9 @@
 package com.example.groupwork.DNDChat;
 
-public class ClickableChat {
+public class ClickableCampaign {
     String campaignName;
 
-    public ClickableChat (String campaignName){
+    public ClickableCampaign (String campaignName){
         this.campaignName = campaignName;
     }
 
@@ -11,7 +11,7 @@ public class ClickableChat {
         return campaignName;
     }
 
-    public void setChatName(String campaignName) {
+    public void setCampaignName(String campaignName) {
         this.campaignName = campaignName;
     }
 

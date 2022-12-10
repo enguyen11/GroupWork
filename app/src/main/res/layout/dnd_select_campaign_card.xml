@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="@+id/chat">
 
             <TextView
-                android:id="@+id/chatSelected"
+                android:id="@+id/campaignSelected"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

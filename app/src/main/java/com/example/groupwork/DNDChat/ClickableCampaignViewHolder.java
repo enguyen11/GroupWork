@@ -8,20 +8,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.groupwork.R;
 
-public class ClickableChatViewHolder extends RecyclerView.ViewHolder{
-    public final TextView chat;
-    public ClickableChatViewHolder(@NonNull View itemView, ChatSelectionRecyclerViewInterface myChatRVInterface) {
+public class ClickableCampaignViewHolder extends RecyclerView.ViewHolder{
+    public final TextView campaign;
+    public ClickableCampaignViewHolder(@NonNull View itemView, CampaignSelectionRecyclerViewInterface myCampaignRVInterface) {
         super(itemView);
-        this.chat = itemView.findViewById(R.id.chatSelected);
+        this.campaign = itemView.findViewById(R.id.campaignSelected);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myChatRVInterface != null){
+                if (myCampaignRVInterface != null){
                     int pos = getBindingAdapterPosition();
 
                     if (pos != RecyclerView.NO_POSITION){
-                        myChatRVInterface.onChatClick(pos);
+                        myCampaignRVInterface.onCampaignClick(pos);
                     }
 
                 }
