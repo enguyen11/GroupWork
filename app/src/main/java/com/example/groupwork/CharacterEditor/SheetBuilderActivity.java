@@ -1,5 +1,6 @@
 package com.example.groupwork.CharacterEditor;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,8 +16,12 @@ import android.widget.EditText;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Player;
 import com.example.groupwork.RPG_Model.SheetType;
+import com.example.groupwork.RecyclerViewStuff.MySheetsAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,6 +61,19 @@ public class SheetBuilderActivity extends AppCompatActivity {
             // goTo.putExtra("player", user);
             // startActivity(goTo);
         }
+        mDatabase.child(username).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (user == null) {
+                    user = snapshot.getValue(Player.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("*** FAILED ******");
+            }
+        });
         newSheet = new SheetType();
         infoField = findViewById(R.id.editTextInfoAdd);
         infoList = new ArrayList<>();
@@ -93,9 +111,14 @@ public class SheetBuilderActivity extends AppCompatActivity {
             newSheet.setInfo(infoList);
             newSheet.setName(sheetName.getText().toString());
             //newSheet.setResources(statGroups);
-            //user.getSheets().add(newSheet);
-            mDatabase.child(username).child("sheets").child("1").setValue(newSheet);
+            user.getSheets().add(newSheet);
+            mDatabase.child(username).setValue(user);
+            Intent goTo = new Intent(this, CharacterSheetActivity.class);
+            goTo.putExtra("player", username);
+            goTo.putExtra("index", user.getSheets().size() - 1);
+            startActivity(goTo);
         });
+
     }
 
     @Override

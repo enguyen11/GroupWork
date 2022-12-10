@@ -96,7 +96,7 @@ public class RpgBuddyCharacterEditor extends Fragment {
                 }
                 System.out.println("***************USERNAME: " + user.getName());
                 System.out.println("sheet name: " + user.getSheets().get(0).getName());
-                  sheetView.setAdapter(new MySheetsAdapter(getContext(),user.getSheets()));
+                  sheetView.setAdapter(new MySheetsAdapter(getContext(),user.getSheets(), username));
                   sheetView.setLayoutManager(new LinearLayoutManager(getContext()));
                   sheetView.getAdapter().notifyDataSetChanged();
             }
@@ -132,6 +132,9 @@ public class RpgBuddyCharacterEditor extends Fragment {
 
         sheetView = getView().findViewById(R.id.recycler_sheet_list);
 
+    }
+    public String getUsername(){
+        return this.username;
     }
 
 }

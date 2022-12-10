@@ -52,6 +52,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
     private TableLayout statTable;
     private TableLayout resourceTable;
     private RecyclerView statRec;
+    private int sheetNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         if (extras != null) {
             username = extras.getString("player");
+            sheetNum = extras.getInt("index");
         }
 
         infoViews = new ArrayList<>();
@@ -86,16 +88,18 @@ public class CharacterSheetActivity extends AppCompatActivity {
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (user == null) {
                 user = snapshot.getValue(Player.class);
-                System.out.println("Username in charactersheetactivity " + user.getName());
+              //  System.out.println("Username in charactersheetactivity " + user.getName());
 
             }
             else {
-                System.out.println("Username from charactersheetactivity: " + user.getName());
+                //System.out.println("Username from charactersheetactivity: " + user.getName());
             }
-            sheetType = user.getSheets().get(0);
+            sheetType = user.getSheets().get(sheetNum);
             infoFields = sheetType.getInfo();
             stats = sheetType.getStats();
             statCats = sheetType.getStatCats();
+            System.out.println(stats);
+            System.out.println(statCats);
 
 
 
@@ -131,5 +135,6 @@ public class CharacterSheetActivity extends AppCompatActivity {
         }
     });
     }
+
 
 }

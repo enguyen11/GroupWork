@@ -23,6 +23,9 @@ public class SheetCatAdapter extends RecyclerView.Adapter<SheetCatViewHolder> {
         this.context = context;
         this.stringList = list;
         this.map = map;
+        System.out.println("********************Created************************");
+        System.out.println(map);
+        System.out.println(list);
     }
 
     @NonNull
@@ -34,13 +37,15 @@ public class SheetCatAdapter extends RecyclerView.Adapter<SheetCatViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull SheetCatViewHolder holder, int position) {
         holder.categoryName.setText(stringList.get(position));
-        holder.statRecycler.setAdapter(new SheetSkillAdapter(context, map.get(stringList.get(position))));
+        ArrayList<String> aList = map.get(stringList.get(position));
+        System.out.println("Sending aList: " + aList);
+        holder.statRecycler.setAdapter(new SheetSkillAdapter(context, aList));
         holder.statRecycler.setLayoutManager(new LinearLayoutManager(context));
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return stringList.size();
     }
 }

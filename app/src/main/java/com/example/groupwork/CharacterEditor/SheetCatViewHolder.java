@@ -14,6 +14,6 @@ public class SheetCatViewHolder extends RecyclerView.ViewHolder {
     public SheetCatViewHolder(@NonNull View itemView) {
         super(itemView);
         categoryName = itemView.findViewById(R.id.sheetStatCat);
-        statRecycler = itemView.findViewById(R.id.statRecyclerConstraint);
+        statRecycler = itemView.findViewById(R.id.sheetStatRecycler);
     }
 }
