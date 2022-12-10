@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/rpgBuddyGameMainMenu"
-        android:title="Play"
-        android:icon="@drawable/wooden_door"/>
+        android:icon="@drawable/wooden_door"
+        android:title="Games" />
     <item
         android:id="@+id/rpgBuddyCharacterEditor"
-        android:title="Heroes"
-        android:icon="@drawable/round_shield" />
+        android:icon="@drawable/round_shield"
+        android:title="Characters" />
     <item
         android:id="@+id/rpgBuddyDiceRoller"
         android:title="Dice"
