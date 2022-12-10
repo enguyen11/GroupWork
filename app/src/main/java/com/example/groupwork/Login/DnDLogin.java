@@ -101,10 +101,16 @@ public class DnDLogin extends AppCompatActivity {
      * @param user The User instance for the person logging in
      */
     private void makeNew(Player user){
-        user.addFriendToMsgList("User1");
+        //user.addFriendToMsgList("User1");
         Message message = new Message("User1", user.getName(), "Start of a conversation");
         user.addMessageToList(message);
         mDatabase.child(user.getName()).setValue(user);
+        mDatabase.child(user.getName()).child("CampaignList").
+                child("Campaigns").push().setValue("Campaign 1");
+        mDatabase.child(user.getName()).child("CampaignList").
+                child("Campaigns").push().setValue("Campaign 2");
+        mDatabase.child(user.getName()).child("CampaignList").
+                child("Campaigns").push().setValue("Campaign 3");
     }
 
 }

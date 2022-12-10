@@ -14,4 +14,11 @@ public class ClickableChat {
     public void setChatName(String chatName) {
         this.chatName = chatName;
     }
+
+    @Override
+    public String toString() {
+        return "ClickableChat{" +
+                "chatName='" + chatName + '\'' +
+                '}';
+    }
 }

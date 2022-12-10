@@ -3,12 +3,12 @@ package com.example.groupwork.DNDChat;
 public class Message {
 
     private String sender;
-    private String receiver;
+    //private String receiver;
     private String content;
 
     public Message(String sender, String receiver, String content){
         this.sender = sender;
-        this.receiver = receiver;
+        //this.receiver = receiver;
         this.content = content;
     }
 
@@ -16,9 +16,12 @@ public class Message {
         return sender;
     }
 
+    /*
     public String getReceiver() {
         return receiver;
     }
+
+     */
 
     public String getContent() {
         return content;
@@ -28,9 +31,12 @@ public class Message {
         this.sender = sender;
     }
 
+    /*
     public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
+
+     */
 
     public void setContent(String content) {
         this.content = content;

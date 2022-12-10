@@ -28,25 +28,6 @@
             android:textColorHint="#616161" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/receiverBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="3dp"
-        android:hint="Recipient"
-        app:layout_constraintBottom_toTopOf="@id/messageBar"
-        app:layout_constraintEnd_toStartOf="@+id/send"
-        app:layout_constraintStart_toStartOf="parent">
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/receiver"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColorHint="#616161" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/send"
@@ -60,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/messageBar"
         app:layout_constraintTop_toBottomOf="@+id/chatHistory"
-        app:layout_constraintVertical_bias="0.904"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="ImageContrastCheck,SpeakableTextPresentCheck">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
@@ -74,7 +55,7 @@
         android:layout_marginEnd="12dp"
 
         android:layout_marginBottom="44dp"
-        app:layout_constraintBottom_toTopOf="@+id/receiverBar"
+        app:layout_constraintBottom_toTopOf="@+id/messageBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

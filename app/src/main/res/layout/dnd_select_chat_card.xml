@@ -6,6 +6,8 @@
     android:layout_margin="8dp"
     app:cardBackgroundColor="@color/dodger_blue"
     app:cardCornerRadius="10dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
