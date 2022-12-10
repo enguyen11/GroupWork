@@ -71,7 +71,7 @@ public class rpgBuddyDiceRoller extends Fragment {
     private Integer modifier;
     private TextView modifierLeft;
     private TextView modifierRight;
-    private Vibrator vibrator; //insert joke here
+    private Vibrator vibrator;
 
     // shake feature
     private SensorManager sensorManager;
@@ -145,15 +145,13 @@ public class rpgBuddyDiceRoller extends Fragment {
 
         // define buttons
 
-        // EXAMPLE DIE
-        //TODO put more pleasing looking images, and correct mistakes in the labels. (one label is wrong)
         ArrayList<DiceItem> items = new ArrayList<>();
-        items.add(new DiceItem(20, 0, R.drawable.d20_black));
-        items.add(new DiceItem(12, 0, R.drawable.d12_black));
-        items.add(new DiceItem(10, 0, R.drawable.d10_black));
-        items.add(new DiceItem(8, 0, R.drawable.d8_black));
-        items.add(new DiceItem(6, 0, R.drawable.d6_black));
-        items.add(new DiceItem(3, 0, R.drawable.d3_black));
+        items.add(new DiceItem(20, 0, R.drawable.sticker_d20_die_emote));
+        items.add(new DiceItem(12, 0, R.drawable.sticker_d12_die_emote));
+        items.add(new DiceItem(10, 0, R.drawable.sticker_d10_die_emote));
+        items.add(new DiceItem(8, 0, R.drawable.sticker_d6_die_emote));
+        items.add(new DiceItem(6, 0, R.drawable.sticker_d6_die_emote));
+        items.add(new DiceItem(4, 0, R.drawable.sticker_d4_die_emote));
         gridView.setAdapter(new DiceGridAdapter(this.getContext(), items));
         gridView.setNumColumns(3);
 
@@ -202,6 +200,9 @@ public class rpgBuddyDiceRoller extends Fragment {
                     item.setQuantity(0);
                     item.updateQuantity();
                 }
+                lastResult = 0;
+                setModifier(0);
+                updateModifierViews();
                 resultView.setText("0");
             }
         });
