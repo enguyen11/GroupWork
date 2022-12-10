@@ -107,11 +107,14 @@ public class DnDLogin extends AppCompatActivity {
         mDatabase.child(user.getName()).setValue(user);
         //Dummy Campaigns
         mDatabase.child(user.getName()).child("CampaignList").
-                child("Campaigns").push().setValue("Campaign 1");
-        mDatabase.child(user.getName()).child("CampaignList").
-                child("Campaigns").push().setValue("Campaign 2");
-        mDatabase.child(user.getName()).child("CampaignList").
-                child("Campaigns").push().setValue("Campaign 3");
+                child("Campaigns").push().setValue("Eric's Campaign");
+
+        //Dummy Chat
+        DatabaseReference mDatabase2 = db.getReference("Games");
+        mDatabase2.child("Eric's Campaign").child("ChatRoom").push().setValue("ChatRoom1");
+        mDatabase2.child("Eric's Campaign").child("ChatRoom").push().setValue("ChatRoom2");
+        mDatabase2.child("Eric's Campaign").child("ChatRoom").push().setValue("ChatRoom3");
+        mDatabase2.child("Eric's Campaign").child("ChatRoom").push().setValue("ChatRoom4");
     }
 
 }

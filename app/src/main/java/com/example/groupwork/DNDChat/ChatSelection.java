@@ -26,6 +26,7 @@ public class ChatSelection extends AppCompatActivity implements ChatSelectionRec
     private DatabaseReference mDatabase;
 
     public static String SENDER;
+    public static String CAMPAIGN_NAME;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,22 +35,22 @@ public class ChatSelection extends AppCompatActivity implements ChatSelectionRec
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             this.SENDER = extras.getString("userID");
+            this.CAMPAIGN_NAME = extras.getString("campaignName");
         }
 
         chatList = new ArrayList<>();
-        this.chatList.add(new ClickableChat("Test"));
+        //this.chatList.add(new ClickableChat("Test"));
 
         RecyclerView chatSelection = findViewById(R.id.chatSelection);
         chatListAdapter = new ClickableChatAdapter(chatList, chatSelection.getContext(), this);
         chatSelection.setAdapter(chatListAdapter);
         chatSelection.setLayoutManager(new LinearLayoutManager(ChatSelection.this));
 
-        /*
+
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com/");
-        StringBuilder path = new StringBuilder("Users");
-        path.append("/");
-        path.append(SENDER);
-        path.append("/chatList/chats");
+        StringBuilder path = new StringBuilder("Games/");
+        path.append(CAMPAIGN_NAME);
+        path.append("/ChatRoom");
         System.out.println(path.toString());
         mDatabase = db.getReference(path.toString());
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -69,7 +70,7 @@ public class ChatSelection extends AppCompatActivity implements ChatSelectionRec
             }
         });
 
-         */
+
 
 
 
