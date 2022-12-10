@@ -23,31 +23,33 @@
         android:textColor="#4A148C"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/campaign_id_label"
+        app:layout_constraintBottom_toTopOf="@+id/campaign_name_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/picker_numPlayers"
+        android:id="@+id/editText_campaign_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/string_0"
-        android:inputType="number"
+        android:hint="@string/string_campaign_name"
+        android:inputType="textShortMessage"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/campaign_id_label"
+        android:textColorHint="#757575"
+        app:layout_constraintBottom_toBottomOf="@+id/campaign_name_label"
         app:layout_constraintEnd_toEndOf="@+id/characterSpinner"
         app:layout_constraintStart_toStartOf="@+id/characterSpinner"
-        app:layout_constraintTop_toTopOf="@+id/campaign_id_label" />
+        app:layout_constraintTop_toTopOf="@+id/campaign_name_label"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
-        android:id="@+id/campaign_id_label"
+        android:id="@+id/campaign_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/string_campaign_id"
+        android:text="@string/string_campaign_name"
         app:layout_constraintBottom_toTopOf="@+id/text_select_character"
         app:layout_constraintStart_toStartOf="@+id/text_select_character"
         app:layout_constraintTop_toBottomOf="@+id/join_game_title" />
@@ -109,6 +111,6 @@
         app:layout_constraintEnd_toStartOf="@+id/characterSpinner"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/campaign_id_label" />
+        app:layout_constraintTop_toBottomOf="@+id/campaign_name_label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

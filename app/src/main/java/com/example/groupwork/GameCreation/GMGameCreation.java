@@ -46,9 +46,7 @@ public class GMGameCreation extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            Log.d(TAG, "extras: " + extras.toString());
             user = extras.getString("user");
-            Log.d(TAG, "User: " + user);
         }
 
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");

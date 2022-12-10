@@ -35,8 +35,11 @@ public class Player implements Parcelable {
         friendsList = new ArrayList<>();
         games = new ArrayList<>();
         this.games.add("init");
-        SheetType defaultSheet = makeDefault();
+        SheetType defaultSheet = makeDefaultSheet();
         this.sheets.add(defaultSheet);
+        characters = new ArrayList<>();
+        Character defaultCharacter = makeDefaultCharacter();
+        this.characters.add(defaultCharacter);
 
     }
     public String getName(){
@@ -51,6 +54,7 @@ public class Player implements Parcelable {
     public ArrayList<SheetType> getSheets(){
         return this.sheets;
     }
+    public ArrayList<Character> getCharacters() { return this.characters; }
     public void addGameRole(boolean isGM){
         this.isGameGM.add(isGM);
     }
@@ -68,7 +72,7 @@ public class Player implements Parcelable {
 
 
 
-    private SheetType makeDefault(){
+    private SheetType makeDefaultSheet(){
         SheetType defaultSheet = new SheetType();
         defaultSheet.setName("D&D 5e Sheet");
         ArrayList<String> info = new ArrayList<>();
@@ -143,6 +147,11 @@ public class Player implements Parcelable {
         defaultSheet.setResources(resourceList);
         return defaultSheet;
 
+    }
+
+    private Character makeDefaultCharacter(){
+        Character defaultCharacter = new Character("default");
+        return defaultCharacter;
     }
 
 

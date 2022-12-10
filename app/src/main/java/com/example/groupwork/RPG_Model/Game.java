@@ -8,8 +8,10 @@ public class Game {
     private String gameMaster;
     private String system;
     private int numPlayers;
-    private ArrayList<String> party;
+    private ArrayList<String> partyPlayers;
     private String descr;
+    private ArrayList<String> partyCharacters;
+
 
 
     public Game(String name, String gameMaster, String system, int numPlayers){
@@ -21,8 +23,14 @@ public class Game {
     }
 
     public void addPlayer(String player) {
-        if (party.size() < numPlayers) {
-            party.add(player);
+        if (partyPlayers.size() < numPlayers) {
+            partyPlayers.add(player);
+        }
+    }
+
+    public void addCharacter(String character) {
+        if (partyPlayers.size() == partyCharacters.size() - 1) {
+            partyCharacters.add(character);
         }
     }
 
@@ -34,6 +42,6 @@ public class Game {
     public String getDescr() {return this.descr;}
 
     public ArrayList<String> getParty() {
-        return party;
+        return partyPlayers;
     }
 }
