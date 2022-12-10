@@ -69,8 +69,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         bottomNav.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             Fragment fragment;
-            if (R.id.loadedGameMainMenu == itemId) {
-                Bundle args = new Bundle();
+            if (R.id.rpgBuddyGameMainMenu == itemId) {
                 args.putString("userID", user.getName());
                 fragment = new RpgBuddyGameMainMenu();
                 changeFragment(fragment);
