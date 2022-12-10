@@ -3,6 +3,7 @@ package com.example.groupwork.CharacterEditor;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ public class SheetAdapter extends RecyclerView.Adapter<SheetViewHolder> {
     private ArrayList<String> stringList;
     private Context context;
 
+
     public SheetAdapter(Context context, ArrayList<String> stringList){
         this.context = context;
         this.stringList = stringList;
@@ -26,6 +28,8 @@ public class SheetAdapter extends RecyclerView.Adapter<SheetViewHolder> {
     }
 
     @Override
+
+
     public void onBindViewHolder(@NonNull SheetViewHolder holder, int position) {
         System.out.println("Adding: " + stringList.get(position));
         holder.header.setText(stringList.get(position));

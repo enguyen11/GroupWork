@@ -2,38 +2,71 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/buttonAddInfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SheetBuilderActivity">
+    tools:context="CharacterEditor.SheetBuilderActivity">
 
-    <TextView
-        android:id="@+id/textView4"
+    <EditText
+        android:id="@+id/editTextInfoAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Define basic info fields here:"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Define stat groups here:"
+        android:ems="10"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".1"/>
 
-    <TextView
-        android:id="@+id/textView6"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerInfoToAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Define resource types here:"
+        app:layout_constraintBottom_toTopOf="@id/editTextStatAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextInfoAdd" />
+
+    <Button
+        android:id="@+id/addInfoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextInfoAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextInfoAdd"
+        app:layout_constraintTop_toTopOf="@+id/editTextInfoAdd" />
+
+    <EditText
+        android:id="@+id/editTextStatAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerInfoToAdd"
+        app:layout_constraintBottom_toTopOf="@id/recyclerStatsToAdd"/>
+
+    <Button
+        android:id="@+id/addStatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextStatAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextStatAdd"
+        app:layout_constraintTop_toTopOf="@+id/editTextStatAdd" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerStatsToAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextStatAdd" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

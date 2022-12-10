@@ -1,7 +1,6 @@
 package com.example.groupwork.CharacterEditor;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.jar.Attributes;
 
 public class CharacterSheetActivityRefactor extends AppCompatActivity {
 

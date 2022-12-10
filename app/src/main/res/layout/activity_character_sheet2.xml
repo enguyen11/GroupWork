@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@id/statTable"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/statRecycler"
+        android:id="@+id/statRecyclerConstraint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

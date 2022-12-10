@@ -126,7 +126,7 @@ public class RpgBuddyCharacterEditor extends Fragment {
             user.getSheets().add(newSheet);
            // mDatabase.child(username).child("sheets").push().setValue(newSheet);
           //  sheetView.getAdapter().notifyDataSetChanged();
-            Intent goTo = new Intent(getActivity(), CharacterSheetActivity.class);
+            Intent goTo = new Intent(getActivity(), SheetBuilderActivity.class);
             goTo.putExtra("player", username);
             startActivity(goTo);
         });

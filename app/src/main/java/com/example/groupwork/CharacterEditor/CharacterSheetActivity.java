@@ -2,10 +2,7 @@ package com.example.groupwork.CharacterEditor;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.Barrier;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -192,8 +188,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
 
 
             statTable = findViewById(R.id.statTable);
-            statRec = findViewById(R.id.statRecycler);
-            //************************************************Try this idea *****************************
+            statRec = findViewById(R.id.statRecyclerConstraint);
             statTable.setShrinkAllColumns(true);
 
             row = new TableRow(context);
