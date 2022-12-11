@@ -20,6 +20,7 @@ public class Character {
         template = temp;
         info = new ArrayList<>();
         stats = new ArrayList<>();
+       // name = "blank character";
     }
     public void updateInfo(int pos, String data){
         info.set(pos, data);

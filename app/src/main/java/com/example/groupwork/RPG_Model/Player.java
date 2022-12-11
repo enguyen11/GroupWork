@@ -39,8 +39,6 @@ public class Player implements Parcelable {
         SheetType defaultSheet = makeDefaultSheet();
         this.sheets.add(defaultSheet);
         characters = new ArrayList<>();
-        characters.add(new Character(defaultSheet));
-
     }
     public String getName(){
         return this.username;
