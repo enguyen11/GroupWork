@@ -65,7 +65,7 @@ public class LoadedGameActivity extends AppCompatActivity {
 
         Bundle args = new Bundle();
         args.putString("user", username);
-        args.putString("campaign", campaign);
+        args.putString("campaignName", campaign);
 
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.loadedGame_bottomNav);
