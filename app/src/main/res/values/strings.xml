@@ -54,13 +54,12 @@
 
     <string name="string_about">About</string>
     <string name="string_group_members">Group Members:</string>
-    <string name="string_bryant_rogers_nguyen_baush_garciaCastillo">Nolen Bryant, Hannah Rogers, Eric Nguyen, Connor Baush, Alan Garcia Castillo</string>
+    <string name="string_dev_names">Hannah Rogers, Eric Nguyen, Connor Baush, Alan Garcia Castillo, Nolen Bryant</string>
     <string name="string_message_history">Message History</string>
     <string name="string_sent_to">Sent to:</string>
     <string name="string_sticker_sent">Sticker Sent</string>
     <string name="string_placeholder">placeholder</string>
     <string name="prompt_throw">Test your fate!</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_game">New Game</string>
     <string name="new_sheet">New Template</string>
@@ -85,17 +84,25 @@
     <string name="join_game">Join Game</string>
     <string name="string_new_character">New Character</string>
     <string name="string_no_games_to_display">No Games to Display</string>
+    <string-array name="available_systems">
+        <item>Dungeons and Dragons 5e</item>
+    </string-array>
     <string name="string_clear">Clear</string>
-    <string name="string_0">0</string>
-    <string name="string_shake_or_press_button_to_roll">Shake or press button to roll:</string>
-    <string name="string_minus0">-0</string>
+    <string name="string_shake_or_press_button_to_roll">Shake or press button to roll:</string>    
     <string name="string_scroll_to_see_past_rolls">Scroll to see past rolls</string>
     <string name="string_total_label">Total:</string>
+    <string name="string_0">0</string>
+    <string name="string_minus0">-0</string>
     <string name="string_add0">+0</string>
     <string name="string_apply_modifiers_label">Apply Modifiers:</string>
     <string name="string_add_modifier">add modifier</string>
     <string name="string_subtract_modifier">subtract modifier</string>
     <string name="string_please_enter_your_username">Please enter your username</string>
+    <string name="string_please_only_use_alphanumeric_characters">Please only use alphanumeric characters.</string>
+    <string name="string_1">1</string>
+    <string name="string_party_summary">Party Summary</string>
+    <string name="string_map">map</string>
+    <string name="string_character_sheet">Character Sheet</string>
 
 
 </resources>
