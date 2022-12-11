@@ -129,9 +129,12 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
                         String campaignName = child.getKey();
                         Log.d(TAG, "campaign: " + campaignName);
                         Log.d(TAG, child.toString());
-                        String curUserCharacter = child.child("character").getValue().toString();
-                        Game game = new Game(campaignName, curUserCharacter, user);
-                        campaignList.add(game);
+                        if(child.child("character").getValue() != null) {
+                            String curUserCharacter = child.child("character").getValue().toString();
+                            Game game = new Game(campaignName, curUserCharacter, user);
+                            campaignList.add(game);
+
+                        }
                     }
                     games_recyclerView.getAdapter().notifyDataSetChanged();
 
@@ -194,6 +197,7 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
         String username = campaignList.get(position).getCurUser();
         goToCampaign.putExtra("user", username);
         goToCampaign.putExtra("campaignName", campaignName);
+        Log.d(TAG, username + " is clicking " + campaignName);
         RpgBuddyGameMainMenu.this.startActivity(goToCampaign);
     }
 }
