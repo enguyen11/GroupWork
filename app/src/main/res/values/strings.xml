@@ -102,5 +102,6 @@
     <string name="string_party_summary">Party Summary</string>
     <string name="string_map">map</string>
     <string name="string_character_sheet">Character Sheet</string>
+    <string name="string_role">Role</string>
 
 </resources>
