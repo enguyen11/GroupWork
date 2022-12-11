@@ -27,6 +27,7 @@ public class Player implements Parcelable {
 
     public Player(){
         System.out.println("**************Making Player*********************");
+        characters = new ArrayList<>();
     }
     public Player(String username){
         this.username = username;

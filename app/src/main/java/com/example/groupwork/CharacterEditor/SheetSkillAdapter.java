@@ -44,6 +44,9 @@ public class SheetSkillAdapter extends RecyclerView.Adapter<SheetSkillViewHolder
 
     @Override
     public int getItemCount() {
+        if(stringList == null){
+            return 0;
+        }
         return stringList.size();
     }
 

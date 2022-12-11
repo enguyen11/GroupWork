@@ -46,6 +46,9 @@ public class MyCharsAdapter extends RecyclerView.Adapter<MyCharsViewHolder> {
 
     @Override
     public int getItemCount() {
+        if(charList == null){
+            return 0;
+        }
         return charList.size();
     }
 }

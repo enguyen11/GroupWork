@@ -51,6 +51,9 @@ public class SheetCatAdapter extends RecyclerView.Adapter<SheetCatViewHolder> {
 
     @Override
     public int getItemCount() {
+        if(stringList == null){
+            return 0;
+        }
         return stringList.size();
     }
 
@@ -58,6 +61,9 @@ public class SheetCatAdapter extends RecyclerView.Adapter<SheetCatViewHolder> {
         return rView.get(index);
     }
     public int getSize(){
+        if(rView == null){
+            return 0;
+        }
         return rView.size();
     }
 }

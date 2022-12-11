@@ -19,6 +19,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.groupwork.Menus.RpgBuddyMainMenu;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Character;
 import com.example.groupwork.RPG_Model.Player;
@@ -83,7 +84,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
                 sheetNum = extras.getInt("index");
                 isTemplate = true;
             }
-            else if (extras.containsKey("character")) {
+            if (extras.containsKey("character")) {
                 charName = extras.getString("character");
                 isTemplate = false;
 
@@ -107,7 +108,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             user = snapshot.getValue(Player.class);
-
+            Log.d("beginning data change: ", String.valueOf(isTemplate));
             if(isTemplate) {
                 sheetType = user.getSheets().get(sheetNum);
                 System.out.println("Viewing a blank template!!!!!!!!");
@@ -116,8 +117,6 @@ public class CharacterSheetActivity extends AppCompatActivity {
                 charIndex = 0;
                 for(DataSnapshot ds: snapshot.child("characters").getChildren()){
                     Character x = ds.getValue(Character.class);
-                    System.out.println(x.getName());
-                    System.out.println("charname: " + charName);
                     if(x.getName() == null){
                         continue;
                     }
@@ -125,6 +124,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
                         sheetType = x.getTemplate();
                         infoVals = x.getInfo();
                         for(ArrayList<String> group : x.getStats()){
+                            System.out.println("Adding statVals: " + group);
                             statVals.add(group);
                         }
                         break;
@@ -145,6 +145,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
             //TableLayout.LayoutParams params = new TableLayout.LayoutParams();
             int n = 0;
             int x = 0;
+            Log.d("before setValues call: ", String.valueOf(isTemplate));
             if(isTemplate){
                 setValues();
             }
@@ -181,6 +182,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
         }
     });
     saveButton.setOnClickListener(view -> {
+        Log.d("onclick before update: ", String.valueOf(isTemplate));
         updateValues();
         if(character == null){
             character = new Character(sheetType);
@@ -197,11 +199,13 @@ public class CharacterSheetActivity extends AppCompatActivity {
             user.getCharacters().set(charIndex, character);
         }
         mDatabase.child(username).child("characters").setValue(user.getCharacters());
+        Intent goTo = new Intent(context, RpgBuddyMainMenu.class);
+        goTo.putExtra("username", username);
+        startActivity(goTo);
     });
     }
     public void setValues(){
-
-
+        System.out.println("new character, setting values");
         int n = 0;
         while (n < infoFields.size()){
             infoVals.add("");
@@ -209,12 +213,16 @@ public class CharacterSheetActivity extends AppCompatActivity {
         }
         n = 0;
         int r = 0;
+        if(statCats == null){
+            return;
+        }
         while(n < statCats.size()){
             ArrayList<String> list = new ArrayList<>();
             while(r < stats.get(statCats.get(n)).size()){
                 list.add("");
                 r++;
             }
+            r = 0;
             statVals.add(list);
             n++;
         }
@@ -222,13 +230,20 @@ public class CharacterSheetActivity extends AppCompatActivity {
     public void updateValues(){
         int n = 0;
         int r = 1;
-        infoVals = new ArrayList<>();
-        statVals = new ArrayList<>();
-        while(r < infoTable.getChildCount() - 2){
+        int x = 0;
+        Log.d("inside update: ", String.valueOf(isTemplate));
+       // infoVals = new ArrayList<>();
+       //statVals = new ArrayList<>();
+        System.out.println("getchildcount: "+ infoTable.getChildCount());
+        while(r < infoTable.getChildCount()){
             TableRow row = (TableRow)infoTable.getChildAt(r);
+            if(n >= row.getChildCount()){
+                break;
+            }
             EditText info = (EditText) row.getChildAt(n);
-            infoVals.add(info.getText().toString());
+            infoVals.set(x,info.getText().toString());
             n++;
+            x++;
             if(n >= 4){
                 r = r + 2;
                 n = 0;
@@ -236,6 +251,8 @@ public class CharacterSheetActivity extends AppCompatActivity {
         }
         n = 0;
         r = 0;
+        x = 0;
+
         while(n < statRec.getAdapter().getItemCount()){
             ArrayList<String> tempList = new ArrayList<>();
             SheetCatAdapter adapter = (SheetCatAdapter) statRec.getAdapter();
@@ -252,10 +269,12 @@ public class CharacterSheetActivity extends AppCompatActivity {
                tempList.add(editText.getText().toString());
                 r++;
             }
-            statVals.add(tempList);
+            statVals.set(x, tempList);
             r = 0;
             n++;
+            x++;
         }
+        Log.d("end of update: ", String.valueOf(isTemplate));
     }
 
 

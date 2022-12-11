@@ -107,6 +107,8 @@
     <string name="string_add_stat_group">Add Stat Group</string>
     <string name="string_remove">Remove</string>
     <string name="string_add_stat">Add Stat</string>
+    <string name="string_template_instr">Click on a template below to create a new character</string>
+    <string name="string_character_instr">Click on a name below to open a character sheet</string>
 
 
 </resources>

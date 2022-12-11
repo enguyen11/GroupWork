@@ -125,14 +125,8 @@ public class RpgBuddyCharacterEditor extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstance){
 
         btnNewSheet = getView().findViewById(R.id.button_new_sheet);
-        btnNewChar = getView().findViewById(R.id.new_character_button);
+        //btnNewChar = getView().findViewById(R.id.new_character_button);
         btnNewSheet.setOnClickListener(view1 -> {
-            SheetType newSheet = new SheetType();
-            newSheet.setName("Dummy Sheet");
-            System.out.println("sheet size: " + user.getSheets().size());
-            user.getSheets().add(newSheet);
-           // mDatabase.child(username).child("sheets").push().setValue(newSheet);
-          //  sheetView.getAdapter().notifyDataSetChanged();
             Intent goTo = new Intent(getActivity(), SheetBuilderActivity.class);
             goTo.putExtra("player", username);
             startActivity(goTo);
