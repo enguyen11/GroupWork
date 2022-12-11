@@ -74,6 +74,10 @@
         <activity
             android:name=".CharacterEditor.CharacterSheetActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".CharacterEditor.CharacterSheetActivityRefactor"
+            android:exported="false" />
         <activity
             android:name=".DndApiActivity.DndAPIActivity"
             android:exported="false">

@@ -2,18 +2,26 @@ package com.example.groupwork.CharacterEditor;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.Barrier;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
+import com.example.groupwork.Menus.RpgBuddyMainMenu;
 import com.example.groupwork.R;
+import com.example.groupwork.RPG_Model.Character;
 import com.example.groupwork.RPG_Model.Player;
 import com.example.groupwork.RPG_Model.Resource;
 import com.example.groupwork.RPG_Model.SheetType;
@@ -23,9 +31,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashMap;
+import java.util.Locale;
+
 
 public class CharacterSheetActivity extends AppCompatActivity {
     private Player user;
@@ -34,6 +44,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
     private String sheetName;
     private ArrayList<String> infoFields;
     private HashMap<String, ArrayList<String>> stats;
+    private ArrayList<String> statCats;
     private HashMap<String, Resource> resources;
     private ArrayList<EditText> infoViews;
     private ArrayList<EditText> statViews;
@@ -43,10 +54,25 @@ public class CharacterSheetActivity extends AppCompatActivity {
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
     private Context context;
+    private TableLayout infoTable;
+    private TableLayout statTable;
+    private TableLayout resourceTable;
+    private RecyclerView statRec;
+    private int sheetNum;
+    private ArrayList<String> infoVals;
+    private ArrayList<ArrayList<String>> statVals;
+    private String charName;
+    private Character character;
+    private boolean isTemplate;
+    private Button saveButton;
+    private int charIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("CHARACTER SHEET", "onCreate: ON CHARACTER SHEET ACTIVITY");
+        // s
+        setContentView(R.layout.activity_character_sheet2);
         context = this;
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         mDatabase = db.getReference("Users");
@@ -54,113 +80,202 @@ public class CharacterSheetActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         if (extras != null) {
             username = extras.getString("player");
+            if (extras.containsKey("index")) {
+                sheetNum = extras.getInt("index");
+                isTemplate = true;
+            }
+            if (extras.containsKey("character")) {
+                charName = extras.getString("character");
+                isTemplate = false;
+
+            }
         }
-        setContentView(R.layout.activity_character_sheet);
+        saveButton = findViewById(R.id.buttonSaveChar);
+
+
         infoViews = new ArrayList<>();
         statViews = new ArrayList<>();
         resourceViews = new ArrayList<>();
+        infoVals = new ArrayList<>();
+        statVals = new ArrayList<>();
 
-        //sheetType = user.getSheets().get(0);
-        //sheetType = mDatabase.child(username).child("sheets").child("0").get
-     //   sheetName = sheetType.getName();
-     //   infoFields = sheetType.getInfo();
-     //   stats = sheetType.getStats();
-        System.out.println("Stats: " + stats);
-     //   resources = sheetType.getResources();
-       /* layout = new ConstraintLayout(this);
-        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT
-        );*/
-        //params.addRule(ConstraintLayout.CENTER_IN_PARENT);
+
+
         infoRecycler = findViewById(R.id.recyclerView2);
 
 
-
-        int n = 0;
-        /*
-        while (n < infoFields.size()){
-            EditText edit = new EditText(this);
-            edit.setId(n);
-            edit.setHint(infoFields.get(n));
-            edit.setLayoutParams(params);
-            if(n > 0){
-                ConstraintLayout.LayoutParams p = new ConstraintLayout.LayoutParams(
-                        ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                        ConstraintLayout.LayoutParams.WRAP_CONTENT);
-                edit.setLayoutParams(p);
-            }
-            //layout.addView(edit);
-            infoViews.add(edit);
-            n++;
-        }*/
-
-
-
-
-        //ConstraintSet conSet = new ConstraintSet();
-        //conSet.connect(infoRecycler.getId(),3, copy1.getId(), 4);
-        //conSet.connect(copy1.getId(),4, copy2.getId(), 3);
-        //conSet.constrainPercentHeight(infoRecycler.getId(), 33);
-        //conSet.constrainPercentHeight(copy1.getId(), 33);
-       // conSet.constrainPercentHeight(copy2.getId(), 33);
-        //layout.setConstraintSet(conSet);
-       // layout.addView(infoRecycler);
-       //layout.addView(copy1);
-        //layout.addView(copy2);
-
-
-
-
-
-/*
-        n = 0;
-        while (n < stats.size()){
-            EditText edit = new EditText(this);
-            ArrayList<String> names = new ArrayList<>(stats.keySet());
-            edit.setHint(names.get(n));
-            statViews.add(edit);
-            n++;
-        }
-        n = 0;
-        while (n < resources.size()){
-            EditText edit = new EditText(this);
-            ArrayList<String> names = new ArrayList<>(resources.keySet());
-            edit.setHint(names.get(n));
-            resourceViews.add(edit);
-            n++;
-        }*/
-       //setContentView(layout, params);
     mDatabase.child(username).addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            if (user == null) {
-                user = snapshot.getValue(Player.class);
-                System.out.println("Username in charactersheetactivity " + user.getName());
+            user = snapshot.getValue(Player.class);
+            Log.d("beginning data change: ", String.valueOf(isTemplate));
+            if(isTemplate) {
+                sheetType = user.getSheets().get(sheetNum);
+                System.out.println("Viewing a blank template!!!!!!!!");
+            }
+            else{
+                charIndex = 0;
+                for(DataSnapshot ds: snapshot.child("characters").getChildren()){
+                    Character x = ds.getValue(Character.class);
+                    if(x.getName() == null){
+                        continue;
+                    }
+                    if(x.getName().equals(charName)){
+                        sheetType = x.getTemplate();
+                        infoVals = x.getInfo();
+                        for(ArrayList<String> group : x.getStats()){
+                            System.out.println("Adding statVals: " + group);
+                            statVals.add(group);
+                        }
+                        break;
+                    }
+                    charIndex++;
+                }
+
 
             }
-            else {
-                System.out.println("Username from charactersheetactivity: " + user.getName());
-            }
-            sheetType = user.getSheets().get(0);
             infoFields = sheetType.getInfo();
-             SheetAdapter adapter = new SheetAdapter(context, infoFields);
-             infoRecycler.setAdapter(adapter);
-             infoRecycler.setLayoutManager(new GridLayoutManager(context, 2));
-             adapter.notifyDataSetChanged();
-            RecyclerView copy1 = findViewById(R.id.recyclerView3);
-            RecyclerView copy2 = findViewById(R.id.recyclerView4);
-             copy1.setAdapter(adapter);
-             copy2.setAdapter(adapter);
-            copy1.setLayoutManager(new GridLayoutManager(context, 3));
-              copy2.setLayoutManager(new GridLayoutManager(context, 2));
-        }
+            stats = sheetType.getStats();
+            statCats = sheetType.getStatCats();
+            infoTable = findViewById(R.id.infoTable);
+            TableRow row = findViewById(R.id.firstRow);
+            TableRow secondrow = new TableRow(context);
+            infoTable.addView(secondrow);
+            infoTable.setStretchAllColumns(true);
+            //TableLayout.LayoutParams params = new TableLayout.LayoutParams();
+            int n = 0;
+            int x = 0;
+            Log.d("before setValues call: ", String.valueOf(isTemplate));
+            if(isTemplate){
+                setValues();
+            }
+            for(String field : infoFields){
+                TextView view = new TextView(context);
+                view.setText(field);
+                row.addView(view);
+                TextView eview = new EditText(context);
+                eview.setText(infoVals.get(x));
+                secondrow.addView(eview);
+                n++;
+                x++;
+                if(n >= 4){
+                    row = new TableRow(context);
+                    infoTable.addView(row);
+                    secondrow = new TableRow(context);
+                    infoTable.addView(secondrow);
+                    n = 0;
+                }
+            }
+           // setValues();
+
+            statRec = findViewById(R.id.statRecyclerConstraint);
+            statRec.setAdapter(new SheetCatAdapter(context, statCats, stats, statVals));
+            statRec.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+
+                n++;
+            }
+
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
 
         }
     });
+    saveButton.setOnClickListener(view -> {
+        Log.d("onclick before update: ", String.valueOf(isTemplate));
+        updateValues();
+        if(character == null){
+            character = new Character(sheetType);
+
+        }
+        character.setInfo(infoVals);
+        character.setGroups(statVals);
+        if(isTemplate) {
+            System.out.println("Creating new character!");
+            user.getCharacters().add(character);
+        }
+        else{
+            System.out.println("Saving existing character!");
+            user.getCharacters().set(charIndex, character);
+        }
+        mDatabase.child(username).child("characters").setValue(user.getCharacters());
+        Intent goTo = new Intent(context, RpgBuddyMainMenu.class);
+        goTo.putExtra("username", username);
+        startActivity(goTo);
+    });
     }
+    public void setValues(){
+        System.out.println("new character, setting values");
+        int n = 0;
+        while (n < infoFields.size()){
+            infoVals.add("");
+            n++;
+        }
+        n = 0;
+        int r = 0;
+        if(statCats == null){
+            return;
+        }
+        while(n < statCats.size()){
+            ArrayList<String> list = new ArrayList<>();
+            while(r < stats.get(statCats.get(n)).size()){
+                list.add("");
+                r++;
+            }
+            r = 0;
+            statVals.add(list);
+            n++;
+        }
+    }
+    public void updateValues(){
+        int n = 0;
+        int r = 1;
+        int x = 0;
+        Log.d("inside update: ", String.valueOf(isTemplate));
+       // infoVals = new ArrayList<>();
+       //statVals = new ArrayList<>();
+        System.out.println("getchildcount: "+ infoTable.getChildCount());
+        while(r < infoTable.getChildCount()){
+            TableRow row = (TableRow)infoTable.getChildAt(r);
+            if(n >= row.getChildCount()){
+                break;
+            }
+            EditText info = (EditText) row.getChildAt(n);
+            infoVals.set(x,info.getText().toString());
+            n++;
+            x++;
+            if(n >= 4){
+                r = r + 2;
+                n = 0;
+            }
+        }
+        n = 0;
+        r = 0;
+        x = 0;
+
+        while(n < statRec.getAdapter().getItemCount()){
+            ArrayList<String> tempList = new ArrayList<>();
+            SheetCatAdapter adapter = (SheetCatAdapter) statRec.getAdapter();
+            if(n >= adapter.getSize()){
+                break;
+            }
+            RecyclerView recyclerView = adapter.getItem(n);
+            while(r < recyclerView.getAdapter().getItemCount()){
+                SheetSkillAdapter sadapter = (SheetSkillAdapter)recyclerView.getAdapter();
+                if(r >= sadapter.getSize()){
+                    break;
+                }
+               EditText editText = sadapter.getItem(r);
+               tempList.add(editText.getText().toString());
+                r++;
+            }
+            statVals.set(x, tempList);
+            r = 0;
+            n++;
+            x++;
+        }
+        Log.d("end of update: ", String.valueOf(isTemplate));
+    }
+
 
 }

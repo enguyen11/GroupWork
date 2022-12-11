@@ -44,6 +44,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
     private DatabaseReference mDatabase2;
     private String username;
 
+
     public static String TAG = "RpgBuddyMainMenu";
 
     private NavArgument nameArg, mailArg;
@@ -54,13 +55,16 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         setContentView(R.layout.activity_rpg_buddy_main_menu);
 
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            username = extras.getString("username");
-        }
 
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         mDatabase = db.getReference("Users");
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if(extras != null){
+            username = extras.getString("username");
+        }
+       // user = new Player("User");
+        //mDatabase.child("User").setValue(user);
         user = new Player(username);
         if(mDatabase.child(username) == null) {
             mDatabase.child(username).setValue(user);
@@ -106,8 +110,8 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {
                 fragment = new RpgBuddyCharacterEditor();
-//                Bundle args = new Bundle();
-//                args.putString("userID", user.getName());
+                Bundle args = new Bundle();
+                args.putString("userID", username);
                 fragment.setArguments(args);
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyDiceRoller == itemId) {

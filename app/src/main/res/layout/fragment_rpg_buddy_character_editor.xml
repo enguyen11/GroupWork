@@ -25,12 +25,42 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_sheet_list"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="1dp"
             app:layout_constraintBottom_toTopOf="@+id/button_new_sheet"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/recycler_character_list"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_character_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/button_new_sheet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/recycler_sheet_list"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/templateInstructions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/string_template_instr"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_sheet_list"
+            app:layout_constraintEnd_toStartOf="@id/character_instructions"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/character_instructions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/string_character_instr"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_character_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/templateInstructions"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
