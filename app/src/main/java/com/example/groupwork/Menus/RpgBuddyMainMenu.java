@@ -4,6 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavArgument;
+import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
+import androidx.navigation.NavInflater;
+import androidx.navigation.Navigation;
 
 import android.content.Context;
 import android.content.Intent;
@@ -42,12 +47,13 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
 
     public static String TAG = "RpgBuddyMainMenu";
 
+    private NavArgument nameArg, mailArg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rpg_buddy_main_menu);
 
-        changeFragment(new RpgBuddyGameMainMenu());
 
 
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
@@ -68,8 +74,21 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
             mDatabase2.setValue("default");
         }
 
+
+        nameArg = new NavArgument.Builder().setDefaultValue(username).build();
+        mailArg = new NavArgument.Builder().setDefaultValue("your email id").build();
+        NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView);
+        NavInflater navInflater = navController.getNavInflater();
+        NavGraph navGraph = navInflater.inflate(R.navigation.rpg_buddy_main_nav_bar);
+        navGraph.addArgument("userID", nameArg);
+        navController.setGraph(navGraph);
+
+        Bundle args = new Bundle();
+        args.putString("userID", user.getName());
+
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.RpgBuddyBottomNav);
+
         bottomNav.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             Fragment fragment;
@@ -78,8 +97,6 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {
                 fragment = new RpgBuddyCharacterEditor();
-                Bundle args = new Bundle();
-                args.putString("userID", username);
                 fragment.setArguments(args);
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyDiceRoller == itemId) {

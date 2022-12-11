@@ -28,7 +28,7 @@ public class LoadedGameActivity extends AppCompatActivity {
 
     private ArrayList<Game> myGames;
     private Button btnNewGame;
-    private Button btnNewSheet;
+
     private Player user;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
@@ -60,6 +60,11 @@ public class LoadedGameActivity extends AppCompatActivity {
             mDatabase2.setValue("default");
         }
 
+        Bundle args = new Bundle();
+        args.putString("user", user.getName());
+        args.putString("campaignName", user.getName());
+
+
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.loadedGame_bottomNav);
         bottomNav.setOnItemSelectedListener(item -> {
@@ -67,6 +72,7 @@ public class LoadedGameActivity extends AppCompatActivity {
             Fragment fragment;
             if (R.id.loadedGameMainMenu == itemId) {
                 fragment = new LoadedGameMenuFragment();
+                fragment.setArguments(args);
                 changeFragment(fragment);
             } else if (R.id.currentCharacterSheet == itemId) {
                 //character sheet
@@ -81,6 +87,8 @@ public class LoadedGameActivity extends AppCompatActivity {
             }
             return true;
         });
+
+
 
 
     }

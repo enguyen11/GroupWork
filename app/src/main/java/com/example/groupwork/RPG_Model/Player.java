@@ -35,7 +35,6 @@ public class Player implements Parcelable {
         messageList = new ArrayList<>();
         friendsList = new ArrayList<>();
         games = new ArrayList<>();
-        this.games.add("init");
         SheetType defaultSheet = makeDefaultSheet();
         this.sheets.add(defaultSheet);
         characters = new ArrayList<>();
