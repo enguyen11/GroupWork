@@ -5,10 +5,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.groupwork.CampaignNotesActivity;
 import com.example.groupwork.Login.DnDLogin;
@@ -26,6 +28,7 @@ public class LoadedGameMenuFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "user";
     private static final String ARG_PARAM2 = "campaign";
+    private static final String TAG = "LoadedGameMenuFragment";
 
     private String campaignName;
     private String user;
@@ -34,9 +37,8 @@ public class LoadedGameMenuFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private String username;
-    private String campaign;
     private Button notes;
+    private TextView name_title;
 
     public LoadedGameMenuFragment() {
         // Required empty public constructor
@@ -67,6 +69,7 @@ public class LoadedGameMenuFragment extends Fragment {
             campaignName = getArguments().getString("campaignName");
             user = getArguments().getString("user");
         }
+        Log.d(TAG, "campaign name: " + campaignName);
     }
 
     @Override
@@ -74,6 +77,9 @@ public class LoadedGameMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_loaded_game_menu, container, false);
+        name_title = v.findViewById(R.id.text_campaign_name_title);
+        name_title.setText(campaignName);
+        Log.d(TAG, "campaign name: " + campaignName);
         notes = v.findViewById(R.id.btn_notes);
         notes.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), CampaignNotesActivity.class);

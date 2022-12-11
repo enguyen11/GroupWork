@@ -9,6 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavArgument;
+import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
+import androidx.navigation.NavInflater;
+import androidx.navigation.Navigation;
 
 import com.example.groupwork.CharacterEditor.RpgBuddyCharacterEditor;
 import com.example.groupwork.DiceRoller.rpgBuddyDiceRoller;
@@ -36,6 +41,8 @@ public class LoadedGameActivity extends AppCompatActivity {
     private String username;
     private String campaign;
 
+    private NavArgument nameArg, campaignArg;
+
     public static String TAG = "LoadedGameActivity";
 
     @Override
@@ -62,6 +69,14 @@ public class LoadedGameActivity extends AppCompatActivity {
             mDatabase2.setValue("default");
         }
 
+        nameArg = new NavArgument.Builder().setDefaultValue(username).build();
+        campaignArg= new NavArgument.Builder().setDefaultValue(campaign).build();
+        NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView2);
+        NavInflater navInflater = navController.getNavInflater();
+        NavGraph navGraph = navInflater.inflate(R.navigation.loaded_game_nav_bar);
+        navGraph.addArgument("user", nameArg);
+        navGraph.addArgument("campaignName", campaignArg);
+        navController.setGraph(navGraph);
 
         Bundle args = new Bundle();
         args.putString("user", username);
@@ -100,7 +115,7 @@ public class LoadedGameActivity extends AppCompatActivity {
     private void changeFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragmentContainerView, fragment);
+        transaction.replace(R.id.fragmentContainerView2, fragment);
         transaction.commit();
 
     }
