@@ -68,7 +68,7 @@ public class PlayerJoinGame extends AppCompatActivity {
         gameDescription = findViewById(R.id.editText_description);
         saveGame = findViewById(R.id.btn_save);
 
-        selectedCharacter = null;
+        selectedCharacter = "default";
         userCharacters = new ArrayList<>();
         //ArrayList<Character> characters = getCharacters();
 //        for (Character c: characters) {
@@ -90,7 +90,7 @@ public class PlayerJoinGame extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 characterSpinner.setPrompt(getString(R.string.categories));
-                selectedCharacter = null;
+                selectedCharacter = "default";
             }
         });
 
@@ -147,15 +147,21 @@ public class PlayerJoinGame extends AppCompatActivity {
                 game = dataSnapshot.getValue(Game.class);
                 Log.d(TAG, "join game " + game.getName());
 
-                game.addPlayer(user);
-//                game.addCharacter(selectedCharacter);
-                gameDatabase.child(campaignName).child("party").child(user).setValue(user);
-                userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(false);
+                boolean added = game.addPlayer(user, selectedCharacter);
+                if(added) {
+                    gameDatabase.child(campaignName).child("party").child(user).setValue(selectedCharacter);
+                    userDatabase.child(user).child("CampaignList").child(campaignName).child("isGM").setValue(false);
+                    userDatabase.child(user).child("CampaignList").child(campaignName).child("character").setValue(selectedCharacter);
 
-                Context context = getApplicationContext();
-                Intent i = new Intent(context, LoadedGameActivity.class);
-                i.putExtra("user", user);
-                startActivity(i);
+                    Context context = getApplicationContext();
+                    Intent i = new Intent(context, LoadedGameActivity.class);
+                    i.putExtra("user", user);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(PlayerJoinGame.this,
+                            "This game is full, please join another campaign.", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override

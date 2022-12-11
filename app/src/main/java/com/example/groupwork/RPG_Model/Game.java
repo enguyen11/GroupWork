@@ -24,8 +24,10 @@ public class Game {
         this.numPlayers = numPlayers;
         this.descr = "";
         this.party = new ArrayList<>();
-        party.add(gameMaster);
+//        party.add(gameMaster);
         this.partyCharacters = new ArrayList<>();
+//        partyCharacters.add("gameMaster");
+
     }
 
     public Game(String name, String curUserCharacter){
@@ -34,20 +36,21 @@ public class Game {
     }
 
 
-    public void addPlayer(String player) {
+    public boolean addPlayer(String player, String character) {
+        boolean wasAdded;
         if(this.party == null) {
             this.party = new ArrayList<>();
+            this.partyCharacters = new ArrayList<>();
         }
         if (this.party.size() < numPlayers) {
             this.party.add(player);
+            partyCharacters.add(character);
+            return true;
         }
+        return false;
     }
 
-    public void addCharacter(String character) {
-        if (party.size() == partyCharacters.size() - 1) {
-            partyCharacters.add(character);
-        }
-    }
+
 
     public String getName() {return this.name;}
     public String getGameMaster() {return this.gameMaster;}
