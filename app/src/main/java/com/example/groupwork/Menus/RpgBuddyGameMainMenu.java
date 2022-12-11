@@ -95,60 +95,68 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        Bundle args = getArguments();
-        if(args != null) {
-            user = args.getString("user");
-        }
-
-        if(user != null) {
-            //user's created/joined games shown in a recyclerview
-            gameList = new ArrayList<>();
-            games_recyclerView = getView().findViewById(R.id.games_recycler_view);
-            gameCardAdapter = new GameCardAdapter(gameList, this.getContext());
-            games_recyclerView.setAdapter(gameCardAdapter);
-            games_recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
-            db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
-            mDatabase = db.getReference("Users");
-
-            mDatabase.child(user).child("games").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    gameList.clear();
-                    for (DataSnapshot child : snapshot.getChildren()) {
-
-                        String campaignName = child.getValue().toString();
-                        String curUserCharacter = child.child("character").getValue().toString();
-                        Game game = new Game(campaignName, curUserCharacter);
-                        gameList.add(game);
-                    }
-                    games_recyclerView.getAdapter().notifyDataSetChanged();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-
-            if (gameList.size() == 0 || gameList.isEmpty()) {
-                games_recyclerView.setVisibility(View.GONE);
-                emptyView.setVisibility(View.VISIBLE);
-            } else {
-                games_recyclerView.setVisibility(View.VISIBLE);
-                emptyView.setVisibility(View.GONE);
-            }
-        } else {
-            Log.d(TAG, "user is null broski");
-        }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_rpg_buddy_game_main_menu, container, false);
 
-        return inflater.inflate(R.layout.fragment_rpg_buddy_game_main_menu, container, false);
+        Bundle args = getArguments();
+        if(args != null) {
+            user = args.getString("userID");
+            Log.d(TAG, "args are not null");
+        } else {
+            Log.d(TAG, "args are null");
+        }
+
+        emptyView = v.findViewById(R.id.text_empty);
+//
+//        if(user != null) {
+//            //user's created/joined games shown in a recyclerview
+//            gameList = new ArrayList<>();
+//            games_recyclerView = v.findViewById(R.id.games_recycler_view);
+//            gameCardAdapter = new GameCardAdapter(gameList, this.getContext());
+//            games_recyclerView.setAdapter(gameCardAdapter);
+//            games_recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+//
+//            db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
+//            mDatabase = db.getReference("Users");
+//
+//            mDatabase.child(user).child("games").addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    gameList.clear();
+//                    for (DataSnapshot child : snapshot.getChildren()) {
+//
+//                        String campaignName = child.getValue().toString();
+//                        String position = child.child("characters").getValue().toString();
+//                        String curUserCharacter = child.child("characters").child(position).getValue().toString();
+//                        Game game = new Game(campaignName, curUserCharacter);
+//                        gameList.add(game);
+//                    }
+//                    games_recyclerView.getAdapter().notifyDataSetChanged();
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//                }
+//            });
+//
+//            if (gameList.size() == 0 || gameList.isEmpty()) {
+//                games_recyclerView.setVisibility(View.GONE);
+//                emptyView.setVisibility(View.VISIBLE);
+//            } else {
+//                games_recyclerView.setVisibility(View.VISIBLE);
+//                emptyView.setVisibility(View.GONE);
+//            }
+//        } else {
+//            Log.d(TAG, "user is null broski");
+//        }
+
+
+
+        return v;
         // Inflate the layout for this fragment
     }
 
