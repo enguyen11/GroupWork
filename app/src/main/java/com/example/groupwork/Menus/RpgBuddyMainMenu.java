@@ -47,7 +47,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
 
     public static String TAG = "RpgBuddyMainMenu";
 
-    private NavArgument nameArg, mailArg;
+    private NavArgument nameArg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,6 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
 
 
         nameArg = new NavArgument.Builder().setDefaultValue(username).build();
-        mailArg = new NavArgument.Builder().setDefaultValue("your email id").build();
         NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView);
         NavInflater navInflater = navController.getNavInflater();
         NavGraph navGraph = navInflater.inflate(R.navigation.rpg_buddy_main_nav_bar);

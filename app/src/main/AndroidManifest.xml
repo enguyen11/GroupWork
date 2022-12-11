@@ -19,6 +19,9 @@
         android:theme="@style/Theme.GroupWork"
         tools:targetApi="31">
         <activity
+            android:name=".CampaignNotesActivity"
+            android:exported="false" />
+        <activity
             android:name=".GameCreation.PlayerJoinGame"
             android:exported="false" />
         <activity
@@ -74,7 +77,6 @@
         <activity
             android:name=".CharacterEditor.CharacterSheetActivity"
             android:exported="false" />
-
         <activity
             android:name=".CharacterEditor.CharacterSheetActivityRefactor"
             android:exported="false" />

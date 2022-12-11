@@ -88,7 +88,7 @@
         <item>Dungeons and Dragons 5e</item>
     </string-array>
     <string name="string_clear">Clear</string>
-    <string name="string_shake_or_press_button_to_roll">Shake or press button to roll:</string>    
+    <string name="string_shake_or_press_button_to_roll">Shake or press button to roll:</string>
     <string name="string_scroll_to_see_past_rolls">Scroll to see past rolls</string>
     <string name="string_total_label">Total:</string>
     <string name="string_0">0</string>
