@@ -46,7 +46,6 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rpg_buddy_main_menu);
 
-        changeFragment(new RpgBuddyGameMainMenu());
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -64,18 +63,23 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
             mDatabase2.setValue("default");
         }
 
+        Bundle args = new Bundle();
+        args.putString("user", user.getName());
+        changeFragment(new RpgBuddyGameMainMenu());
+
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.RpgBuddyBottomNav);
         bottomNav.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             Fragment fragment;
             if (R.id.rpgBuddyGameMainMenu == itemId) {
-                args.putString("userID", user.getName());
                 fragment = new RpgBuddyGameMainMenu();
+//                Bundle args = new Bundle();
+//                args.putString("user", user.getName());
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {
                 fragment = new RpgBuddyCharacterEditor();
-                Bundle args = new Bundle();
+//                Bundle args = new Bundle();
                 args.putString("userID", user.getName());
                 fragment.setArguments(args);
                 changeFragment(fragment);

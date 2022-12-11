@@ -11,11 +11,13 @@ import com.example.groupwork.R;
 
 public class GameCardViewHolder extends RecyclerView.ViewHolder  {
     public final TextView campaignName;
-    public final TextView gameSystem;
+    public final TextView userCharacter;
+//    public final TextView gameSystem;
 
     public GameCardViewHolder(@NonNull View itemView) {
         super(itemView);
         campaignName = itemView.findViewById(R.id.textView_campaign_name);
-        gameSystem = itemView.findViewById(R.id.textView_game_system);
+        userCharacter = itemView.findViewById(R.id.textView_game_character);
+//        gameSystem = itemView.findViewById(R.id.textView_game_system);
     }
 }

@@ -11,6 +11,7 @@ public class Game {
     private ArrayList<String> party;
     private String descr;
     private ArrayList<String> partyCharacters;
+    private String curUserCharacter;
 
 
     public Game(){
@@ -26,6 +27,12 @@ public class Game {
         party.add(gameMaster);
         this.partyCharacters = new ArrayList<>();
     }
+
+    public Game(String name, String curUserCharacter){
+        this.name = name;
+        this.curUserCharacter = curUserCharacter;
+    }
+
 
     public void addPlayer(String player) {
         if(this.party == null) {
@@ -49,7 +56,7 @@ public class Game {
     public void setDescr(String s) {this.descr = s;}
     public String getDescr() {return this.descr;}
     public ArrayList<String> getParty() {return this.party;}
-
+    public String getCurUserCharacter() {return this.curUserCharacter;}
     public ArrayList<String> partyCharacters() {
         return this.partyCharacters;
     }

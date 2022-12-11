@@ -36,9 +36,11 @@ public class GameCardAdapter extends RecyclerView.Adapter<GameCardViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull GameCardViewHolder holder, int position) {
         String name = gameList.get(position).getName();
-        String system = gameList.get(position).getSystem();
+        String characterName = gameList.get(position).getCurUserCharacter();
+//        String system = gameList.get(position).getSystem();
         holder.campaignName.setText(name);
-        holder.gameSystem.setText(system);
+        holder.userCharacter.setText(characterName);
+//        holder.gameSystem.setText(system);
 
     }
 
