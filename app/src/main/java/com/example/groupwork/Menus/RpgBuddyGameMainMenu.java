@@ -95,23 +95,6 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_rpg_buddy_game_main_menu, container, false);
-        // Inflate the layout for this fragment
-    }
-
-    public void onViewCreated(View view, @Nullable Bundle savedInstance){
-            btnNewGame = getView().findViewById(R.id.button_newGame);
-            btnNewGame.setOnClickListener(view1 -> {
-                new SelectPlayerTypeDialog().show(getActivity().getSupportFragmentManager(), TAG);
-            });
-
         Bundle args = getArguments();
         if(args != null) {
             user = args.getString("user");
@@ -157,6 +140,23 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
         } else {
             Log.d(TAG, "user is null broski");
         }
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        return inflater.inflate(R.layout.fragment_rpg_buddy_game_main_menu, container, false);
+        // Inflate the layout for this fragment
+    }
+
+    public void onViewCreated(View view, @Nullable Bundle savedInstance){
+            btnNewGame = getView().findViewById(R.id.button_newGame);
+            btnNewGame.setOnClickListener(view1 -> {
+                new SelectPlayerTypeDialog().show(getActivity().getSupportFragmentManager(), TAG);
+            });
 
         }
 
