@@ -113,7 +113,7 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
             //user's created/joined games shown in a recyclerview
             campaignList = new ArrayList<>();
             games_recyclerView = v.findViewById(R.id.games_recycler_view);
-            gameCardAdapter = new GameCardAdapter(campaignList, this.getContext());
+            gameCardAdapter = new GameCardAdapter(campaignList, this.getContext(), this);
             games_recyclerView.setAdapter(gameCardAdapter);
             games_recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
