@@ -10,7 +10,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -18,6 +20,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.groupwork.R;
+import com.example.groupwork.RPG_Model.Character;
 import com.example.groupwork.RPG_Model.Player;
 import com.example.groupwork.RPG_Model.Resource;
 import com.example.groupwork.RPG_Model.SheetType;
@@ -27,8 +30,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class CharacterSheetActivity extends AppCompatActivity {
@@ -53,6 +58,12 @@ public class CharacterSheetActivity extends AppCompatActivity {
     private TableLayout resourceTable;
     private RecyclerView statRec;
     private int sheetNum;
+    private ArrayList<String> infoVals;
+    private ArrayList<ArrayList<String>> statVals;
+    private String charName;
+    private Character character;
+    private boolean isTemplate;
+    private Button saveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +78,27 @@ public class CharacterSheetActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
         if (extras != null) {
             username = extras.getString("player");
-            sheetNum = extras.getInt("index");
+            if (extras.containsKey("index")) {
+                sheetNum = extras.getInt("index");
+                isTemplate = true;
+                setValues();
+            }
+            else if (extras.containsKey("character")) {
+                Log.d("SELECTED CHARACTER", "username: " + username + "\ncharacter: " + charName);
+                charName = extras.getString("character");
+                isTemplate = false;
+
+            }
         }
+        saveButton = findViewById(R.id.buttonSaveChar);
+
 
         infoViews = new ArrayList<>();
         statViews = new ArrayList<>();
         resourceViews = new ArrayList<>();
+        infoVals = new ArrayList<>();
+        statVals = new ArrayList<>();
+
 
 
         //params.addRule(ConstraintLayout.CENTER_IN_PARENT);
@@ -86,41 +112,68 @@ public class CharacterSheetActivity extends AppCompatActivity {
     mDatabase.child(username).addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            if (user == null) {
-                user = snapshot.getValue(Player.class);
-              //  System.out.println("Username in charactersheetactivity " + user.getName());
+            user = snapshot.getValue(Player.class);
+
+            if(isTemplate) {
+                sheetType = user.getSheets().get(sheetNum);
+                System.out.println("Viewing a blank template!!!!!!!!");
+            }
+            else{
+
+                for(DataSnapshot ds: snapshot.child("characters").getChildren()){
+                    Character x = ds.getValue(Character.class);
+                    System.out.println(x.getName());
+                    System.out.println("charname: " + charName);
+                    if(x.getName() == null){
+                        continue;
+                    }
+                    if(x.getName().equals(charName)){
+                        sheetType = x.getTemplate();
+                        infoVals = x.getInfo();
+                        for(ArrayList<String> group : x.getStats()){
+                            statVals.add(group);
+                        }
+
+                        System.out.println("Found sheet!!!!");
+                        break;
+                    }
+                }
+                System.out.println("Viewing a saved character!!!!!!");
+
 
             }
-            else {
-                //System.out.println("Username from charactersheetactivity: " + user.getName());
-            }
-            sheetType = user.getSheets().get(sheetNum);
             infoFields = sheetType.getInfo();
             stats = sheetType.getStats();
             statCats = sheetType.getStatCats();
-            System.out.println(stats);
-            System.out.println(statCats);
-
-
-
             infoTable = findViewById(R.id.infoTable);
             TableRow row = findViewById(R.id.firstRow);
             TableRow secondrow = new TableRow(context);
             infoTable.addView(secondrow);
-
             infoTable.setStretchAllColumns(true);
             //TableLayout.LayoutParams params = new TableLayout.LayoutParams();
             int n = 0;
+            int x = 0;
             for(String field : infoFields){
                 TextView view = new TextView(context);
                 view.setText(field);
                 row.addView(view);
                 TextView eview = new EditText(context);
+                eview.setText(infoVals.get(x));
                 secondrow.addView(eview);
+                n++;
+                x++;
+                if(n >= 4){
+                    row = new TableRow(context);
+                    infoTable.addView(row);
+                    secondrow = new TableRow(context);
+                    infoTable.addView(secondrow);
+                    n = 0;
+                }
             }
+           // setValues();
 
             statRec = findViewById(R.id.statRecyclerConstraint);
-            statRec.setAdapter(new SheetCatAdapter(context, statCats, stats));
+            statRec.setAdapter(new SheetCatAdapter(context, statCats, stats, statVals));
             statRec.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
 
@@ -134,6 +187,76 @@ public class CharacterSheetActivity extends AppCompatActivity {
 
         }
     });
+    saveButton.setOnClickListener(view -> {
+        updateValues();
+        if(character == null){
+            character = new Character(sheetType);
+            //charName = infoVals.get(0);
+        }
+        character.setInfo(infoVals);
+        character.setGroups(statVals);
+        user.getCharacters().add(character);
+        System.out.println("set groups done");
+        mDatabase.child(username).child("characters").setValue(user.getCharacters());
+    });
+    }
+    public void setValues(){
+        //infoVals = infoFields;
+        //statVals = new ArrayList<>();
+        int n = 0;
+        while (n < infoFields.size()){
+            infoVals.add("");
+            n++;
+        }
+        n = 0;
+        int r = 0;
+        while(n < statCats.size()){
+            ArrayList<String> list = new ArrayList<>();
+            while(r < stats.get(statCats.get(n)).size()){
+                list.add("");
+                r++;
+            }
+            statVals.add(list);
+            n++;
+        }
+    }
+    public void updateValues(){
+        int n = 0;
+        int r = 1;
+        infoVals = new ArrayList<>();
+        statVals = new ArrayList<>();
+        while(r < infoTable.getChildCount() - 2){
+            TableRow row = (TableRow)infoTable.getChildAt(r);
+            EditText info = (EditText) row.getChildAt(n);
+            infoVals.add(info.getText().toString());
+            n++;
+            if(n >= 4){
+                r = r + 2;
+                n = 0;
+            }
+        }
+        n = 0;
+        r = 0;
+        System.out.println("item count: " + statRec.getAdapter().getItemCount());
+
+        while(n < statRec.getAdapter().getItemCount()){
+            System.out.println("outer loop!!!" + n);
+            ArrayList<String> tempList = new ArrayList<>();
+            SheetCatAdapter adapter = (SheetCatAdapter) statRec.getAdapter();
+            RecyclerView recyclerView = adapter.getItem(n);
+            System.out.println("inner item count: " + recyclerView.getAdapter().getItemCount());
+            while(r < recyclerView.getAdapter().getItemCount()){
+                System.out.println("inner loop!!!" + r);
+                SheetSkillAdapter sadapter = (SheetSkillAdapter)recyclerView.getAdapter();
+               EditText editText = sadapter.getItem(r);
+               tempList.add(editText.getText().toString());
+               System.out.println("Edit text value: " + editText.getText().toString());
+                r++;
+            }
+            statVals.add(tempList);
+            r = 0;
+            n++;
+        }
     }
 
 

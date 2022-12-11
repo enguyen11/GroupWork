@@ -18,7 +18,6 @@ public class SheetType implements Parcelable {
     public SheetType(){
         stats = new HashMap<>(100);
         resources = new HashMap<>(100);
-
     }
 
     protected SheetType(Parcel in) {
@@ -80,6 +79,8 @@ public class SheetType implements Parcelable {
     public ArrayList<String> getStatCats(){
         return this.statCats;
     }
+
+
 
 
     @Override

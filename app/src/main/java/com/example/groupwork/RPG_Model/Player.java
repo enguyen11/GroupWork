@@ -34,6 +34,8 @@ public class Player implements Parcelable {
         friendsList = new ArrayList<>();
         SheetType defaultSheet = makeDefault();
         this.sheets.add(defaultSheet);
+        characters = new ArrayList<>();
+        characters.add(new Character(defaultSheet));
 
     }
     public String getName(){
@@ -154,6 +156,10 @@ public class Player implements Parcelable {
     protected Player(Parcel in) {
         friends = in.createStringArrayList();  //in.createTypedArrayList(String);
         sheets = in.createTypedArrayList(SheetType.CREATOR);
+    }
+
+    public ArrayList<Character> getCharacters(){
+        return this.characters;
     }
 
     public static final Creator<Player> CREATOR = new Creator<Player>() {

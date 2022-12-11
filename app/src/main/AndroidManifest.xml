@@ -34,13 +34,6 @@
             android:name=".Login.DnDLogin"
             android:exported="false" />
         <activity
-            android:name=".CharacterSheetActivityRefactor"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".StickerActivity.Messages"
             android:exported="false" />
         <activity

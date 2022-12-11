@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import com.example.groupwork.RPG_Model.Player;
 import com.example.groupwork.RPG_Model.SheetType;
+import com.example.groupwork.RecyclerViewStuff.MyCharsAdapter;
 import com.example.groupwork.RecyclerViewStuff.MySheetsAdapter;
 import com.example.groupwork.RecyclerViewStuff.MySheetsViewHolder;
 
@@ -36,7 +37,9 @@ import com.google.firebase.database.ValueEventListener;
 public class RpgBuddyCharacterEditor extends Fragment {
 
     private Button btnNewSheet;
+    private Button btnNewChar;
     private RecyclerView sheetView;
+    private RecyclerView charView;
     private Player user;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
@@ -99,6 +102,10 @@ public class RpgBuddyCharacterEditor extends Fragment {
                   sheetView.setAdapter(new MySheetsAdapter(getContext(),user.getSheets(), username));
                   sheetView.setLayoutManager(new LinearLayoutManager(getContext()));
                   sheetView.getAdapter().notifyDataSetChanged();
+                  charView.setAdapter(new MyCharsAdapter(getContext(), user.getCharacters(), username));
+                  charView.setLayoutManager(new LinearLayoutManager(getContext()));
+                  charView.getAdapter().notifyDataSetChanged();
+
             }
 
             @Override
@@ -118,6 +125,7 @@ public class RpgBuddyCharacterEditor extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstance){
 
         btnNewSheet = getView().findViewById(R.id.button_new_sheet);
+        btnNewChar = getView().findViewById(R.id.new_character_button);
         btnNewSheet.setOnClickListener(view1 -> {
             SheetType newSheet = new SheetType();
             newSheet.setName("Dummy Sheet");
@@ -131,6 +139,7 @@ public class RpgBuddyCharacterEditor extends Fragment {
         });
 
         sheetView = getView().findViewById(R.id.recycler_sheet_list);
+        charView = getView().findViewById(R.id.recycler_character_list);
 
     }
     public String getUsername(){
