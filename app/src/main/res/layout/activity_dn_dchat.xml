@@ -18,7 +18,8 @@
         android:hint="@string/enter_your_message_here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/send"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chatHistory">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -33,7 +34,7 @@
         android:id="@+id/send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:contentDescription="TODO"
         android:src="@drawable/ic_baseline_send_24"
@@ -41,7 +42,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/messageBar"
         app:layout_constraintTop_toBottomOf="@+id/chatHistory"
-        app:layout_constraintVertical_bias="1.0"
         tools:ignore="ImageContrastCheck,SpeakableTextPresentCheck">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
@@ -49,13 +49,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatHistory"
         android:layout_width="0dp"
-        android:layout_height="166dp"
-        android:layout_margin="10dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
+        android:layout_height="0dp"
 
-        android:layout_marginBottom="44dp"
-        app:layout_constraintBottom_toTopOf="@+id/messageBar"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
