@@ -116,6 +116,8 @@ public class DnDLogin extends AppCompatActivity {
         //Dummy Campaigns
         mDatabase.child(user.getName()).child("CampaignList").
                 push().setValue("Eric's Campaign");
+        mDatabase.child(user.getName()).child("CampaignList").
+                push().setValue("Eric");
 
         //Dummy Chat
         /*
