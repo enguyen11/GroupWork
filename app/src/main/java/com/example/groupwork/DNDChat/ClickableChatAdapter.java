@@ -28,7 +28,7 @@ public class ClickableChatAdapter extends RecyclerView.Adapter<ClickableChatView
     @Override
     public ClickableChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ClickableChatViewHolder
-                ((LayoutInflater.from(context).inflate(R.layout.dnd_select_chat_card, null)), myChatRVInterface);
+                ((LayoutInflater.from(context).inflate(R.layout.dnd_select_chat_card_2, null)), myChatRVInterface);
     }
 
     @Override
