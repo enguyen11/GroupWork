@@ -24,8 +24,8 @@ public class LoadedGameMenuFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "user";
+    private static final String ARG_PARAM2 = "campaign";
 
     private String campaignName;
     private String user;
@@ -34,6 +34,8 @@ public class LoadedGameMenuFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private String username;
+    private String campaign;
     private Button notes;
 
     public LoadedGameMenuFragment() {

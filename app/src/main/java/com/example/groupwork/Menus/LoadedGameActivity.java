@@ -34,6 +34,7 @@ public class LoadedGameActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabase2;
     private String username;
+    private String campaign;
 
     public static String TAG = "LoadedGameActivity";
 
@@ -47,6 +48,7 @@ public class LoadedGameActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             username = extras.getString("user");
+            campaign = extras.getString("campaignName");
         }
 
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
@@ -60,10 +62,10 @@ public class LoadedGameActivity extends AppCompatActivity {
             mDatabase2.setValue("default");
         }
 
-        Bundle args = new Bundle();
-        args.putString("user", user.getName());
-        args.putString("campaignName", user.getName());
 
+        Bundle args = new Bundle();
+        args.putString("user", username);
+        args.putString("campaignName", campaign);
 
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.loadedGame_bottomNav);
@@ -77,8 +79,6 @@ public class LoadedGameActivity extends AppCompatActivity {
             } else if (R.id.currentCharacterSheet == itemId) {
                 //character sheet
 //                fragment = new RpgBuddyCharacterEditor();
-//                Bundle args = new Bundle();
-//                args.putString("user", user.getName());
 //                fragment.setArguments(args);
 //                changeFragment(fragment);
             } else if (R.id.rpgBuddyDiceRoller == itemId) {
