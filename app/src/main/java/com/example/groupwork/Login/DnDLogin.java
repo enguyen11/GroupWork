@@ -54,11 +54,11 @@ public class DnDLogin extends AppCompatActivity {
         login_button.setOnClickListener(view -> {
             String username = username_entry.getText().toString();
 
-            //Intent openAccount = new Intent(DnDLogin.this, CampaignSelection.class);
-            //openAccount.putExtra("userID", username);
+            Intent openAccount = new Intent(DnDLogin.this, CampaignSelection.class);
+            openAccount.putExtra("userID", username);
 
-            Intent openAccount = new Intent(DnDLogin.this, RpgBuddyMainMenu.class);
-            openAccount.putExtra("username", username);
+            //Intent openAccount = new Intent(DnDLogin.this, RpgBuddyMainMenu.class);
+            //openAccount.putExtra("username", username);
 
             db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com/");
             mDatabase = db.getReference("Users");
@@ -115,7 +115,7 @@ public class DnDLogin extends AppCompatActivity {
 
         //Dummy Campaigns
         mDatabase.child(user.getName()).child("CampaignList").
-                child("Campaigns").push().setValue("Eric's Campaign");
+                push().setValue("Eric's Campaign");
 
         //Dummy Chat
         /*

@@ -52,7 +52,7 @@ public class CampaignSelection extends AppCompatActivity implements CampaignSele
         StringBuilder path = new StringBuilder("Users");
         path.append("/");
         path.append(SENDER);
-        path.append("/CampaignList/Campaigns");
+        path.append("/CampaignList");
         //System.out.println(path.toString());
         mDatabase = db.getReference(path.toString());
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
