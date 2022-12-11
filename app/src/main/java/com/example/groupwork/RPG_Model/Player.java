@@ -160,7 +160,7 @@ public class Player implements Parcelable {
     }
 
     private Character makeDefaultCharacter(){
-        Character defaultCharacter = new Character("default");
+        Character defaultCharacter = new Character();
         return defaultCharacter;
     }
 
@@ -171,9 +171,7 @@ public class Player implements Parcelable {
         sheets = in.createTypedArrayList(SheetType.CREATOR);
     }
 
-    public ArrayList<Character> getCharacters(){
-        return this.characters;
-    }
+
 
     public static final Creator<Player> CREATOR = new Creator<Player>() {
         @Override

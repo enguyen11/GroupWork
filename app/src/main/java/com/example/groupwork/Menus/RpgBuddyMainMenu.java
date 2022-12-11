@@ -55,7 +55,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if(extras != null){
-            username = extras.getString("userID");
+            username = extras.getString("username");
         }
        // user = new Player("User");
         //mDatabase.child("User").setValue(user);

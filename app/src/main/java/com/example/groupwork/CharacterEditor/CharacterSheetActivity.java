@@ -64,6 +64,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
     private Character character;
     private boolean isTemplate;
     private Button saveButton;
+    private int charIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
             if (extras.containsKey("index")) {
                 sheetNum = extras.getInt("index");
                 isTemplate = true;
-                setValues();
+                //setValues();
             }
             else if (extras.containsKey("character")) {
                 Log.d("SELECTED CHARACTER", "username: " + username + "\ncharacter: " + charName);
@@ -119,7 +120,7 @@ public class CharacterSheetActivity extends AppCompatActivity {
                 System.out.println("Viewing a blank template!!!!!!!!");
             }
             else{
-
+                charIndex = 0;
                 for(DataSnapshot ds: snapshot.child("characters").getChildren()){
                     Character x = ds.getValue(Character.class);
                     System.out.println(x.getName());
@@ -133,12 +134,10 @@ public class CharacterSheetActivity extends AppCompatActivity {
                         for(ArrayList<String> group : x.getStats()){
                             statVals.add(group);
                         }
-
-                        System.out.println("Found sheet!!!!");
                         break;
                     }
+                    charIndex++;
                 }
-                System.out.println("Viewing a saved character!!!!!!");
 
 
             }
@@ -153,6 +152,9 @@ public class CharacterSheetActivity extends AppCompatActivity {
             //TableLayout.LayoutParams params = new TableLayout.LayoutParams();
             int n = 0;
             int x = 0;
+            if(isTemplate){
+                setValues();
+            }
             for(String field : infoFields){
                 TextView view = new TextView(context);
                 view.setText(field);
@@ -191,12 +193,18 @@ public class CharacterSheetActivity extends AppCompatActivity {
         updateValues();
         if(character == null){
             character = new Character(sheetType);
-            //charName = infoVals.get(0);
+
         }
         character.setInfo(infoVals);
         character.setGroups(statVals);
-        user.getCharacters().add(character);
-        System.out.println("set groups done");
+        if(isTemplate) {
+            System.out.println("Creating new character!");
+            user.getCharacters().add(character);
+        }
+        else{
+            System.out.println("Saving existing character!");
+            user.getCharacters().set(charIndex, character);
+        }
         mDatabase.child(username).child("characters").setValue(user.getCharacters());
     });
     }
