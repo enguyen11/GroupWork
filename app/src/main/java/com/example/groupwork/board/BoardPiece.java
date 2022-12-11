@@ -5,12 +5,11 @@ import android.util.Pair;
 public interface BoardPiece {
     Pair<Integer, Integer> getCoordinates();
 
-    String getPieceId();
+    String getNameId();
 
     boolean isSelected();
 
     int getImageSourceId();
 
-    String getNameId();
     void setNewCoordinates(int x, int y);
 }

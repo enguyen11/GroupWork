@@ -57,7 +57,7 @@ public class Tile {
             Log.d("TILE", "updateDisplay: test passed isOccupied  ");
             ImageView image = view.findViewById(R.id.character);
             image.setVisibility(View.VISIBLE);
-            //image.setImageResource(this.piece.getImageSourceId());
+            image.setImageResource(this.piece.getImageSourceId());
         } else if (!isOccupied){
             Log.d("TILE", "updateDisplay: test failed, not occupied ");
             ImageView image = view.findViewById(R.id.character);

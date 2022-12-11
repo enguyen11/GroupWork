@@ -6,7 +6,7 @@ import android.util.Pair;
 import java.util.Hashtable;
 
 public class BattleMapManager {
-    private BattleMapActivity activity;
+    private final BattleMapActivity activity;
     private Hashtable<Pair<Integer, Integer>, BoardPiece> pieces;
     private Hashtable<Pair<Integer, Integer>, Tile> tileHashtable;
     private boolean isReady;
@@ -20,12 +20,14 @@ public class BattleMapManager {
     }
 
     public void importData(Hashtable<Pair<Integer, Integer>, Tile> tileHashtable, Hashtable<Pair<Integer, Integer>, BoardPiece> pieces) {
+        if (tileHashtable == null | pieces == null) return;
         this.tileHashtable = tileHashtable;
         this.pieces = pieces;
         this.isReady = true;
     }
 
-    public void build() {
+    // this function puts pieces in their place
+    public void putPieces() {
         if (!(isReady)) return;
         for (BoardPiece piece : this.pieces.values()) {
             Log.d("TILE", "FOR LOOP");
@@ -40,26 +42,25 @@ public class BattleMapManager {
         }
     }
 
-
     // genral pseudo code for the listener
     // if select is null and the tiles is unoccupied, do nothing
     // if select is null and the tile is occupied, we select that tile!
     // if we have something selected and we select an unoccupied tile, we free tile0 and occupy tile1
     // if we have something selected and we select an occupied tile, we FREE our selection, maybe mark piece as deselected.
-    public void trySelectTile(int x, int y) throws NullPointerException {
-        Log.d("TILE", String.format("attempting to select tile %d, %d", x, y));
-        if (!(isReady)) return;
+    public boolean trySelectTile(int x, int y) throws NullPointerException {
 
-        Tile tile = tileHashtable.get(new Pair<>(x, y));
-        Log.d("TILE", String.format("Is occupied? %b", tile.isOccupied()));
+        if (!(isReady)) return false;
+        Pair<Integer,Integer> pair = new Pair<>(x, y);
+        Tile tile = tileHashtable.get(pair);
+
         if (tile == null) throw new NullPointerException("hashtable item not found for x and y");
 
         // first case
         if (this.selection == null & tile.isOccupied()) {
             this.selection = tile;
-            return;
+            return true;
         } else if (this.selection == null) {
-            return;
+            return false;
         }
 
         // assume selection is not null
@@ -73,10 +74,67 @@ public class BattleMapManager {
             activity.updateTile(tile);
             activity.updateTile(selection);
             selection = null;
-
-        } else {
-            selection = null;
+            return true;
         }
+        if (pair == new Pair<>(selection.getCoor()[0], selection.getCoor()[1])) return false;
+
+        selection = null;
+        return false;
+    }
+
+
+    public boolean addPiece(BoardPiece piece) {
+        if (!(isReady)) return false;
+
+        int x, y;
+        int[] coor;
+        if (selection == null){
+            coor = findFreeSpot();
+        } else if (selection.isOccupied() == false){
+            coor = selection.getCoor();
+        } else {
+            coor = findFreeSpot();
+        }
+
+        x = coor[0];
+        y = coor[1];
+
+
+        piece.setNewCoordinates(x, y);
+
+
+        Pair<Integer, Integer> key = new Pair<>(x, y);
+        Tile tile = tileHashtable.get(key);
+        if (tile == null | tile.isOccupied()) return false;
+        pieces.put(key, piece);
+        tile.occupy(piece);
+        activity.updateTile(tile);
+        return true;
+    }
+
+    public int[] findFreeSpot() {
+        int[] coor;
+        for (Tile tile : tileHashtable.values()
+        ) {
+            if (tile.isOccupied() == false) {
+                return tile.getCoor();
+            }
+        }
+        return coor = new int[]{-1, -1};
+    }
+
+
+    public boolean deletePiece() {
+        if (!(isReady)) return false;
+        if (selection == null) return false;
+        Log.d("TILE", "Selection is not null!");
+        BoardPiece myPiece = pieces.get(new Pair<>(selection.getCoor()[0], selection.getCoor()[1]));
+        if (myPiece == null) return false;
+        selection.free();
+        selection.updateDisplay();
+        pieces.remove(new Pair<>(selection.getCoor()[0], selection.getCoor()[1]));
+        selection = null;
+        return true;
     }
 
 

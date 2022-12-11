@@ -27,8 +27,8 @@ public class Character implements BoardPiece {
     }
 
     @Override
-    public String getPieceId() {
-        return null;
+    public String getNameId() {
+        return name;
     }
 
     @Override
@@ -38,11 +38,7 @@ public class Character implements BoardPiece {
 
     @Override
     public int getImageSourceId() {
-        return 0;
+        return this.imageSourceId;
     }
 
-    @Override
-    public String getNameId(){
-        return name;
-    }
 }

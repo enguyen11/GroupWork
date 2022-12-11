@@ -12,13 +12,13 @@ import android.view.View;
 
 import androidx.gridlayout.widget.GridLayout;
 
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.groupwork.R;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 
 public class BattleMapActivity extends AppCompatActivity {
 
@@ -26,6 +26,9 @@ public class BattleMapActivity extends AppCompatActivity {
     private int width, height;
     private Handler handler;
     private BattleMapManager mapManager;
+    private Button addHero;
+    private Button addFoe;
+    private Button delPiece;
 
     // our pieces
     private Hashtable<Pair<Integer, Integer>, BoardPiece> pieces;
@@ -52,10 +55,43 @@ public class BattleMapActivity extends AppCompatActivity {
         mapManager = new BattleMapManager(this);
 
         //TODO ERASE
-        pieces.put(new Pair<>(8,9), new Character(8, 9, "Cool guy", R.drawable.sticker_d20));
-        pieces.put(new Pair<>(4,4), new Character(4, 4, "Cool guy", R.drawable.sticker_d20));
+        pieces.put(new Pair<>(8, 9), new Character(8, 9, "Cool guy", R.drawable.sticker_d20));
+        pieces.put(new Pair<>(4, 4), new Character(4, 4, "Cool guy", R.drawable.sticker_d20));
         // this thread runs the setup
-        Thread setup = new Thread(new Runnable() {
+        Thread setup = new Thread(runSetup());
+        setup.start();
+
+        addFoe = findViewById(R.id.foe_btn);
+        addFoe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addNewPiece(new Character(0, 0, "Ragnar", R.drawable.round_shield));
+            }
+        });
+        addHero = findViewById(R.id.hero_btn);
+        addHero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addNewPiece(new Character(0, 0, "Ragnar", R.drawable.sticker_swords_dnd_sword30));
+            }
+        });
+        delPiece = findViewById(R.id.del_btn);
+        delPiece.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mapManager.deletePiece()) {
+                    newToast("Piece deleted");
+                } else {
+                    newToast("Nothing to delete");
+                }
+            }
+        });
+    }
+
+
+    private Runnable runSetup() {
+        Runnable task = new Runnable() {
+            @Override
             public void run() {
                 boolean black = false;
                 Hashtable<Pair<Integer, Integer>, Tile> map = new Hashtable<>();
@@ -82,11 +118,8 @@ public class BattleMapActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
-        setup.start();
-
-        //Create Manager
-
+        };
+        return task;
     }
 
     public Hashtable<Pair<Integer, Integer>, Tile> getMap() {
@@ -123,20 +156,23 @@ public class BattleMapActivity extends AppCompatActivity {
             @Override
             public void run() {
                 mapManager.importData(map, pieces);
-                mapManager.build();
+                mapManager.putPieces();
             }
         }).start();
     }
 
     // this cade sets the interactivity fof a tile view ImageView
-    private void setTileClickListener(View currentView, Tile currentTile){
+    private void setTileClickListener(View currentView, Tile currentTile) {
         currentView.setOnTouchListener(new View.OnTouchListener() {
                                            @Override
                                            public boolean onTouch(View view, MotionEvent motionEvent) {
-                                               if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                                               if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                                                    ImageView image = view.findViewById(R.id.tile);
-                                                   image.setColorFilter(Color.YELLOW);
-                                                   mapManager.trySelectTile(currentTile.getCoor()[0], currentTile.getCoor()[1]);
+                                                   if (mapManager.trySelectTile(currentTile.getCoor()[0], currentTile.getCoor()[1])) {
+                                                       image.setColorFilter(Color.BLUE);
+                                                   } else {
+                                                       image.setColorFilter(Color.YELLOW);
+                                                   }
                                                    return true;
                                                }
                                                ImageView image = view.findViewById(R.id.tile);
@@ -147,7 +183,7 @@ public class BattleMapActivity extends AppCompatActivity {
         );
     }
 
-    public void updateTile(Tile tile){
+    public void updateTile(Tile tile) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -155,4 +191,18 @@ public class BattleMapActivity extends AppCompatActivity {
             }
         });
     }
+
+    private boolean addNewPiece(BoardPiece boardPiece) {
+        boolean res = mapManager.addPiece(boardPiece);
+        String msg = res ? String.format("New piece at %d:%d", boardPiece.getCoordinates().first, boardPiece.getCoordinates().second) : "Failed to place piece";
+        newToast(msg);
+        return res;
+    }
+
+    private void newToast(String msg) {
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getBaseContext(), msg, duration);
+        toast.show();
+    }
+
 }
