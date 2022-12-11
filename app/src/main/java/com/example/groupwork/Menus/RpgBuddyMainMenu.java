@@ -53,8 +53,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rpg_buddy_main_menu);
-        Fragment defaultFrag = new RpgBuddyGameMainMenu();
-        changeFragment(defaultFrag);
+
 
 
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
@@ -86,6 +85,9 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
 
         Bundle args = new Bundle();
         args.putString("userID", user.getName());
+        Fragment defaultFrag = new RpgBuddyGameMainMenu();
+        defaultFrag.setArguments(args);
+        changeFragment(defaultFrag);
 
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.RpgBuddyBottomNav);
@@ -95,6 +97,7 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
             Fragment fragment;
             if (R.id.rpgBuddyGameMainMenu == itemId) {
                 fragment = new RpgBuddyGameMainMenu();
+                fragment.setArguments(args);
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {
                 fragment = new RpgBuddyCharacterEditor();
@@ -119,8 +122,8 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragmentContainerView, fragment);
         transaction.commit();
-
     }
+
 
     @Override
     public void sendInput(String selection) {

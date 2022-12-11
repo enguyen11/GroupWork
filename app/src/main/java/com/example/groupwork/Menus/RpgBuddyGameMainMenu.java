@@ -94,6 +94,11 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        Bundle args = getArguments();
+        if(args != null) {
+            user = args.getString("userID");
+        } else {
+        }
 
     }
 
@@ -155,7 +160,10 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
                 emptyView.setVisibility(View.GONE);
                 Log.d(TAG, "you should see " + gameList.size() + " games");
             }
+            games_recyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
         } else {
+            //games_recyclerView.setVisibility(View.VISIBLE);
             Log.d(TAG, "user is null");
         }
 
@@ -165,6 +173,63 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
         // Inflate the layout for this fragment
     }
 
+
+    public void onResume() {
+
+        super.onResume();
+        Bundle args = getArguments();
+        if(args != null) {
+            user = args.getString("userID");
+        } else {
+        }
+        if (user != null) {
+            //user's created/joined games shown in a recyclerview
+            gameList = new ArrayList<>();
+            games_recyclerView = getView().findViewById(R.id.games_recycler_view);
+            gameCardAdapter = new GameCardAdapter(gameList, this.getContext());
+            games_recyclerView.setAdapter(gameCardAdapter);
+            games_recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+            db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
+            mDatabase = db.getReference("Users");
+
+            mDatabase.child(user).child("CampaignList").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    gameList.clear();
+                    for (DataSnapshot child : snapshot.getChildren()) {
+
+                        String campaignName = child.getKey();
+                        Log.d(TAG, "campaign: " + campaignName);
+                        String curUserCharacter = child.child("character").getValue().toString();
+                        Game game = new Game(campaignName, curUserCharacter);
+                        gameList.add(game);
+                    }
+                    games_recyclerView.getAdapter().notifyDataSetChanged();
+
+                    if (gameList.size() > 0) {
+                        games_recyclerView.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+            if (gameList.size() == 0 || gameList.isEmpty()) {
+                games_recyclerView.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+                Log.d(TAG, "no games to show");
+            } else {
+                games_recyclerView.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.GONE);
+                Log.d(TAG, "you should see " + gameList.size() + " games");
+            }
+        }
+    }
+
+
     public void onViewCreated(View view, @Nullable Bundle savedInstance){
             btnNewGame = getView().findViewById(R.id.button_newGame);
             btnNewGame.setOnClickListener(view1 -> {
@@ -172,6 +237,7 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
             });
 
         }
+
 
     @Override
     public void sendInput(String selection) {
