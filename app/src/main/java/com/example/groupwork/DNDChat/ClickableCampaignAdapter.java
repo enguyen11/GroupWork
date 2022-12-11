@@ -30,7 +30,7 @@ public class ClickableCampaignAdapter extends RecyclerView.Adapter<ClickableCamp
     @Override
     public ClickableCampaignViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ClickableCampaignViewHolder
-                ((LayoutInflater.from(context).inflate(R.layout.dnd_select_campaign_card, null)), myCampaignRVInterface);
+                ((LayoutInflater.from(context).inflate(R.layout.dnd_select_campaign_card_2, null)), myCampaignRVInterface);
     }
 
     @Override
