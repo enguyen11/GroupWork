@@ -23,7 +23,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder>{
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MessageViewHolder((LayoutInflater.from(context).inflate(R.layout.dnd_message_card, null)));
+        return new MessageViewHolder((LayoutInflater.from(context).inflate(R.layout.dnd_message_card_2, null)));
     }
 
     @Override
