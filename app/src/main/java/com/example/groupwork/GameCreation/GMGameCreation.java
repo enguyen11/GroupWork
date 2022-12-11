@@ -128,6 +128,7 @@ public class GMGameCreation extends AppCompatActivity {
                             Context context = getApplicationContext();
                             Intent i = new Intent(context, LoadedGameActivity.class);
                             i.putExtra("user", user);
+                            i.putExtra("campaignName", campaignName);
                             startActivity(i);
                         }
                     } else {

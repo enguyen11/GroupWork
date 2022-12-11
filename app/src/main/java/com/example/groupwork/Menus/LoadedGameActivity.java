@@ -26,14 +26,13 @@ import java.util.ArrayList;
 
 public class LoadedGameActivity extends AppCompatActivity {
 
-    private ArrayList<Game> myGames;
-    private Button btnNewGame;
-    private Button btnNewSheet;
+
     private Player user;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabase2;
     private String username;
+    private String campaign;
 
     public static String TAG = "LoadedGameActivity";
 
@@ -47,6 +46,7 @@ public class LoadedGameActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             username = extras.getString("user");
+            campaign = extras.getString("campaignName");
         }
 
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
@@ -60,6 +60,11 @@ public class LoadedGameActivity extends AppCompatActivity {
             mDatabase2.setValue("default");
         }
 
+
+        Bundle args = new Bundle();
+        args.putString("user", username);
+        args.putString("campaign", campaign);
+
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.loadedGame_bottomNav);
         bottomNav.setOnItemSelectedListener(item -> {
@@ -71,8 +76,6 @@ public class LoadedGameActivity extends AppCompatActivity {
             } else if (R.id.currentCharacterSheet == itemId) {
                 //character sheet
 //                fragment = new RpgBuddyCharacterEditor();
-//                Bundle args = new Bundle();
-//                args.putString("user", user.getName());
 //                fragment.setArguments(args);
 //                changeFragment(fragment);
             } else if (R.id.rpgBuddyDiceRoller == itemId) {

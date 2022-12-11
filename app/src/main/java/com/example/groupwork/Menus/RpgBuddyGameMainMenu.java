@@ -21,11 +21,10 @@ import javax.annotation.Nullable;
 import com.example.groupwork.GameCreation.GMGameCreation;
 import com.example.groupwork.GameCreation.PlayerJoinGame;
 import com.example.groupwork.GameCreation.SelectPlayerTypeDialog;
+import com.example.groupwork.LoadCampaign.LoadCampaignSelectionInterface;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Game;
 import com.example.groupwork.RecyclerViewStuff.GameCardAdapter;
-import com.example.groupwork.StickerActivity.MessageAdapter;
-import com.example.groupwork.StickerActivity.StickerMessage;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,13 +38,13 @@ import java.util.ArrayList;
  * Use the {@link RpgBuddyGameMainMenu#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeDialog.OnInputListener{
+public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeDialog.OnInputListener, LoadCampaignSelectionInterface {
 
     private static final String TAG = "RpgBuddyGameMainMenu";
 
     private RecyclerView games_recyclerView;
     private TextView emptyView;
-    private ArrayList<Game> gameList;
+    private ArrayList<Game> campaignList;
     private GameCardAdapter gameCardAdapter;
 
 
@@ -112,9 +111,9 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
 
         if(user != null) {
             //user's created/joined games shown in a recyclerview
-            gameList = new ArrayList<>();
+            campaignList = new ArrayList<>();
             games_recyclerView = v.findViewById(R.id.games_recycler_view);
-            gameCardAdapter = new GameCardAdapter(gameList, this.getContext());
+            gameCardAdapter = new GameCardAdapter(campaignList, this.getContext());
             games_recyclerView.setAdapter(gameCardAdapter);
             games_recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
@@ -124,18 +123,18 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
             mDatabase.child(user).child("CampaignList").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    gameList.clear();
+                    campaignList.clear();
                     for (DataSnapshot child : snapshot.getChildren()) {
 
                         String campaignName = child.getKey();
                         Log.d(TAG, "campaign: " + campaignName);
                         String curUserCharacter = child.child("character").getValue().toString();
-                        Game game = new Game(campaignName, curUserCharacter);
-                        gameList.add(game);
+                        Game game = new Game(campaignName, curUserCharacter, user);
+                        campaignList.add(game);
                     }
                     games_recyclerView.getAdapter().notifyDataSetChanged();
 
-                    if (gameList.size() > 0 ) {
+                    if (campaignList.size() > 0 ) {
                         games_recyclerView.setVisibility(View.VISIBLE);
                         emptyView.setVisibility(View.GONE);
                     }
@@ -146,14 +145,14 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
                 }
             });
 
-            if (gameList.size() == 0 || gameList.isEmpty()) {
+            if (campaignList.size() == 0 || campaignList.isEmpty()) {
                 games_recyclerView.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
                 Log.d(TAG, "no games to show");
             } else {
                 games_recyclerView.setVisibility(View.VISIBLE);
                 emptyView.setVisibility(View.GONE);
-                Log.d(TAG, "you should see " + gameList.size() + " games");
+                Log.d(TAG, "you should see " + campaignList.size() + " games");
             }
         } else {
             Log.d(TAG, "user is null");
@@ -185,5 +184,15 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
             return;
         }
         startActivity(i);
+    }
+
+    @Override
+    public void onCampaignCardClick(int position) {
+        Intent goToCampaign = new Intent(getContext(), LoadedGameActivity.class);
+        String campaignName = campaignList.get(position).getName();
+        String username = campaignList.get(position).getCurUser();
+        goToCampaign.putExtra("user", username);
+        goToCampaign.putExtra("campaignName", campaignName);
+        RpgBuddyGameMainMenu.this.startActivity(goToCampaign);
     }
 }
