@@ -19,6 +19,7 @@ import com.example.groupwork.Menus.LoadedGameActivity;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Character;
 import com.example.groupwork.RPG_Model.Game;
+import com.example.groupwork.RPG_Model.Player;
 import com.example.groupwork.RPG_Model.SheetType;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +50,7 @@ public class PlayerJoinGame extends AppCompatActivity {
     private FirebaseDatabase db;
     private DatabaseReference userDatabase;
     private DatabaseReference gameDatabase;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class PlayerJoinGame extends AppCompatActivity {
             user = extras.getString("user");
         }
 
+        context = this;
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         userDatabase = db.getReference("Users");
         gameDatabase = db.getReference("Games");
@@ -75,25 +78,47 @@ public class PlayerJoinGame extends AppCompatActivity {
 //        for (Character c: characters) {
 //            userCharacters.add(c.getName());
 //        }
-        if(userCharacters == null){
-            userCharacters.add("Character for testing 2");
-        }
+      //  if(userCharacters == null){
+        //    userCharacters.add("Character for testing 2");
+       // }
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, userCharacters);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        characterSpinner.setAdapter(adapter);
-        characterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        userDatabase.child(user).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                selectedCharacter = adapterView.getItemAtPosition(position).toString();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Player p = snapshot.getValue(Player.class);
+                ArrayList<Character> cList = p.getCharacters();
+                userCharacters = new ArrayList<>();
+                for(Character c : cList){
+                    userCharacters.add(c.getName());
+                }
+                userCharacters.add("Create New");
+
+                ArrayAdapter adapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item, userCharacters);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                characterSpinner.setAdapter(adapter);
+                characterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                        selectedCharacter = adapterView.getItemAtPosition(position).toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        characterSpinner.setPrompt(getString(R.string.categories));
+                        selectedCharacter = "default";
+                    }
+                });
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                characterSpinner.setPrompt(getString(R.string.categories));
-                selectedCharacter = "default";
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+
+
+
 
 
 
@@ -165,9 +190,7 @@ public class PlayerJoinGame extends AppCompatActivity {
                     Toast.makeText(PlayerJoinGame.this,
                             "This game is full, please join another campaign.", Toast.LENGTH_SHORT).show();
                 }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w(TAG, "loadPost:onCancelled " + error.toString());

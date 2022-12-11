@@ -20,11 +20,15 @@ import com.example.groupwork.Login.Login;
 import com.example.groupwork.Menus.LoadedGameActivity;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Game;
+import com.example.groupwork.RPG_Model.Player;
+import com.example.groupwork.RPG_Model.SheetType;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class GMGameCreation extends AppCompatActivity {
 
@@ -45,12 +49,15 @@ public class GMGameCreation extends AppCompatActivity {
     private DatabaseReference userDatabase;
     private DatabaseReference gameDatabase;
     private Game game;
+    private ArrayList<SheetType> sheetList;
+    private ArrayList<String> sheetNames;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_creation);
-
+        context = this;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             user = extras.getString("user");
@@ -68,25 +75,45 @@ public class GMGameCreation extends AppCompatActivity {
         gameDescription = findViewById(R.id.editText_description);
         saveGame = findViewById(R.id.btn_save);
 
-        selectedSystem = null;
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.available_systems, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        gameSystemSpinner.setAdapter(adapter);
-        gameSystemSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        userDatabase.child(user).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                String text;
-                selectedSystem = adapterView.getItemAtPosition(position).toString();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Player p = snapshot.getValue(Player.class);
+                sheetList = p.getSheets();
+                sheetNames = new ArrayList<>();
+                for (SheetType s : sheetList){
+                    sheetNames.add(s.getName());
+                }
+
+
+                ArrayAdapter<CharSequence> adapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item, sheetNames);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                gameSystemSpinner.setAdapter(adapter);
+                gameSystemSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                        String text;
+                        selectedSystem = adapterView.getItemAtPosition(position).toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        gameSystemSpinner.setPrompt(getString(R.string.categories));
+                        selectedSystem = adapterView.getItemAtPosition(0).toString();
+                    }
+                });
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                gameSystemSpinner.setPrompt(getString(R.string.categories));
-                selectedSystem = adapterView.getItemAtPosition(0).toString();
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+
+
+        selectedSystem = null;
+
+
 
 
 
