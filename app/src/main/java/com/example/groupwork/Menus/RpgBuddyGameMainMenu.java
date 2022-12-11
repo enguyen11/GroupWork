@@ -129,6 +129,7 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
 
                         String campaignName = child.getKey();
                         Log.d(TAG, "campaign: " + campaignName);
+                        Log.d(TAG, child.toString());
                         String curUserCharacter = child.child("character").getValue().toString();
                         Game game = new Game(campaignName, curUserCharacter);
                         gameList.add(game);
