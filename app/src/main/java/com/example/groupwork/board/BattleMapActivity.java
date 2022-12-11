@@ -37,8 +37,8 @@ public class BattleMapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_map);
         //TODO ERASE
-        width = 12;
-        height = 30;
+        width = 14;
+        height = 14;
         //grid
         grid = (GridLayout) findViewById(R.id.BattleMap);
         grid.setColumnCount(width);
@@ -51,6 +51,9 @@ public class BattleMapActivity extends AppCompatActivity {
         pieces = new Hashtable<>();
         mapManager = new BattleMapManager(this);
 
+        //TODO ERASE
+        pieces.put(new Pair<>(8,9), new Character(8, 9, "Cool guy", R.drawable.sticker_d20));
+        pieces.put(new Pair<>(4,4), new Character(4, 4, "Cool guy", R.drawable.sticker_d20));
         // this thread runs the setup
         Thread setup = new Thread(new Runnable() {
             public void run() {
@@ -110,8 +113,9 @@ public class BattleMapActivity extends AppCompatActivity {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 key = new Pair<>(j, i);
-                View currentView = battleMap.get(key).getView();
-                setTileClickListener(currentView);
+                Tile currentTile = battleMap.get(key);
+                View currentView = currentTile.getView();
+                setTileClickListener(currentView, currentTile);
                 if (currentView != null) grid.addView(currentView);
             }
         }
@@ -125,13 +129,14 @@ public class BattleMapActivity extends AppCompatActivity {
     }
 
     // this cade sets the interactivity fof a tile view ImageView
-    private void setTileClickListener(View currentView){
+    private void setTileClickListener(View currentView, Tile currentTile){
         currentView.setOnTouchListener(new View.OnTouchListener() {
                                            @Override
                                            public boolean onTouch(View view, MotionEvent motionEvent) {
                                                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                                                    ImageView image = view.findViewById(R.id.tile);
                                                    image.setColorFilter(Color.YELLOW);
+                                                   mapManager.trySelectTile(currentTile.getCoor()[0], currentTile.getCoor()[1]);
                                                    return true;
                                                }
                                                ImageView image = view.findViewById(R.id.tile);
@@ -143,6 +148,11 @@ public class BattleMapActivity extends AppCompatActivity {
     }
 
     public void updateTile(Tile tile){
-        tile.updateDisplay();
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tile.updateDisplay();
+            }
+        });
     }
 }
