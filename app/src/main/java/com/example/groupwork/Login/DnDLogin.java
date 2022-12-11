@@ -113,6 +113,7 @@ public class DnDLogin extends AppCompatActivity {
                 child("Campaigns").push().setValue("Eric's Campaign");
 
         //Dummy Chat
+        /*
         DatabaseReference mDatabase2 = db.getReference("Games");
         Message systemMsg1 = new Message("System", "This is the start to the In-Game Chat");
         Message systemMsg2 = new Message("System", "This is the start to the Out-of-Game Chat");
@@ -120,6 +121,8 @@ public class DnDLogin extends AppCompatActivity {
                 .child("In-Game Chat").push().setValue(systemMsg1);
         mDatabase2.child("Eric's Campaign").child("ChatRoom")
                 .child("Out-of-Game Chat").push().setValue(systemMsg2);
+                
+         */
     }
 
 }
