@@ -19,7 +19,8 @@ public class Player implements Parcelable {
     private ArrayList<SheetType> sheets;
     private ArrayList<String> friends;
     private ArrayList<Character> characters;
-    private ArrayList<Game> games;
+    private ArrayList<String> games;
+    private ArrayList<Boolean> isGameGM;
     private ArrayList<Map> maps;
     private ArrayList<Message> messageList;
     private ArrayList<String> friendsList;
@@ -32,8 +33,13 @@ public class Player implements Parcelable {
         sheets = new ArrayList<>();
         messageList = new ArrayList<>();
         friendsList = new ArrayList<>();
-        SheetType defaultSheet = makeDefault();
+        games = new ArrayList<>();
+        this.games.add("init");
+        SheetType defaultSheet = makeDefaultSheet();
         this.sheets.add(defaultSheet);
+        characters = new ArrayList<>();
+        Character defaultCharacter = makeDefaultCharacter();
+        this.characters.add(defaultCharacter);
 
     }
     public String getName(){
@@ -48,12 +54,17 @@ public class Player implements Parcelable {
     public ArrayList<SheetType> getSheets(){
         return this.sheets;
     }
+    public ArrayList<Character> getCharacters() { return this.characters; }
+    public void addGameRole(boolean isGM){
+        this.isGameGM.add(isGM);
+    }
     public void addFriend(String friend) {
         this.friends.add(friend);
     }
     public void addFriendToMsgList(String friend) {
         this.friendsList.add(friend);
     }
+    public void addGame(String campaignName) {this.games.add(campaignName);}
 
     public void addMessageToList(Message myMessage){
         this.messageList.add(myMessage);
@@ -61,7 +72,7 @@ public class Player implements Parcelable {
 
 
 
-    private SheetType makeDefault(){
+    private SheetType makeDefaultSheet(){
         SheetType defaultSheet = new SheetType();
         defaultSheet.setName("D&D 5e Sheet");
         ArrayList<String> info = new ArrayList<>();
@@ -136,6 +147,11 @@ public class Player implements Parcelable {
         defaultSheet.setResources(resourceList);
         return defaultSheet;
 
+    }
+
+    private Character makeDefaultCharacter(){
+        Character defaultCharacter = new Character("default");
+        return defaultCharacter;
     }
 
 
