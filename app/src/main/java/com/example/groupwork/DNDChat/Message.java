@@ -7,7 +7,7 @@ public class Message {
     private String content;
 
     public Message(){
-        
+
     }
 
     public Message(String sender, String content){

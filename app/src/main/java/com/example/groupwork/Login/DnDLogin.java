@@ -117,9 +117,9 @@ public class DnDLogin extends AppCompatActivity {
         Message systemMsg1 = new Message("System", "This is the start to the In-Game Chat");
         Message systemMsg2 = new Message("System", "This is the start to the Out-of-Game Chat");
         mDatabase2.child("Eric's Campaign").child("ChatRoom")
-                .child("In-Game Chat").setValue(systemMsg1);
+                .child("In-Game Chat").push().setValue(systemMsg1);
         mDatabase2.child("Eric's Campaign").child("ChatRoom")
-                .child("Out-of-Game Chat").setValue(systemMsg2);
+                .child("Out-of-Game Chat").push().setValue(systemMsg2);
     }
 
 }

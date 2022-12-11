@@ -76,7 +76,7 @@ public class DnDChat extends AppCompatActivity {
                 path.append(CAMPAIGN_NAME);
                 path.append("/ChatRoom/");
                 path.append(CHATNAME);
-                System.out.println("Path: " + path.toString());
+                //System.out.println("Path: " + path.toString());
 
                 mDatabase = db.getReference(path.toString());
                 mDatabase.push().setValue(message);
@@ -90,11 +90,15 @@ public class DnDChat extends AppCompatActivity {
     }
 
     private void pullDownChat(){
-        StringBuilder path = new StringBuilder("Games/");
-        path.append(CAMPAIGN_NAME);
-        path.append("/ChatRoom");
+        //StringBuilder path = new StringBuilder("Games/");
+        //path.append(CAMPAIGN_NAME);
+        //path.append("/ChatRoom");
         //path.append(CHATNAME);
         //System.out.println(path.toString());
+        StringBuilder path = new StringBuilder("Games/");
+        path.append(CAMPAIGN_NAME);
+        path.append("/ChatRoom/");
+        path.append(CHATNAME);
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com/");
         mDatabase = db.getReference(path.toString());
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
