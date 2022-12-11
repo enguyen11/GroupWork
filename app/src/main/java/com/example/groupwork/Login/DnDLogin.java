@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.groupwork.DNDChat.Message;
+import com.example.groupwork.Game_Invite.Game_Invite;
 import com.example.groupwork.Menus.RpgBuddyMainMenu;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Player;
@@ -51,7 +52,7 @@ public class DnDLogin extends AppCompatActivity {
          */
         login_button.setOnClickListener(view -> {
             String username = username_entry.getText().toString();
-            Intent openAccount = new Intent(DnDLogin.this, RpgBuddyMainMenu.class);
+            Intent openAccount = new Intent(DnDLogin.this, Game_Invite.class);
             openAccount.putExtra("username", username);
             db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com/");
             mDatabase = db.getReference("Users");
