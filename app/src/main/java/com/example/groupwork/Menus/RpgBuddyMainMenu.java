@@ -53,7 +53,8 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rpg_buddy_main_menu);
-
+        Fragment defaultFrag = new RpgBuddyGameMainMenu();
+        changeFragment(defaultFrag);
 
 
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
