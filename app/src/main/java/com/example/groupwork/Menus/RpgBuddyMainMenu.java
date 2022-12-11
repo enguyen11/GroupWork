@@ -74,10 +74,6 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
             mDatabase2.setValue("default");
         }
 
-//        Bundle args = new Bundle();
-//        args.putString("user", username);
-//        Log.d(TAG, "user: " + username);
-//        changeFragment(new RpgBuddyGameMainMenu());
 
         nameArg = new NavArgument.Builder().setDefaultValue(username).build();
         mailArg = new NavArgument.Builder().setDefaultValue("your email id").build();
@@ -86,11 +82,6 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         NavGraph navGraph = navInflater.inflate(R.navigation.rpg_buddy_main_nav_bar);
         navGraph.addArgument("userID", nameArg);
         navController.setGraph(navGraph);
-
-
-
-
-        ///////////////
 
         Bundle args = new Bundle();
         args.putString("userID", user.getName());
@@ -102,16 +93,10 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
             int itemId = item.getItemId();
             Fragment fragment;
             if (R.id.rpgBuddyGameMainMenu == itemId) {
-                Log.d(TAG, "rpgBuddyGameMainMenu selected");
                 fragment = new RpgBuddyGameMainMenu();
-
-//                Bundle args = new Bundle();
-//                args.putString("user", user.getName());
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {
                 fragment = new RpgBuddyCharacterEditor();
-                Bundle args = new Bundle();
-                args.putString("userID", username);
                 fragment.setArguments(args);
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyDiceRoller == itemId) {

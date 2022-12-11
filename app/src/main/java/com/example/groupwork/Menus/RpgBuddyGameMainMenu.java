@@ -156,7 +156,7 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
                 Log.d(TAG, "you should see " + gameList.size() + " games");
             }
         } else {
-            Log.d(TAG, "user is null broski");
+            Log.d(TAG, "user is null");
         }
 
 
