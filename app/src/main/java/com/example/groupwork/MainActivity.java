@@ -8,9 +8,8 @@ import android.widget.Button;
 
 import com.example.groupwork.DndApiActivity.DndAPIActivity;
 import com.example.groupwork.Login.DnDLogin;
-import com.example.groupwork.Login.Login;
-import com.example.groupwork.Menus.RpgBuddyMainMenu;
 import com.example.groupwork.StickerActivity.Firebase;
+import com.example.groupwork.board.BattleMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,5 +44,13 @@ public class MainActivity extends AppCompatActivity {
             Intent goToSearch = new Intent(MainActivity.this, About.class);
             MainActivity.this.startActivity(goToSearch);
         });
+        //TODO delete
+        Button map = findViewById(R.id.mapActivity);
+        map.setOnClickListener(view -> {
+            Intent goToMap = new Intent(MainActivity.this, BattleMap.class);
+            MainActivity.this.startActivity(goToMap);
+        });
+
+
     }
 }
