@@ -26,6 +26,8 @@ import java.util.ArrayList;
 
 public class LoadedGameActivity extends AppCompatActivity {
 
+    private ArrayList<Game> myGames;
+    private Button btnNewGame;
 
     private Player user;
     private FirebaseDatabase db;
@@ -72,6 +74,7 @@ public class LoadedGameActivity extends AppCompatActivity {
             Fragment fragment;
             if (R.id.loadedGameMainMenu == itemId) {
                 fragment = new LoadedGameMenuFragment();
+                fragment.setArguments(args);
                 changeFragment(fragment);
             } else if (R.id.currentCharacterSheet == itemId) {
                 //character sheet
@@ -84,6 +87,8 @@ public class LoadedGameActivity extends AppCompatActivity {
             }
             return true;
         });
+
+
 
 
     }

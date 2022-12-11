@@ -42,6 +42,7 @@ public class PlayerJoinGame extends AppCompatActivity {
 
     private String campaignName;
     private String selectedCharacter;
+    private String description;
     private ArrayList<String> userCharacters;
     private Game game;
 
@@ -100,6 +101,7 @@ public class PlayerJoinGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 campaignName = edittext_campaignName.getText().toString();
+                description = gameDescription.getText().toString();
                 joinGame(campaignName);
 //                Log.d(TAG, "onclick " + game.getName());
 //                if(game == null || game.getName() != campaignName) {
@@ -152,6 +154,7 @@ public class PlayerJoinGame extends AppCompatActivity {
                     gameDatabase.child(campaignName).child("party").child(user).setValue(selectedCharacter);
                     userDatabase.child(user).child("CampaignList").child(campaignName).child("isGM").setValue(false);
                     userDatabase.child(user).child("CampaignList").child(campaignName).child("character").setValue(selectedCharacter);
+                    userDatabase.child(user).child("CampaignList").child(campaignName).child("notes").setValue(description);
 
                     Context context = getApplicationContext();
                     Intent i = new Intent(context, LoadedGameActivity.class);
