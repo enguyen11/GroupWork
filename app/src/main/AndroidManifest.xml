@@ -20,7 +20,7 @@
         android:theme="@style/Theme.GroupWork"
         tools:targetApi="31">
         <activity
-            android:name=".board.BattleMap"
+            android:name=".board.BattleMapActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

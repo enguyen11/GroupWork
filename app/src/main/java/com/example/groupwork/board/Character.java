@@ -1,13 +1,29 @@
 package com.example.groupwork.board;
 
+import android.util.Pair;
+
 public class Character implements BoardPiece {
     private int x;
     private int y;
+    private boolean isSelected;
+    final private int imageSourceId;
+    final private String name;
 
+    Character(int x, int y, String name, int imageSourceID){
+        this.x = x;
+        this.y = y;
+        this.imageSourceId = imageSourceID;
+        this.name = name;
+    }
+
+    public void setNewCoordinates(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
 
     @Override
-    public void moveTo(int x, int y) {
-
+    public Pair<Integer, Integer> getCoordinates() {
+        return new Pair<Integer, Integer>(x, y);
     }
 
     @Override
@@ -15,8 +31,18 @@ public class Character implements BoardPiece {
         return null;
     }
 
-    public int[] getCoor(){
-        int[] coor = {this.x, this.y};
-        return coor;
+    @Override
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    @Override
+    public int getImageSourceId() {
+        return 0;
+    }
+
+    @Override
+    public String getNameId(){
+        return name;
     }
 }

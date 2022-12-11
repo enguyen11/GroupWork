@@ -9,7 +9,7 @@ import android.widget.Button;
 import com.example.groupwork.DndApiActivity.DndAPIActivity;
 import com.example.groupwork.Login.DnDLogin;
 import com.example.groupwork.StickerActivity.Firebase;
-import com.example.groupwork.board.BattleMap;
+import com.example.groupwork.board.BattleMapActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO delete
         Button map = findViewById(R.id.mapActivity);
         map.setOnClickListener(view -> {
-            Intent goToMap = new Intent(MainActivity.this, BattleMap.class);
+            Intent goToMap = new Intent(MainActivity.this, BattleMapActivity.class);
             MainActivity.this.startActivity(goToMap);
         });
 

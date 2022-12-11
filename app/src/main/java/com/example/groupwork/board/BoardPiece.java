@@ -1,7 +1,16 @@
 package com.example.groupwork.board;
 
-public interface BoardPiece {
+import android.util.Pair;
 
-    public void moveTo(int x, int y);
-    public String getPieceId();
+public interface BoardPiece {
+    Pair<Integer, Integer> getCoordinates();
+
+    String getPieceId();
+
+    boolean isSelected();
+
+    int getImageSourceId();
+
+    String getNameId();
+    void setNewCoordinates(int x, int y);
 }
