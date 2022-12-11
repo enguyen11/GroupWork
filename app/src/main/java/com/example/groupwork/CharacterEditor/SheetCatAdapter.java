@@ -55,7 +55,9 @@ public class SheetCatAdapter extends RecyclerView.Adapter<SheetCatViewHolder> {
     }
 
     public RecyclerView getItem(int index){
-        System.out.println("get item arrayList size: " + rView.size());
         return rView.get(index);
+    }
+    public int getSize(){
+        return rView.size();
     }
 }

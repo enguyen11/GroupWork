@@ -9,7 +9,7 @@
         android:id="@+id/textViewStatGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/EditAddIndStat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,13 +24,13 @@
         app:layout_constraintHeight_max="wrap"
         app:layout_constraintHeight_percent=".50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewStatGroup" />
+        app:layout_constraintTop_toBottomOf="@id/EditAddIndStat" />
 
     <Button
         android:id="@+id/removeGroupButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="@string/string_remove"
         app:layout_constraintBottom_toBottomOf="@+id/textViewStatGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewStatGroup"
@@ -51,7 +51,7 @@
         android:id="@+id/addIndStatButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="@string/string_add_stat"
         app:layout_constraintBottom_toBottomOf="@+id/EditAddIndStat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/EditAddIndStat"

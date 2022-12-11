@@ -82,10 +82,8 @@ public class CharacterSheetActivity extends AppCompatActivity {
             if (extras.containsKey("index")) {
                 sheetNum = extras.getInt("index");
                 isTemplate = true;
-                //setValues();
             }
             else if (extras.containsKey("character")) {
-                Log.d("SELECTED CHARACTER", "username: " + username + "\ncharacter: " + charName);
                 charName = extras.getString("character");
                 isTemplate = false;
 
@@ -102,14 +100,9 @@ public class CharacterSheetActivity extends AppCompatActivity {
 
 
 
-        //params.addRule(ConstraintLayout.CENTER_IN_PARENT);
         infoRecycler = findViewById(R.id.recyclerView2);
 
 
-
-        int n = 0;
-
-       //setContentView(layout, params);
     mDatabase.child(username).addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -178,8 +171,6 @@ public class CharacterSheetActivity extends AppCompatActivity {
             statRec.setAdapter(new SheetCatAdapter(context, statCats, stats, statVals));
             statRec.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
-
-
                 n++;
             }
 
@@ -209,8 +200,8 @@ public class CharacterSheetActivity extends AppCompatActivity {
     });
     }
     public void setValues(){
-        //infoVals = infoFields;
-        //statVals = new ArrayList<>();
+
+
         int n = 0;
         while (n < infoFields.size()){
             infoVals.add("");
@@ -245,20 +236,20 @@ public class CharacterSheetActivity extends AppCompatActivity {
         }
         n = 0;
         r = 0;
-        System.out.println("item count: " + statRec.getAdapter().getItemCount());
-
         while(n < statRec.getAdapter().getItemCount()){
-            System.out.println("outer loop!!!" + n);
             ArrayList<String> tempList = new ArrayList<>();
             SheetCatAdapter adapter = (SheetCatAdapter) statRec.getAdapter();
+            if(n >= adapter.getSize()){
+                break;
+            }
             RecyclerView recyclerView = adapter.getItem(n);
-            System.out.println("inner item count: " + recyclerView.getAdapter().getItemCount());
             while(r < recyclerView.getAdapter().getItemCount()){
-                System.out.println("inner loop!!!" + r);
                 SheetSkillAdapter sadapter = (SheetSkillAdapter)recyclerView.getAdapter();
+                if(r >= sadapter.getSize()){
+                    break;
+                }
                EditText editText = sadapter.getItem(r);
                tempList.add(editText.getText().toString());
-               System.out.println("Edit text value: " + editText.getText().toString());
                 r++;
             }
             statVals.add(tempList);

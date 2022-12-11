@@ -50,4 +50,7 @@ public class SheetSkillAdapter extends RecyclerView.Adapter<SheetSkillViewHolder
     public EditText getItem(int index){
         return fieldVals.get(index);
     }
+    public int getSize(){
+        return fieldVals.size();
+    }
 }
