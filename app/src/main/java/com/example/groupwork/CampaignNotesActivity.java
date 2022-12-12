@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -26,7 +27,7 @@ public class CampaignNotesActivity extends AppCompatActivity {
 
     private String username;
     private String campaignName;
-    private Button notes;
+    private TextView notesText;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
     private String TAG = "CampaignNotesActivity";
@@ -42,7 +43,7 @@ public class CampaignNotesActivity extends AppCompatActivity {
         }
         Log.d(TAG, username);
 
-        notes = findViewById(R.id.btn_notes);
+        notesText = findViewById(R.id.notes_text);
 
         if(campaignName != null && username != null ) {
             db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
@@ -51,7 +52,8 @@ public class CampaignNotesActivity extends AppCompatActivity {
             mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    notes.setText(dataSnapshot.child("notes").getValue().toString());
+                    notesText.setText(dataSnapshot.child("notes").getValue().toString());
+                    Log.d(TAG, dataSnapshot.child("notes").getValue().toString());
 
                 }
 
