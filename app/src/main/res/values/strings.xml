@@ -62,8 +62,9 @@
     <string name="prompt_throw">Test your fate!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_game">New Game</string>
-    <string name="new_sheet">New Sheet</string>
+    <string name="new_sheet">New Template</string>
     <string name="statHint">Stat entry field</string>
+    <string name="infoHint">Enter</string>
 
     <string name="email">Email</string>
     <string name="new_user2">New User</string>
@@ -87,7 +88,7 @@
         <item>Dungeons and Dragons 5e</item>
     </string-array>
     <string name="string_clear">Clear</string>
-    <string name="string_shake_or_press_button_to_roll">Shake or press button to roll:</string>    
+    <string name="string_shake_or_press_button_to_roll">Shake or press button to roll:</string>
     <string name="string_scroll_to_see_past_rolls">Scroll to see past rolls</string>
     <string name="string_total_label">Total:</string>
     <string name="string_0">0</string>
@@ -108,6 +109,14 @@
     <string name="string_party_summary">Party Summary</string>
     <string name="string_map">map</string>
     <string name="string_character_sheet">Character Sheet</string>
+    <string name="string_role">Role</string>
+    <string name="string_add_info">Add Info</string>
+    <string name="string_add_stat_group">Add Stat Group</string>
+    <string name="string_remove">Remove</string>
+    <string name="string_add_stat">Add Stat</string>
+    <string name="string_template_instr">Click on a template below to create a new character</string>
+    <string name="string_character_instr">Click on a name below to open a character sheet</string>
+
 
 
 </resources>

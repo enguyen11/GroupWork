@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -29,6 +28,17 @@
             android:exported="false" />
         <activity
             android:name=".DNDChat.DnDChat"
+            android:exported="false" />
+        <activity
+            android:name=".board.BattleMapActivity"
+            android:exported="false"
+            android:configChanges = "orientation">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".CampaignNotesActivity"
             android:exported="false" />
         <activity
             android:name=".GameCreation.PlayerJoinGame"
@@ -85,6 +95,9 @@
             android:exported="false" />
         <activity
             android:name=".CharacterEditor.CharacterSheetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CharacterEditor.CharacterSheetActivityRefactor"
             android:exported="false" />
         <activity
             android:name=".DndApiActivity.DndAPIActivity"
