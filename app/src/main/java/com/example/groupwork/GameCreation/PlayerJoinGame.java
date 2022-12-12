@@ -168,7 +168,7 @@ public class PlayerJoinGame extends AppCompatActivity {
     }
 
     private void joinGame(String name) {
-        gameDatabase.addListenerForSingleValueEvent (new ValueEventListener() {
+        gameDatabase.child(name).addValueEventListener (new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 game = dataSnapshot.getValue(Game.class);
