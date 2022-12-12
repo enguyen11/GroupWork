@@ -114,10 +114,11 @@ public class DnDLogin extends AppCompatActivity {
         //Move all of the below code to the appropriate class when done
 
         //Dummy Campaigns
-        mDatabase.child(user.getName()).child("CampaignList").
-                push().setValue("Eric's Campaign");
-        mDatabase.child(user.getName()).child("CampaignList").
-                push().setValue("Eric");
+
+        //mDatabase.child(user.getName()).child("CampaignList").
+        //        push().setValue("Eric's Campaign");
+        //mDatabase.child(user.getName()).child("CampaignList").
+        //        push().setValue("Eric");
 
         //Dummy Chat
         /*
@@ -128,7 +129,7 @@ public class DnDLogin extends AppCompatActivity {
                 .child("In-Game Chat").push().setValue(systemMsg1);
         mDatabase2.child("Eric's Campaign").child("ChatRoom")
                 .child("Out-of-Game Chat").push().setValue(systemMsg2);
-                
+
          */
     }
 
