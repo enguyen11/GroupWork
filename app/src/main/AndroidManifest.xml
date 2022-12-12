@@ -39,12 +39,15 @@
         </activity>
         <activity
             android:name=".CampaignNotesActivity"
+            android:label="Campaign Notes"
             android:exported="false" />
         <activity
             android:name=".GameCreation.PlayerJoinGame"
+            android:label="Player Join Game"
             android:exported="false" />
         <activity
             android:name=".GameCreation.GMGameCreation"
+            android:label="Game Master Game Creation"
             android:exported="false" />
         <activity
             android:name=".Login.Account_Creation"
@@ -54,6 +57,7 @@
             android:exported="false" />
         <activity
             android:name=".Login.DnDLogin"
+            android:label="Login"
             android:exported="false" />
         <activity
             android:name=".StickerActivity.Messages"
@@ -83,21 +87,26 @@
             android:exported="false" />
         <activity
             android:name=".Menus.RpgBuddyMainMenu"
+            android:label="Game Menu"
             android:exported="false" />
         <activity
             android:name=".Menus.LoadedGameActivity"
+            android:label="Options"
             android:exported="false" />
         <activity
             android:name=".StickerActivity.Firebase"
             android:exported="false" />
         <activity
             android:name=".CharacterEditor.SheetBuilderActivity"
+            android:label="Sheet Builder"
             android:exported="false" />
         <activity
             android:name=".CharacterEditor.CharacterSheetActivity"
+            android:label="Character Sheet Builder"
             android:exported="false" />
         <activity
             android:name=".CharacterEditor.CharacterSheetActivityRefactor"
+            android:label="Character Sheet Activity Refactor"
             android:exported="false" />
         <activity
             android:name=".DndApiActivity.DndAPIActivity"
