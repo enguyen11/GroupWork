@@ -82,6 +82,11 @@ public class LoadedGameActivity extends AppCompatActivity {
         args.putString("user", username);
         args.putString("campaignName", campaign);
 
+
+        Fragment defaultFrag = new LoadedGameMenuFragment();
+        defaultFrag.setArguments(args);
+        changeFragment(defaultFrag);
+
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.loadedGame_bottomNav);
         bottomNav.setOnItemSelectedListener(item -> {

@@ -1,5 +1,7 @@
 package com.example.groupwork;
 
+import static com.example.groupwork.Menus.LoadedGameActivity.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,11 +24,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class CampaignNotesActivity extends AppCompatActivity {
 
+    private String username;
     private String campaignName;
-    private String user;
-    private TextView notes;
+    private Button notes;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
+    private String TAG = "CampaignNotesActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,18 +37,21 @@ public class CampaignNotesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_campaign_notes);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            username = extras.getString("user");
             campaignName = extras.getString("campaignName");
-            user = extras.getString("user");
         }
+        Log.d(TAG, username);
 
-        if(campaignName != null && user != null ) {
+        notes = findViewById(R.id.btn_notes);
+
+        if(campaignName != null && username != null ) {
             db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
-            mDatabase = db.getReference("Users").child(user).child("CampaignList").child(campaignName);
+            mDatabase = db.getReference("Users").child(username).child("CampaignList").child(campaignName);
 
             mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    notes.setText(dataSnapshot.child("notes").getValue().toString());
+//                    notes.setText(dataSnapshot.child("notes").getValue().toString());
 
                 }
 

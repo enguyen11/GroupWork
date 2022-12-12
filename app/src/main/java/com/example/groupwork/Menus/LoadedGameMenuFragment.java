@@ -69,7 +69,6 @@ public class LoadedGameMenuFragment extends Fragment {
             campaignName = getArguments().getString("campaignName");
             user = getArguments().getString("user");
         }
-        Log.d(TAG, "campaign name: " + campaignName);
     }
 
     @Override
@@ -79,12 +78,13 @@ public class LoadedGameMenuFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_loaded_game_menu, container, false);
         name_title = v.findViewById(R.id.text_campaign_name_title);
         name_title.setText(campaignName);
-        Log.d(TAG, "campaign name: " + campaignName);
+        Log.d(TAG, "this campaign name: " + this.campaignName);
+        Log.d(TAG, "this user name: " + this.user);
         notes = v.findViewById(R.id.btn_notes);
         notes.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), CampaignNotesActivity.class);
-            i.putExtra("user", user);
-            i.putExtra("campaignName", campaignName);
+            i.putExtra("user", this.user);
+            i.putExtra("campaignName", this.campaignName);
             getActivity().startActivity(i);
         });
         // Inflate the layout for this fragment

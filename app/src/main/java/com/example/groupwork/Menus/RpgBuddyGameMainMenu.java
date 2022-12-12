@@ -209,7 +209,6 @@ public class RpgBuddyGameMainMenu extends Fragment  implements SelectPlayerTypeD
         String username = campaignList.get(position).getCurUser();
         goToCampaign.putExtra("user", username);
         goToCampaign.putExtra("campaignName", campaignName);
-        Log.d(TAG, username + " is clicking " + campaignName);
         RpgBuddyGameMainMenu.this.startActivity(goToCampaign);
     }
 }

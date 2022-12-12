@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rpg_buddy_main_nav_bar"
-    app:startDestination="@id/LoadedGameMainMenu">
+    app:startDestination="@id/rpgBuddyBackground">
 
     <fragment
         android:id="@+id/rpgBuddyCharacterEditor"
@@ -20,4 +20,9 @@
         android:name="com.example.groupwork.Menus.LoadedGameMenuFragment"
         android:label="fragment_loaded_game_main_menu"
         tools:layout="@layout/fragment_loaded_game_menu" />
+    <fragment
+        android:id="@id/rpgBuddyBackground"
+        android:name="com.example.groupwork.Menus.RpgBuddyBackgroundFragment"
+        android:label="fragment_rpg_background"
+        tools:layout="@layout/fragment_background" />
 </navigation>
