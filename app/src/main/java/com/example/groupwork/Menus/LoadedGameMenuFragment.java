@@ -13,10 +13,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.groupwork.CampaignNotesActivity;
+import com.example.groupwork.DNDChat.ChatSelection;
 import com.example.groupwork.Login.DnDLogin;
 import com.example.groupwork.MainActivity;
 import com.example.groupwork.R;
-import com.example.groupwork.board.BattleMapActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,8 +38,8 @@ public class LoadedGameMenuFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private Button mapBtn;
     private Button notes;
+    private Button chat;
     private TextView name_title;
 
     public LoadedGameMenuFragment() {
@@ -71,6 +71,7 @@ public class LoadedGameMenuFragment extends Fragment {
             campaignName = getArguments().getString("campaignName");
             user = getArguments().getString("user");
         }
+        Log.d(TAG, "campaign name: " + campaignName);
     }
 
     @Override
@@ -80,24 +81,26 @@ public class LoadedGameMenuFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_loaded_game_menu, container, false);
         name_title = v.findViewById(R.id.text_campaign_name_title);
         name_title.setText(campaignName);
-        Log.d(TAG, "this campaign name: " + this.campaignName);
-        Log.d(TAG, "this user name: " + this.user);
+        Log.d(TAG, "campaign name: " + campaignName);
+
+        chat = v.findViewById(R.id.btn_chat);
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), ChatSelection.class);
+                i.putExtra("userID", user);
+                i.putExtra("campaignName", campaignName);
+                getActivity().startActivity(i);
+            }
+        });
+
         notes = v.findViewById(R.id.btn_notes);
         notes.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), CampaignNotesActivity.class);
-            i.putExtra("user", this.user);
-            i.putExtra("campaignName", this.campaignName);
-            getActivity().startActivity(i);
-        });
-        //set map
-        mapBtn = v.findViewById(R.id.btn_map);
-        mapBtn.setOnClickListener(view -> {
-            Intent i = new Intent(getActivity(), BattleMapActivity.class);
             i.putExtra("user", user);
             i.putExtra("campaignName", campaignName);
             getActivity().startActivity(i);
         });
-
         // Inflate the layout for this fragment
         return v;
     }

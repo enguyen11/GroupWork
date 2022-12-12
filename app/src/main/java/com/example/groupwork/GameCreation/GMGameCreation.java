@@ -16,6 +16,7 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.groupwork.DNDChat.Message;
 import com.example.groupwork.Login.Login;
 import com.example.groupwork.Menus.LoadedGameActivity;
 import com.example.groupwork.R;
@@ -126,6 +127,14 @@ public class GMGameCreation extends AppCompatActivity {
                             userDatabase.child(user).child("CampaignList").child(campaignName).child("character").setValue("Game Master");
                             userDatabase.child(user).child("CampaignList").child(campaignName).child("notes").setValue(descr);
                             gameDatabase.child(campaignName).setValue(game);
+
+                            DatabaseReference mDatabase2 = db.getReference("Games");
+                            Message systemMsg1 = new Message("System", "This is the start to the In-Game Chat");
+                            Message systemMsg2 = new Message("System", "This is the start to the Out-of-Game Chat");
+                            mDatabase2.child(campaignName).child("ChatRoom")
+                                    .child("In-Game Chat").push().setValue(systemMsg1);
+                            mDatabase2.child(campaignName).child("ChatRoom")
+                                    .child("Out-of-Game Chat").push().setValue(systemMsg2);
                             Context context = getApplicationContext();
                             Intent i = new Intent(context, LoadedGameActivity.class);
                             i.putExtra("user", user);
