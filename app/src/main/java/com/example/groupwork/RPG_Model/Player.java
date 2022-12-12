@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.example.groupwork.DNDChat.Message;
 import com.example.groupwork.StickerActivity.StickerMessage;
 
-import org.checkerframework.checker.units.qual.A;
+//import org.checkerframework.checker.units.qual.A;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -19,22 +19,25 @@ public class Player implements Parcelable {
     private ArrayList<SheetType> sheets;
     private ArrayList<String> friends;
     private ArrayList<Character> characters;
-    private ArrayList<Game> games;
+    private ArrayList<String> games;
+    private ArrayList<Boolean> isGameGM;
     private ArrayList<Map> maps;
     private ArrayList<Message> messageList;
     private ArrayList<String> friendsList;
 
     public Player(){
         System.out.println("**************Making Player*********************");
+        characters = new ArrayList<>();
     }
     public Player(String username){
         this.username = username;
         sheets = new ArrayList<>();
         messageList = new ArrayList<>();
         friendsList = new ArrayList<>();
-        SheetType defaultSheet = makeDefault();
+        games = new ArrayList<>();
+        SheetType defaultSheet = makeDefaultSheet();
         this.sheets.add(defaultSheet);
-
+        characters = new ArrayList<>();
     }
     public String getName(){
         return this.username;
@@ -48,12 +51,17 @@ public class Player implements Parcelable {
     public ArrayList<SheetType> getSheets(){
         return this.sheets;
     }
+    public ArrayList<Character> getCharacters() { return this.characters; }
+    public void addGameRole(boolean isGM){
+        this.isGameGM.add(isGM);
+    }
     public void addFriend(String friend) {
         this.friends.add(friend);
     }
     public void addFriendToMsgList(String friend) {
         this.friendsList.add(friend);
     }
+    public void addGame(String campaignName) {this.games.add(campaignName);}
 
     public void addMessageToList(Message myMessage){
         this.messageList.add(myMessage);
@@ -61,10 +69,11 @@ public class Player implements Parcelable {
 
 
 
-    private SheetType makeDefault(){
+    private SheetType makeDefaultSheet(){
         SheetType defaultSheet = new SheetType();
         defaultSheet.setName("D&D 5e Sheet");
         ArrayList<String> info = new ArrayList<>();
+        ArrayList<String> statCats = new ArrayList<>();
         info.add("Name");
         info.add("Race");
         info.add("Class");
@@ -75,40 +84,47 @@ public class Player implements Parcelable {
         ArrayList<String> level = new ArrayList<>(
                 Arrays.asList("Level"));
         statList.put("Level", level);
+        statCats.add("Level");
 
         ArrayList<String> hp = new ArrayList<>(
                 Arrays.asList("Maximum Hit Points",
                         "Current Hit Points", "Temporary Hit Points", "Hit Dice")
         );
         statList.put("Hit Points", hp);
+        statCats.add("Hit Points");
 
         ArrayList<String> ac = new ArrayList<>(
                 Arrays.asList("Armor Class")
         );
         statList.put("Armor Class", ac);
+        statCats.add("Armor Class");
 
         ArrayList<String> speed = new ArrayList<>(
                 Arrays.asList("Walking Speed", "Swimming Speed",
                         "Climbing Speed", "Flying Speed")
         );
         statList.put("Speed", speed);
+        statCats.add("Speed");
 
         ArrayList<String> init = new ArrayList<>(
                 Arrays.asList("Initiative")
         );
         statList.put("Initiative", init);
+        statCats.add("Initiative");
 
         ArrayList<String> abilities = new ArrayList<>(
                 Arrays.asList("Strength", "Dexterity", "Constitution",
                         "Intelligence", "Wisdom", "Charisma")
         );
         statList.put("Ability Scores", abilities);
+        statCats.add("Ability Scores");
 
         ArrayList<String> modifiers = new ArrayList<>(
                 Arrays.asList("Strength", "Dexterity", "Constitution",
                         "Intelligence", "Wisdom", "Charisma")
         );
         statList.put("Ability Modifiers", modifiers);
+        statCats.add("Ability Modifiers");
 
         ArrayList<String> skills = new ArrayList<>(
                 Arrays.asList("Acrobatics", "Athletics", "Arcana",
@@ -118,12 +134,15 @@ public class Player implements Parcelable {
                         "Sleight of Hand", "Stealth", "Survival")
         );
         statList.put("Skills", skills);
+        statCats.add("Skills");
         ArrayList<String> prof = new ArrayList<>(
                 Arrays.asList("Proficiency Bonus")
         );
         statList.put("Proficiency Bonus", prof);
+        statCats.add("Proficiency Bonus");
 
         defaultSheet.setStats(statList);
+        defaultSheet.setStatCats(statCats);
 
         LinkedHashMap<String, Resource> resourceList = new LinkedHashMap<>(100);
         Resource money = new Resource("Currency", 5);
@@ -138,12 +157,19 @@ public class Player implements Parcelable {
 
     }
 
+    private Character makeDefaultCharacter(){
+        Character defaultCharacter = new Character();
+        return defaultCharacter;
+    }
+
 
 
     protected Player(Parcel in) {
         friends = in.createStringArrayList();  //in.createTypedArrayList(String);
         sheets = in.createTypedArrayList(SheetType.CREATOR);
     }
+
+
 
     public static final Creator<Player> CREATOR = new Creator<Player>() {
         @Override

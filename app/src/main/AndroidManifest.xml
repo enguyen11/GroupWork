@@ -7,8 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <uses-permission android:name="android.permission.VIBRATE" />
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -27,6 +25,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".CampaignNotesActivity"
+            android:exported="false" />
         <activity
             android:name=".GameCreation.PlayerJoinGame"
             android:exported="false" />
@@ -72,6 +73,9 @@
             android:name=".Menus.RpgBuddyMainMenu"
             android:exported="false" />
         <activity
+            android:name=".Menus.LoadedGameActivity"
+            android:exported="false" />
+        <activity
             android:name=".StickerActivity.Firebase"
             android:exported="false" />
         <activity
@@ -79,6 +83,9 @@
             android:exported="false" />
         <activity
             android:name=".CharacterEditor.CharacterSheetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CharacterEditor.CharacterSheetActivityRefactor"
             android:exported="false" />
         <activity
             android:name=".DndApiActivity.DndAPIActivity"

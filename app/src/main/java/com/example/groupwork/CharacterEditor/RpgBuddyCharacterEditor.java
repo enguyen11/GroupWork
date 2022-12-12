@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import com.example.groupwork.RPG_Model.Player;
 import com.example.groupwork.RPG_Model.SheetType;
+import com.example.groupwork.RecyclerViewStuff.MyCharsAdapter;
 import com.example.groupwork.RecyclerViewStuff.MySheetsAdapter;
 import com.example.groupwork.RecyclerViewStuff.MySheetsViewHolder;
 
@@ -36,7 +37,9 @@ import com.google.firebase.database.ValueEventListener;
 public class RpgBuddyCharacterEditor extends Fragment {
 
     private Button btnNewSheet;
+    private Button btnNewChar;
     private RecyclerView sheetView;
+    private RecyclerView charView;
     private Player user;
     private FirebaseDatabase db;
     private DatabaseReference mDatabase;
@@ -78,6 +81,7 @@ public class RpgBuddyCharacterEditor extends Fragment {
         super.onCreate(savedInstanceState);
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         mDatabase = db.getReference("Users");
+       // mDatabase.child("New User!!!").setValue(new Player());
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -86,20 +90,22 @@ public class RpgBuddyCharacterEditor extends Fragment {
         if(args != null) {
             username = args.getString("userID");
         }
-        //System.out.println("sheet name: " + user.getSheets().get(0).getName());
+
         mDatabase.child(username).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (user == null) {
                     user = snapshot.getValue(Player.class);
-                    System.out.println("*************Making user: " + user.getSheets());
                 }
-                System.out.println(snapshot.getValue().toString());
-               // System.out.println(snapshot.child("Name").getValue().toString());
-                 System.out.println(user.getSheets());
-                  sheetView.setAdapter(new MySheetsAdapter(getContext(),user.getSheets()));
+                System.out.println("***************USERNAME: " + user.getName());
+                System.out.println("sheet name: " + user.getSheets().get(0).getName());
+                  sheetView.setAdapter(new MySheetsAdapter(getContext(),user.getSheets(), username));
                   sheetView.setLayoutManager(new LinearLayoutManager(getContext()));
                   sheetView.getAdapter().notifyDataSetChanged();
+                  charView.setAdapter(new MyCharsAdapter(getContext(), user.getCharacters(), username));
+                  charView.setLayoutManager(new LinearLayoutManager(getContext()));
+                  charView.getAdapter().notifyDataSetChanged();
+
             }
 
             @Override
@@ -119,20 +125,19 @@ public class RpgBuddyCharacterEditor extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstance){
 
         btnNewSheet = getView().findViewById(R.id.button_new_sheet);
+        //btnNewChar = getView().findViewById(R.id.new_character_button);
         btnNewSheet.setOnClickListener(view1 -> {
-            SheetType newSheet = new SheetType();
-            newSheet.setName("Dummy Sheet");
-            System.out.println("sheet size: " + user.getSheets().size());
-            user.getSheets().add(newSheet);
-           // mDatabase.child(username).child("sheets").push().setValue(newSheet);
-          //  sheetView.getAdapter().notifyDataSetChanged();
-            Intent goTo = new Intent(getActivity(), CharacterSheetActivity.class);
+            Intent goTo = new Intent(getActivity(), SheetBuilderActivity.class);
             goTo.putExtra("player", username);
             startActivity(goTo);
         });
 
         sheetView = getView().findViewById(R.id.recycler_sheet_list);
+        charView = getView().findViewById(R.id.recycler_character_list);
 
+    }
+    public String getUsername(){
+        return this.username;
     }
 
 }
