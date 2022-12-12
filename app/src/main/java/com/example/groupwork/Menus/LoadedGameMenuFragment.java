@@ -92,7 +92,10 @@ public class LoadedGameMenuFragment extends Fragment {
         //set map
         mapBtn = v.findViewById(R.id.btn_map);
         mapBtn.setOnClickListener(view -> {
-            new Intent(getActivity(), BattleMapActivity.class);
+            Intent i = new Intent(getActivity(), BattleMapActivity.class);
+            i.putExtra("user", user);
+            i.putExtra("campaignName", campaignName);
+            getActivity().startActivity(i);
         });
 
         // Inflate the layout for this fragment
