@@ -17,6 +17,7 @@ import com.example.groupwork.DNDChat.ChatSelection;
 import com.example.groupwork.Login.DnDLogin;
 import com.example.groupwork.MainActivity;
 import com.example.groupwork.R;
+import com.example.groupwork.board.BattleMapActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +42,7 @@ public class LoadedGameMenuFragment extends Fragment {
     private Button notes;
     private Button chat;
     private TextView name_title;
+    private Button mapBtn;
 
     public LoadedGameMenuFragment() {
         // Required empty public constructor
@@ -97,6 +99,15 @@ public class LoadedGameMenuFragment extends Fragment {
         notes = v.findViewById(R.id.btn_notes);
         notes.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), CampaignNotesActivity.class);
+            i.putExtra("user", user);
+            i.putExtra("campaignName", campaignName);
+            getActivity().startActivity(i);
+        });
+
+
+        mapBtn = v.findViewById(R.id.btn_map);
+        mapBtn.setOnClickListener(view -> {
+            Intent i = new Intent(getActivity(), BattleMapActivity.class);
             i.putExtra("user", user);
             i.putExtra("campaignName", campaignName);
             getActivity().startActivity(i);
