@@ -5,9 +5,18 @@
       <map>
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/activity_account_creation.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/activity_chat.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/activity_chat_selection.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/activity_display_clicked_sticker.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/activity_dn_dchat.xml" value="0.264" />
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/activity_firebase.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/activity_login.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/dnd_message_card.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/dnd_message_card_2.xml" value="0.4" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/dnd_select_campaign_card.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/dnd_select_campaign_card2.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/dnd_select_campaign_card_2.xml" value="0.4" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/dnd_select_chat_card.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/dnd_select_chat_card_2.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_character_editor.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_dice_roller.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/Eric Nguyen/OneDrive/Desktop/CS5520/DndApp/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_game_main_menu.xml" value="0.24947916666666667" />
@@ -85,7 +94,25 @@
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_character_editor.xml" value="0.2477355072463768" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_dice_roller.xml" value="0.4" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_game_main_menu.xml" value="0.2477355072463768" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_loaded_game_menu.xml" value="0.264" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_character_editor.xml" value="0.1802536231884058" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_dice_roller.xml" value="0.2" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_rpg_buddy_game_main_menu.xml" value="0.2" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_select_game.xml" value="0.24456521739130435" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/fragment_sticker_selection.xml" value="0.2164855072463768" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/friend_card.xml" value="0.2164855072463768" />
+
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/message_card.xml" value="0.264" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sheet_stat_card.xml" value="0.2164855072463768" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card.xml" value="0.24456521739130435" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card2.xml" value="0.1" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/sticker_card_with_sender.xml" value="0.24456521739130435" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/menu/in_game_bottom_nav_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/menu/rpg_buddy_bottom_nav_menu.xml" value="0.25416666666666665" />
+
+        <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/game_card.xml" value="0.4" />
         <entry key="..\:/Users/roger/AndroidStudioProjects/GroupWork/app/src/main/res/layout/item_card.xml" value="0.536" />
+
       </map>
     </option>
   </component>

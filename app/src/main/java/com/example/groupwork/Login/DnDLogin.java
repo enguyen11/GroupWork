@@ -9,6 +9,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.groupwork.DNDChat.CampaignSelection;
+import com.example.groupwork.DNDChat.DnDChat;
 import com.example.groupwork.DNDChat.Message;
 import com.example.groupwork.Menus.RpgBuddyMainMenu;
 import com.example.groupwork.R;
@@ -51,8 +53,13 @@ public class DnDLogin extends AppCompatActivity {
          */
         login_button.setOnClickListener(view -> {
             String username = username_entry.getText().toString();
-            Intent openAccount = new Intent(DnDLogin.this, RpgBuddyMainMenu.class);
-            openAccount.putExtra("username", username);
+
+            Intent openAccount = new Intent(DnDLogin.this, CampaignSelection.class);
+            openAccount.putExtra("userID", username);
+
+            //Intent openAccount = new Intent(DnDLogin.this, RpgBuddyMainMenu.class);
+            //openAccount.putExtra("username", username);
+
             db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com/");
             mDatabase = db.getReference("Users");
             Player user = new Player(username);
@@ -99,10 +106,30 @@ public class DnDLogin extends AppCompatActivity {
      * @param user The User instance for the person logging in
      */
     private void makeNew(Player user){
-        user.addFriendToMsgList("User1");
-        Message message = new Message("User1", user.getName(), "Start of a conversation");
+        //user.addFriendToMsgList("User1");
+        Message message = new Message("User1", "Start of a conversation");
         user.addMessageToList(message);
         mDatabase.child(user.getName()).setValue(user);
+
+        //Move all of the below code to the appropriate class when done
+
+        //Dummy Campaigns
+        mDatabase.child(user.getName()).child("CampaignList").
+                push().setValue("Eric's Campaign");
+        mDatabase.child(user.getName()).child("CampaignList").
+                push().setValue("Eric");
+
+        //Dummy Chat
+        /*
+        DatabaseReference mDatabase2 = db.getReference("Games");
+        Message systemMsg1 = new Message("System", "This is the start to the In-Game Chat");
+        Message systemMsg2 = new Message("System", "This is the start to the Out-of-Game Chat");
+        mDatabase2.child("Eric's Campaign").child("ChatRoom")
+                .child("In-Game Chat").push().setValue(systemMsg1);
+        mDatabase2.child("Eric's Campaign").child("ChatRoom")
+                .child("Out-of-Game Chat").push().setValue(systemMsg2);
+                
+         */
     }
 
 }
