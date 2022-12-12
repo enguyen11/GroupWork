@@ -54,9 +54,6 @@ public class DnDLogin extends AppCompatActivity {
         login_button.setOnClickListener(view -> {
             String username = username_entry.getText().toString();
 
-            //Intent openAccount = new Intent(DnDLogin.this, CampaignSelection.class);
-            //openAccount.putExtra("userID", username);
-
             Intent openAccount = new Intent(DnDLogin.this, RpgBuddyMainMenu.class);
             openAccount.putExtra("username", username);
 

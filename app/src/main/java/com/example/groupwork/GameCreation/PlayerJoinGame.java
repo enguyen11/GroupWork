@@ -29,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 
 public class PlayerJoinGame extends AppCompatActivity {
@@ -171,7 +173,14 @@ public class PlayerJoinGame extends AppCompatActivity {
         gameDatabase.child(name).addValueEventListener (new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                game = dataSnapshot.getValue(Game.class);
+                Log.d("joinGame", dataSnapshot.toString());
+                Log.d("joinGame", dataSnapshot.getValue().toString());
+//                game = dataSnapshot.getValue(Game.class);
+                ArrayList<String> retrievedParty = new ArrayList<>();
+                for(DataSnapshot child : dataSnapshot.child("party").getChildren()){
+                    retrievedParty.add(child.getValue().toString());
+                }
+                game = new Game(name, dataSnapshot.child("gameMaster").getValue().toString(), dataSnapshot.child("system").getValue().toString(),dataSnapshot.child("numPlayers").getValue(Integer.class), retrievedParty);
                 boolean added = game.addPlayer(user, selectedCharacter);
                 if(added == true) {
                     gameDatabase.child(campaignName).child("party").child(user).setValue(selectedCharacter);

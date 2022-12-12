@@ -16,6 +16,7 @@ import com.example.groupwork.CampaignNotesActivity;
 import com.example.groupwork.DNDChat.ChatSelection;
 import com.example.groupwork.Login.DnDLogin;
 import com.example.groupwork.MainActivity;
+import com.example.groupwork.PartySummaryActivity;
 import com.example.groupwork.R;
 import com.example.groupwork.board.BattleMapActivity;
 
@@ -41,8 +42,10 @@ public class LoadedGameMenuFragment extends Fragment {
 
     private Button notes;
     private Button chat;
-    private TextView name_title;
     private Button mapBtn;
+    private Button btn_notes;
+    private Button btn_partySummary;
+    private TextView name_title;
 
     public LoadedGameMenuFragment() {
         // Required empty public constructor
@@ -83,7 +86,6 @@ public class LoadedGameMenuFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_loaded_game_menu, container, false);
         name_title = v.findViewById(R.id.text_campaign_name_title);
         name_title.setText(campaignName);
-        Log.d(TAG, "campaign name: " + campaignName);
 
         chat = v.findViewById(R.id.btn_chat);
         chat.setOnClickListener(new View.OnClickListener() {
@@ -96,15 +98,21 @@ public class LoadedGameMenuFragment extends Fragment {
             }
         });
 
-        notes = v.findViewById(R.id.btn_notes);
-        notes.setOnClickListener(view -> {
+        btn_notes = v.findViewById(R.id.btn_notes);
+        btn_notes.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), CampaignNotesActivity.class);
             i.putExtra("user", user);
             i.putExtra("campaignName", campaignName);
             getActivity().startActivity(i);
         });
-
-
+        btn_partySummary = v.findViewById(R.id.btn_party_summary);
+        btn_partySummary.setOnClickListener(view -> {
+            Intent i = new Intent(getActivity(), PartySummaryActivity.class);
+            i.putExtra("user", this.user);
+            i.putExtra("campaignName", this.campaignName);
+            getActivity().startActivity(i);
+        });
+        //set map
         mapBtn = v.findViewById(R.id.btn_map);
         mapBtn.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), BattleMapActivity.class);

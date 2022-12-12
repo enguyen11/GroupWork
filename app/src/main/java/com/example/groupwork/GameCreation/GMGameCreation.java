@@ -122,7 +122,6 @@ public class GMGameCreation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 campaignName = edittext_campaignName.getText().toString();
-                Log.d(TAG, "current campaign name: " + campaignName);
                 createGame(campaignName);
 
             }
