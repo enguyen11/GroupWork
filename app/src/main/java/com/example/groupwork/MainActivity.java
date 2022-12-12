@@ -8,9 +8,8 @@ import android.widget.Button;
 
 import com.example.groupwork.DndApiActivity.DndAPIActivity;
 import com.example.groupwork.Login.DnDLogin;
-import com.example.groupwork.Login.Login;
-import com.example.groupwork.Menus.RpgBuddyMainMenu;
 import com.example.groupwork.StickerActivity.Firebase;
+import com.example.groupwork.board.BattleMapActivity;
 
 public class MainActivity extends AppCompatActivity {
 
