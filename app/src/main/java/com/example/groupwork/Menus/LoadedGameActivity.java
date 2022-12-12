@@ -23,6 +23,7 @@ import com.example.groupwork.GameCreation.SelectPlayerTypeDialog;
 import com.example.groupwork.R;
 import com.example.groupwork.RPG_Model.Game;
 import com.example.groupwork.RPG_Model.Player;
+import com.example.groupwork.board.BattleMapActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,7 +41,7 @@ public class LoadedGameActivity extends AppCompatActivity {
     private DatabaseReference mDatabase2;
     private String username;
     private String campaign;
-
+    private Button mapBtn;
 
     private NavArgument nameArg, campaignArg;
 

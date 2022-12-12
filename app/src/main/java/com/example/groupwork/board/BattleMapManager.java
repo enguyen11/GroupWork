@@ -2,12 +2,16 @@ package com.example.groupwork.board;
 
 import android.util.Log;
 import android.util.Pair;
+
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Hashtable;
 
 public class BattleMapManager {
     private final BattleMapActivity activity;
     private Hashtable<Pair<Integer, Integer>, BoardPiece> pieces;
     private Hashtable<Pair<Integer, Integer>, Tile> tileHashtable;
+    private FirebaseDatabase db;
     private boolean isReady;
     private Tile selection;
     private Tile lastTouched;

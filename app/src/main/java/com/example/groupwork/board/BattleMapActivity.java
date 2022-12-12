@@ -23,6 +23,8 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.groupwork.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Hashtable;
 
@@ -32,8 +34,6 @@ public class BattleMapActivity extends AppCompatActivity {
 
     private GridLayout grid;
 
-    private ScrollView scroll2;
-    private HorizontalScrollView scroll1;
 
     private int width, height;
     private Handler handler;
@@ -41,6 +41,13 @@ public class BattleMapActivity extends AppCompatActivity {
     private Button addHero;
     private Button addFoe;
     private Button delPiece;
+
+
+    //db
+    private FirebaseDatabase db;
+    private DatabaseReference mDatabase;
+    private String user;
+    private String campaign;
 
     // our pieces
     private Hashtable<Pair<Integer, Integer>, BoardPiece> pieces;
@@ -51,19 +58,28 @@ public class BattleMapActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_map);
-        //TODO ERASE
+
+        Bundle extra = getIntent().getExtras();
+        db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
+        mDatabase = db.getReference("Users");
+
+        user = extra.getString("user");
+        campaign = extra.getString("campaignName");
+
+
+
+
         width = 12;
         height = 12;
 
-        // scroll
-        scroll1 = findViewById(R.id.scroll1);
-        scroll2 = findViewById(R.id.scroll2);
 
         //grid
         grid = (GridLayout) findViewById(R.id.BattleMap);
         grid.setColumnCount(width);
         grid.setRowCount(height);
         grid.setAlignmentMode(GridLayout.ALIGN_MARGINS);
+        Log.d("db", "onCreate: " + user + campaign);
+        //mDatabase.child(user).child("CampaignList");
 
         //variables
         handler = new Handler(Looper.getMainLooper());
@@ -258,6 +274,12 @@ public class BattleMapActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(getBaseContext(), msg, duration);
         toast.show();
+    }
+
+    @Override
+    protected void onStop () {
+        super.onStop();
+        mDatabase.child(user).child("CampaignList").child(campaign).child("Board").setValue(convertStateToString().toString());
     }
 
 }
