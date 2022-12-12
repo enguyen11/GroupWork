@@ -143,14 +143,12 @@ public class PlayerJoinGame extends AppCompatActivity {
     }
 
     private void joinGame(String name) {
-        gameDatabase.addListenerForSingleValueEvent (new ValueEventListener() {
+        gameDatabase.child(name).addListenerForSingleValueEvent (new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 game = dataSnapshot.getValue(Game.class);
-                Log.d(TAG, "join game " + game.getName());
-
                 boolean added = game.addPlayer(user, selectedCharacter);
-                if(added) {
+                if(added == true) {
                     gameDatabase.child(campaignName).child("party").child(user).setValue(selectedCharacter);
                     userDatabase.child(user).child("CampaignList").child(campaignName).child("isGM").setValue(false);
                     userDatabase.child(user).child("CampaignList").child(campaignName).child("character").setValue(selectedCharacter);

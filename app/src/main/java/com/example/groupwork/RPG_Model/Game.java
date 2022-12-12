@@ -1,5 +1,7 @@
 package com.example.groupwork.RPG_Model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class Game {
@@ -44,12 +46,14 @@ public class Game {
             this.party = new ArrayList<>();
             this.partyCharacters = new ArrayList<>();
         }
-        if (this.party.size() < numPlayers) {
+        if (this.party.size() < this.numPlayers) {
             this.party.add(player);
             partyCharacters.add(character);
-            return true;
+            wasAdded = true;
+        } else {
+            wasAdded = false;
         }
-        return false;
+        return wasAdded;
     }
 
 
