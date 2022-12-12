@@ -116,7 +116,11 @@
     <string name="string_add_stat">Add Stat</string>
     <string name="string_template_instr">Click on a template below to create a new character</string>
     <string name="string_character_instr">Click on a name below to open a character sheet</string>
+
     <string name="text_tap_on_the_dice_to_add_one_long_press_to_remove_one">Tap on the dice to add one. Long press to remove one.</string>
+
+    <string name="string_your_party">Your Party</string>
+
 
 
 </resources>
