@@ -1,13 +1,21 @@
 package com.example.groupwork.Menus;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.groupwork.CampaignNotesActivity;
+import com.example.groupwork.DNDChat.CampaignSelection;
+import com.example.groupwork.Login.DnDLogin;
+import com.example.groupwork.MainActivity;
 import com.example.groupwork.R;
 
 /**
@@ -19,12 +27,20 @@ public class LoadedGameMenuFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "user";
+    private static final String ARG_PARAM2 = "campaign";
+    private static final String TAG = "LoadedGameMenuFragment";
+
+    private String campaignName;
+    private String user;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Button notes;
+    private Button chat;
+    private TextView name_title;
 
     public LoadedGameMenuFragment() {
         // Required empty public constructor
@@ -52,15 +68,40 @@ public class LoadedGameMenuFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            campaignName = getArguments().getString("campaignName");
+            user = getArguments().getString("user");
         }
+        Log.d(TAG, "campaign name: " + campaignName);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View v = inflater.inflate(R.layout.fragment_loaded_game_menu, container, false);
+        name_title = v.findViewById(R.id.text_campaign_name_title);
+        name_title.setText(campaignName);
+
+        chat = v.findViewById(R.id.btn_chat);
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), CampaignSelection.class);
+                System.out.println("User: "  + user);
+                i.putExtra("userID", user);
+                getActivity().startActivity(i);
+            }
+        });
+
+        Log.d(TAG, "campaign name: " + campaignName);
+        notes = v.findViewById(R.id.btn_notes);
+        notes.setOnClickListener(view -> {
+            Intent i = new Intent(getActivity(), CampaignNotesActivity.class);
+            i.putExtra("user", user);
+            i.putExtra("campaignName", campaignName);
+            getActivity().startActivity(i);
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_loaded_game_menu, container, false);
+        return v;
     }
 }

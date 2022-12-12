@@ -122,11 +122,14 @@ public class GMGameCreation extends AppCompatActivity {
                         }
                         else {
                             game.setDescr(descr);
-                            userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(true); //add game to player
+                            userDatabase.child(user).child("CampaignList").child(campaignName).child("isGM").setValue(true); //add game to player
+                            userDatabase.child(user).child("CampaignList").child(campaignName).child("character").setValue("Game Master");
+                            userDatabase.child(user).child("CampaignList").child(campaignName).child("notes").setValue(descr);
                             gameDatabase.child(campaignName).setValue(game);
                             Context context = getApplicationContext();
                             Intent i = new Intent(context, LoadedGameActivity.class);
                             i.putExtra("user", user);
+                            i.putExtra("campaignName", campaignName);
                             startActivity(i);
                         }
                     } else {

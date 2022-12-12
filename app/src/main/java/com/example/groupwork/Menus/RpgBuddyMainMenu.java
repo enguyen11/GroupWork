@@ -4,6 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavArgument;
+import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
+import androidx.navigation.NavInflater;
+import androidx.navigation.Navigation;
 
 import android.content.Context;
 import android.content.Intent;
@@ -39,22 +44,27 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
     private DatabaseReference mDatabase2;
     private String username;
 
+
     public static String TAG = "RpgBuddyMainMenu";
+
+    private NavArgument nameArg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rpg_buddy_main_menu);
 
-        changeFragment(new RpgBuddyGameMainMenu());
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            username = extras.getString("username");
-        }
 
         db = FirebaseDatabase.getInstance("https://dndapp-b52b2-default-rtdb.firebaseio.com");
         mDatabase = db.getReference("Users");
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if(extras != null){
+            username = extras.getString("username");
+        }
+       // user = new Player("User");
+        //mDatabase.child("User").setValue(user);
         user = new Player(username);
         if(mDatabase.child(username) == null) {
             mDatabase.child(username).setValue(user);
@@ -64,18 +74,32 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
             mDatabase2.setValue("default");
         }
 
+
+        nameArg = new NavArgument.Builder().setDefaultValue(username).build();
+        NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView);
+        NavInflater navInflater = navController.getNavInflater();
+        NavGraph navGraph = navInflater.inflate(R.navigation.rpg_buddy_main_nav_bar);
+        navGraph.addArgument("userID", nameArg);
+        navController.setGraph(navGraph);
+
+        Bundle args = new Bundle();
+        args.putString("userID", user.getName());
+        Fragment defaultFrag = new RpgBuddyGameMainMenu();
+        defaultFrag.setArguments(args);
+        changeFragment(defaultFrag);
+
         // FOLLOWING CODE MANAGES THE DIFFERENT FRAGMENTS IN THE MAIN SCREENS
         BottomNavigationView bottomNav = findViewById(R.id.RpgBuddyBottomNav);
+
         bottomNav.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             Fragment fragment;
             if (R.id.rpgBuddyGameMainMenu == itemId) {
                 fragment = new RpgBuddyGameMainMenu();
+                fragment.setArguments(args);
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyCharacterEditor == itemId) {
                 fragment = new RpgBuddyCharacterEditor();
-                Bundle args = new Bundle();
-                args.putString("userID", user.getName());
                 fragment.setArguments(args);
                 changeFragment(fragment);
             } else if (R.id.rpgBuddyDiceRoller == itemId) {
@@ -97,8 +121,8 @@ public class RpgBuddyMainMenu extends AppCompatActivity implements SelectPlayerT
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragmentContainerView, fragment);
         transaction.commit();
-
     }
+
 
     @Override
     public void sendInput(String selection) {
