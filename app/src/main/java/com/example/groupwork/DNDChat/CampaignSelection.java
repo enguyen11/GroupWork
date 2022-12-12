@@ -60,7 +60,7 @@ public class CampaignSelection extends AppCompatActivity implements CampaignSele
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot mySnapShot: snapshot.getChildren()){
                     System.out.println("Value: " + mySnapShot.getValue());
-                    CampaignSelection.campaignList.add(new ClickableCampaign(String.valueOf(mySnapShot.getValue())));
+                    CampaignSelection.campaignList.add(new ClickableCampaign(String.valueOf(mySnapShot.getKey())));
                     campaignListAdapter.notifyDataSetChanged();
                 }
                 //System.out.println("My List: " + Arrays.toString(campaignList.toArray()));
