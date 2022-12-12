@@ -128,18 +128,7 @@ public class PlayerJoinGame extends AppCompatActivity {
                 campaignName = edittext_campaignName.getText().toString();
                 description = gameDescription.getText().toString();
                 joinGame(campaignName);
-//                Log.d(TAG, "onclick " + game.getName());
-//                if(game == null || game.getName() != campaignName) {
-//                    Toast.makeText(PlayerJoinGame.this,
-//                            "Please have your GM create your campaign before you join.", Toast.LENGTH_SHORT).show();
-//                } else if (selectedCharacter == null){
-//                    Toast.makeText(PlayerJoinGame.this,
-//                            "Please select a character for your campaign.", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    game.addPlayer(user);
-//                    game.addCharacter(selectedCharacter);
-//                    userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(false);
-//                }
+
             }
         });
 
@@ -171,7 +160,14 @@ public class PlayerJoinGame extends AppCompatActivity {
         gameDatabase.child(name).addValueEventListener (new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                game = dataSnapshot.getValue(Game.class);
+                Log.d("joinGame", dataSnapshot.toString());
+                Log.d("joinGame", dataSnapshot.getValue().toString());
+//                game = dataSnapshot.getValue(Game.class);
+                ArrayList<String> retrievedParty = new ArrayList<>();
+                for(DataSnapshot child : dataSnapshot.child("party").getChildren()){
+                    retrievedParty.add(child.getValue().toString());
+                }
+                game = new Game(name, dataSnapshot.child("gameMaster").getValue().toString(), dataSnapshot.child("system").getValue().toString(),dataSnapshot.child("numPlayers").getValue(Integer.class), retrievedParty);
                 boolean added = game.addPlayer(user, selectedCharacter);
                 if(added == true) {
                     gameDatabase.child(campaignName).child("party").child(user).setValue(selectedCharacter);

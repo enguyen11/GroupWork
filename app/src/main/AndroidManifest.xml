@@ -17,41 +17,43 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GroupWork"
         tools:targetApi="31">
-
+        <activity
+            android:name=".party_summary_activity"
+            android:exported="false" />
         <activity
             android:name=".DNDChat.CampaignSelection"
-            android:label="Campaign Selection"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Campaign Selection" />
         <activity
             android:name=".DNDChat.ChatSelection"
-            android:label="Chat Selection"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Chat Selection" />
         <activity
             android:name=".DNDChat.DnDChat"
             android:exported="false" />
         <activity
             android:name=".board.BattleMapActivity"
-            android:exported="false"
-            android:configChanges = "orientation">
+            android:configChanges="orientation"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".CampaignNotesActivity"
-            android:label="Campaign Notes"
             android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Campaign Notes" />
         <activity
             android:name=".GameCreation.PlayerJoinGame"
-            android:label="Player Join Game"
             android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Player Join Game" />
         <activity
             android:name=".GameCreation.GMGameCreation"
-            android:label="Game Master Game Creation"
             android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Game Master Game Creation" />
         <activity
             android:name=".Login.Account_Creation"
             android:configChanges="orientation|screenSize"
@@ -62,9 +64,9 @@
             android:exported="false" />
         <activity
             android:name=".Login.DnDLogin"
-            android:label="Login"
             android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Login" />
         <activity
             android:name=".StickerActivity.Messages"
             android:configChanges="orientation|screenSize"
@@ -97,33 +99,33 @@
             android:exported="false" />
         <activity
             android:name=".Menus.RpgBuddyMainMenu"
-            android:label="Game Menu"
             android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Game Menu" />
         <activity
             android:name=".Menus.LoadedGameActivity"
-            android:label="Options"
             android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Options" />
         <activity
             android:name=".StickerActivity.Firebase"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".CharacterEditor.SheetBuilderActivity"
-            android:label="Sheet Builder"
             android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Sheet Builder" />
         <activity
             android:name=".CharacterEditor.CharacterSheetActivity"
-            android:label="Character Sheet Builder"
             android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Character Sheet Builder" />
         <activity
             android:name=".CharacterEditor.CharacterSheetActivityRefactor"
-            android:label="Character Sheet Activity Refactor"
             android:configChanges="orientation|screenSize"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Character Sheet Activity Refactor" />
         <activity
             android:name=".DndApiActivity.DndAPIActivity"
             android:configChanges="orientation|screenSize"

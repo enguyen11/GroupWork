@@ -84,23 +84,15 @@
         android:id="@+id/characterSpinner"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:background="#228C9EFF"
         android:minHeight="48dp"
+        android:outlineProvider="background"
         app:layout_constraintBottom_toBottomOf="@+id/text_select_character"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/text_select_character"
         app:layout_constraintTop_toTopOf="@+id/text_select_character"
         tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/action_new_character"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/string_new_character"
-        android:textColor="#0277BD"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/characterSpinner"
-        app:layout_constraintTop_toBottomOf="@+id/characterSpinner" />
 
     <TextView
         android:id="@+id/text_select_character"
