@@ -31,10 +31,6 @@ public class Character implements BoardPiece {
         return name;
     }
 
-    @Override
-    public boolean isSelected() {
-        return isSelected;
-    }
 
     @Override
     public int getImageSourceId() {

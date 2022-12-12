@@ -30,7 +30,7 @@ public class Tile {
     }
 
     public boolean occupy(BoardPiece piece){
-        if (isOccupied) return false;
+        if (isOccupied) throw new RuntimeException("Can't occupy if isOccupied is true");
         this.piece = piece;
         isOccupied = true;
         return isOccupied;
@@ -50,16 +50,13 @@ public class Tile {
 
     // CAN ONLY BE RAN BY THE MAIN THREAD!
     public void updateDisplay(){
-        Log.d("TILE", "updateDisplay: attempting to update the display ");
         if (view == null) return;
-        Log.d("TILE", "updateDisplay: test passed view is not null  ");
+
         if (isOccupied){
-            Log.d("TILE", "updateDisplay: test passed isOccupied  ");
             ImageView image = view.findViewById(R.id.character);
             image.setVisibility(View.VISIBLE);
             image.setImageResource(this.piece.getImageSourceId());
         } else if (!isOccupied){
-            Log.d("TILE", "updateDisplay: test failed, not occupied ");
             ImageView image = view.findViewById(R.id.character);
             image.setVisibility(View.INVISIBLE);
         }

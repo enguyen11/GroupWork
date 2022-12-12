@@ -2,7 +2,6 @@ package com.example.groupwork.board;
 
 import android.util.Log;
 import android.util.Pair;
-
 import java.util.Hashtable;
 
 public class BattleMapManager {
@@ -11,6 +10,7 @@ public class BattleMapManager {
     private Hashtable<Pair<Integer, Integer>, Tile> tileHashtable;
     private boolean isReady;
     private Tile selection;
+    private Tile lastTouched;
 
     BattleMapManager(BattleMapActivity activity) {
         this.activity = activity;
@@ -73,6 +73,8 @@ public class BattleMapManager {
             // update display
             activity.updateTile(tile);
             activity.updateTile(selection);
+            //update hashmap
+            updatePieceTable(piece, tile.getCoor()[0], tile.getCoor()[1]);
             selection = null;
             return true;
         }
@@ -88,25 +90,25 @@ public class BattleMapManager {
 
         int x, y;
         int[] coor;
-        if (selection == null){
+        if (lastTouched == null){
+            Log.d("SELECTION", "addPiece: Selection is null");
             coor = findFreeSpot();
-        } else if (selection.isOccupied() == false){
-            coor = selection.getCoor();
+        } else if (!(lastTouched.isOccupied())){
+            coor = lastTouched.getCoor();
         } else {
+            Log.d("SELECTION", "addPiece: last touched is occupied");
             coor = findFreeSpot();
         }
 
+        // final piece positions
         x = coor[0];
         y = coor[1];
 
-
-        piece.setNewCoordinates(x, y);
-
-
+        // perform add action
         Pair<Integer, Integer> key = new Pair<>(x, y);
         Tile tile = tileHashtable.get(key);
         if (tile == null | tile.isOccupied()) return false;
-        pieces.put(key, piece);
+        updatePieceTable(piece, x, y);
         tile.occupy(piece);
         activity.updateTile(tile);
         return true;
@@ -130,12 +132,26 @@ public class BattleMapManager {
         Log.d("TILE", "Selection is not null!");
         BoardPiece myPiece = pieces.get(new Pair<>(selection.getCoor()[0], selection.getCoor()[1]));
         if (myPiece == null) return false;
+        Log.d("TILE", "Piece is not null!");
+        pieces.remove(new Pair<>(selection.getCoor()[0], selection.getCoor()[1]));
         selection.free();
         selection.updateDisplay();
-        pieces.remove(new Pair<>(selection.getCoor()[0], selection.getCoor()[1]));
         selection = null;
         return true;
     }
 
+    private void updatePieceTable(BoardPiece piece, int x, int y){
+        pieces.remove(piece.getCoordinates());
+        piece.setNewCoordinates(x, y);
+        pieces.put(new Pair<>(x, y), piece);
+    }
+
+    public Tile getLastTouched(){
+        return lastTouched;
+    }
+
+    public void setLastTouched(Tile lastTouched){
+        this.lastTouched = lastTouched;
+    }
 
 }

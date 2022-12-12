@@ -1,11 +1,13 @@
 package com.example.groupwork.board;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +21,8 @@ import android.widget.Toast;
 import com.example.groupwork.R;
 
 import java.util.Hashtable;
+
+import retrofit2.http.PATCH;
 
 public class BattleMapActivity extends AppCompatActivity {
 
@@ -54,9 +58,6 @@ public class BattleMapActivity extends AppCompatActivity {
         pieces = new Hashtable<>();
         mapManager = new BattleMapManager(this);
 
-        //TODO ERASE
-        pieces.put(new Pair<>(8, 9), new Character(8, 9, "Cool guy", R.drawable.sticker_d20));
-        pieces.put(new Pair<>(4, 4), new Character(4, 4, "Cool guy", R.drawable.sticker_d20));
         // this thread runs the setup
         Thread setup = new Thread(runSetup());
         setup.start();
@@ -65,14 +66,14 @@ public class BattleMapActivity extends AppCompatActivity {
         addFoe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addNewPiece(new Character(0, 0, "Ragnar", R.drawable.round_shield));
+                addNewPiece(new Character(0, 0, "foe", R.drawable.sticker_monk));
             }
         });
         addHero = findViewById(R.id.hero_btn);
         addHero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addNewPiece(new Character(0, 0, "Ragnar", R.drawable.sticker_swords_dnd_sword30));
+                addNewPiece(new Character(0, 0, "hero", R.drawable.sticker_swords_dnd_sword30));
             }
         });
         delPiece = findViewById(R.id.del_btn);
@@ -88,6 +89,48 @@ public class BattleMapActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        CharSequence data = convertStateToString();
+        outState.putCharSequence("gameState",data);
+    }
+
+    private CharSequence convertStateToString(){
+        StringBuilder data;
+        data = new StringBuilder();
+        for (BoardPiece piece: pieces.values()
+        ) {
+            Pair<Integer, Integer> pair = piece.getCoordinates();
+            data.append(String.format("%d:%d:%s:%d;", pair.first, pair.second, piece.getNameId(), piece.getImageSourceId()));
+        }
+        return data;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        CharSequence data = (CharSequence) savedInstanceState.getCharSequence("gameState");
+        String[] strPieces = String.valueOf(data).split(";");
+        Log.d("RESTORE", "onRestoreInstanceState: " + data);
+        for (String current: strPieces
+             ) {
+            String[] points = current.split(":");
+            if (points.length < 4) continue;
+            Log.d("RESTORE", "x: " + points[0]);
+            Log.d("RESTORE", "y: " + points[1]);
+            Log.d("RESTORE", "name: " + points[2]);
+            Log.d("RESTORE", "id: " + points[3]);
+            Pair<Integer, Integer> key = new Pair<>(Integer.parseInt(points[0].trim()), Integer.parseInt(points[1].trim()));
+            BoardPiece piece = new Character(Integer.parseInt(points[0].trim()), Integer.parseInt(points[1].trim()) , points[2].trim(), Integer.parseInt(points[3].trim()));
+            pieces.put(key, piece);
+        }
+
+        Log.d("RESTORE", "onRestoreInstanceState:  w :" + String.valueOf(width));
+        Log.d("RESTORE", "onRestoreInstanceState:  h :" + String.valueOf(height));
+        Log.d("RESTORE", "onRestoreInstanceState: size:" + String.valueOf(pieces.values().size()));
+        new Thread(runSetup()).start();
+    }
 
     private Runnable runSetup() {
         Runnable task = new Runnable() {
@@ -138,7 +181,6 @@ public class BattleMapActivity extends AppCompatActivity {
         return handler;
     }
 
-
     // this creates a grid in UI, main thread ONLY
     public void createGrid(Hashtable<Pair<Integer, Integer>, Tile> map) {
         this.battleMap = map;
@@ -166,6 +208,7 @@ public class BattleMapActivity extends AppCompatActivity {
         currentView.setOnTouchListener(new View.OnTouchListener() {
                                            @Override
                                            public boolean onTouch(View view, MotionEvent motionEvent) {
+                                               mapManager.setLastTouched(currentTile);
                                                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                                                    ImageView image = view.findViewById(R.id.tile);
                                                    if (mapManager.trySelectTile(currentTile.getCoor()[0], currentTile.getCoor()[1])) {

@@ -7,8 +7,6 @@ public interface BoardPiece {
 
     String getNameId();
 
-    boolean isSelected();
-
     int getImageSourceId();
 
     void setNewCoordinates(int x, int y);
