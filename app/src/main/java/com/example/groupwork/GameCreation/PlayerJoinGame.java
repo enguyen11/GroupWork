@@ -76,7 +76,7 @@ public class PlayerJoinGame extends AppCompatActivity {
 //            userCharacters.add(c.getName());
 //        }
         if(userCharacters == null){
-            userCharacters.add("Character for testing 2");
+//            userCharacters.add("Character for testing 2");
         }
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, userCharacters);
@@ -91,7 +91,6 @@ public class PlayerJoinGame extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 characterSpinner.setPrompt(getString(R.string.categories));
-                selectedCharacter = "default";
             }
         });
 
@@ -103,18 +102,7 @@ public class PlayerJoinGame extends AppCompatActivity {
                 campaignName = edittext_campaignName.getText().toString();
                 description = gameDescription.getText().toString();
                 joinGame(campaignName);
-//                Log.d(TAG, "onclick " + game.getName());
-//                if(game == null || game.getName() != campaignName) {
-//                    Toast.makeText(PlayerJoinGame.this,
-//                            "Please have your GM create your campaign before you join.", Toast.LENGTH_SHORT).show();
-//                } else if (selectedCharacter == null){
-//                    Toast.makeText(PlayerJoinGame.this,
-//                            "Please select a character for your campaign.", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    game.addPlayer(user);
-//                    game.addCharacter(selectedCharacter);
-//                    userDatabase.child(user).child("games").child(campaignName).child("isGM").setValue(false);
-//                }
+
             }
         });
 
