@@ -44,13 +44,5 @@ public class MainActivity extends AppCompatActivity {
             Intent goToSearch = new Intent(MainActivity.this, About.class);
             MainActivity.this.startActivity(goToSearch);
         });
-        //TODO delete
-        Button map = findViewById(R.id.mapActivity);
-        map.setOnClickListener(view -> {
-            Intent goToMap = new Intent(MainActivity.this, BattleMapActivity.class);
-            MainActivity.this.startActivity(goToMap);
-        });
-
-
     }
 }
