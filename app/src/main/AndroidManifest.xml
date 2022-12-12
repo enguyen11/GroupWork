@@ -40,36 +40,46 @@
         <activity
             android:name=".CampaignNotesActivity"
             android:label="Campaign Notes"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".GameCreation.PlayerJoinGame"
             android:label="Player Join Game"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".GameCreation.GMGameCreation"
             android:label="Game Master Game Creation"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Login.Account_Creation"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Login.Login"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Login.DnDLogin"
             android:label="Login"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".StickerActivity.Messages"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".StickerActivity.DisplayClickedSticker"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".About"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".StickerActivity.Friends"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".StickerActivity.ShowSticker"
@@ -88,28 +98,35 @@
         <activity
             android:name=".Menus.RpgBuddyMainMenu"
             android:label="Game Menu"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".Menus.LoadedGameActivity"
             android:label="Options"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".StickerActivity.Firebase"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".CharacterEditor.SheetBuilderActivity"
             android:label="Sheet Builder"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".CharacterEditor.CharacterSheetActivity"
             android:label="Character Sheet Builder"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".CharacterEditor.CharacterSheetActivityRefactor"
             android:label="Character Sheet Activity Refactor"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".DndApiActivity.DndAPIActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
