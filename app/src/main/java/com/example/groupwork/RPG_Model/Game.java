@@ -33,6 +33,19 @@ public class Game {
 
     }
 
+    public Game(String name, String gameMaster, String system, int numPlayers, ArrayList<String> party){
+        this.name = name;
+        this.gameMaster = gameMaster;
+        this.system = system;
+        this.numPlayers = numPlayers;
+        this.descr = "";
+        this.party = party;
+//        party.add(gameMaster);
+        this.partyCharacters = new ArrayList<>();
+//        partyCharacters.add("gameMaster");
+
+    }
+
     public Game(String name, String curUserCharacter, String curUser){
         this.name = name;
         this.curUserCharacter = curUserCharacter;
@@ -65,6 +78,15 @@ public class Game {
     public void setDescr(String s) {this.descr = s;}
     public String getDescr() {return this.descr;}
     public ArrayList<String> getParty() {return this.party;}
+    public void setParty(ArrayList<String> party) { this.party = party;}
+
+    public void setCurUser(String curUser) {
+        this.curUser = curUser;
+    }
+
+    public void setCurUserCharacter(String curUserCharacter) {
+        this.curUserCharacter = curUserCharacter;
+    }
     public String getCurUserCharacter() {return this.curUserCharacter;}
     public String getCurUser() {return this.curUser;}
     public ArrayList<String> partyCharacters() {
