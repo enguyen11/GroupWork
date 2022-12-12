@@ -161,6 +161,14 @@
         app:layout_constraintStart_toEndOf="@+id/chevronRight" />
 
     <TextView
+        android:id="@+id/text_infodirections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_tap_on_the_dice_to_add_one_long_press_to_remove_one"
+        app:layout_constraintBottom_toTopOf="@+id/roll_info"
+        app:layout_constraintEnd_toEndOf="@+id/roll_info" />
+
+    <TextView
         android:id="@+id/text_modifierlabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

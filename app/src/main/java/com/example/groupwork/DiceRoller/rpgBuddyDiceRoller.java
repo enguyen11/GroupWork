@@ -149,7 +149,7 @@ public class rpgBuddyDiceRoller extends Fragment {
         items.add(new DiceItem(20, 0, R.drawable.sticker_d20_die_emote));
         items.add(new DiceItem(12, 0, R.drawable.sticker_d12_die_emote));
         items.add(new DiceItem(10, 0, R.drawable.sticker_d10_die_emote));
-        items.add(new DiceItem(8, 0, R.drawable.sticker_d6_die_emote));
+        items.add(new DiceItem(8, 0, R.drawable.sticker_d8_die_emote));
         items.add(new DiceItem(6, 0, R.drawable.sticker_d6_die_emote));
         items.add(new DiceItem(4, 0, R.drawable.sticker_d4_die_emote));
         gridView.setAdapter(new DiceGridAdapter(this.getContext(), items));

@@ -88,7 +88,7 @@
         <item>Dungeons and Dragons 5e</item>
     </string-array>
     <string name="string_clear">Clear</string>
-    <string name="string_shake_or_press_button_to_roll">Shake or press button to roll:</string>
+    <string name="string_shake_or_press_button_to_roll">Shake device or press button to roll:</string>
     <string name="string_scroll_to_see_past_rolls">Scroll to see past rolls</string>
     <string name="string_total_label">Total:</string>
     <string name="string_0">0</string>
@@ -116,7 +116,7 @@
     <string name="string_add_stat">Add Stat</string>
     <string name="string_template_instr">Click on a template below to create a new character</string>
     <string name="string_character_instr">Click on a name below to open a character sheet</string>
-
+    <string name="text_tap_on_the_dice_to_add_one_long_press_to_remove_one">Tap on the dice to add one. Long press to remove one.</string>
 
 
 </resources>
