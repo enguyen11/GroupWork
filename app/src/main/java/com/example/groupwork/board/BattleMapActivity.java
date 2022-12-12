@@ -12,10 +12,14 @@ import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.core.view.NestedScrollingChild;
+import androidx.core.widget.NestedScrollView;
 import androidx.gridlayout.widget.GridLayout;
 
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.groupwork.R;
@@ -27,6 +31,10 @@ import retrofit2.http.PATCH;
 public class BattleMapActivity extends AppCompatActivity {
 
     private GridLayout grid;
+
+    private ScrollView scroll2;
+    private HorizontalScrollView scroll1;
+
     private int width, height;
     private Handler handler;
     private BattleMapManager mapManager;
@@ -44,8 +52,13 @@ public class BattleMapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_map);
         //TODO ERASE
-        width = 14;
-        height = 14;
+        width = 12;
+        height = 12;
+
+        // scroll
+        scroll1 = findViewById(R.id.scroll1);
+        scroll2 = findViewById(R.id.scroll2);
+
         //grid
         grid = (GridLayout) findViewById(R.id.BattleMap);
         grid.setColumnCount(width);
@@ -57,7 +70,6 @@ public class BattleMapActivity extends AppCompatActivity {
         battleMap = new Hashtable<>();
         pieces = new Hashtable<>();
         mapManager = new BattleMapManager(this);
-
         // this thread runs the setup
         Thread setup = new Thread(runSetup());
         setup.start();
@@ -125,11 +137,11 @@ public class BattleMapActivity extends AppCompatActivity {
             BoardPiece piece = new Character(Integer.parseInt(points[0].trim()), Integer.parseInt(points[1].trim()) , points[2].trim(), Integer.parseInt(points[3].trim()));
             pieces.put(key, piece);
         }
-
         Log.d("RESTORE", "onRestoreInstanceState:  w :" + String.valueOf(width));
         Log.d("RESTORE", "onRestoreInstanceState:  h :" + String.valueOf(height));
         Log.d("RESTORE", "onRestoreInstanceState: size:" + String.valueOf(pieces.values().size()));
-        new Thread(runSetup()).start();
+        // put the pieces again
+        mapManager.putPieces();
     }
 
     private Runnable runSetup() {
