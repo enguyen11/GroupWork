@@ -52,8 +52,8 @@ public class BattleMapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_map);
         //TODO ERASE
-        width = 4;
-        height = 4;
+        width = 12;
+        height = 12;
 
         // scroll
         scroll1 = findViewById(R.id.scroll1);
@@ -140,6 +140,7 @@ public class BattleMapActivity extends AppCompatActivity {
         Log.d("RESTORE", "onRestoreInstanceState:  w :" + String.valueOf(width));
         Log.d("RESTORE", "onRestoreInstanceState:  h :" + String.valueOf(height));
         Log.d("RESTORE", "onRestoreInstanceState: size:" + String.valueOf(pieces.values().size()));
+        // put the pieces again
         mapManager.putPieces();
     }
 
