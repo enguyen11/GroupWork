@@ -29,7 +29,7 @@ public class MyCharsAdapter extends RecyclerView.Adapter<MyCharsViewHolder> {
     @NonNull
     @Override
     public MyCharsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyCharsViewHolder(LayoutInflater.from(context).inflate(R.layout.sheet_type_card, null));
+        return new MyCharsViewHolder(LayoutInflater.from(context).inflate(R.layout.sheet_type_card2, null));
     }
 
     @Override

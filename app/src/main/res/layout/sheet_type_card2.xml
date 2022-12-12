@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginStart="2dp"
+android:layout_marginEnd="2dp"
+android:padding="5dp"
+app:cardElevation="5dp"
+app:cardMaxElevation="5dp"
+app:cardPreventCornerOverlap="true"
+app:cardUseCompatPadding="true"
+android:background="@android:color/transparent"
+android:layout_gravity="center">
+
+<com.google.android.material.card.MaterialCardView
+    android:layout_width="200dp"
+    android:layout_height="30dp"
+    android:layout_marginStart="1dp"
+    android:layout_marginEnd="1dp"
+    android:layout_marginBottom="10dp"
+    android:padding="20dp"
+    app:cardBackgroundColor="@color/dodger_blue"
+
+    app:cardElevation="5dp"
+    app:strokeColor="@color/black"
+    app:strokeWidth="0.5dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:id="@+id/textView_sheetName_forCard"
+        android:layout_width="212dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/sender"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</com.google.android.material.card.MaterialCardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

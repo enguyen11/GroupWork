@@ -29,7 +29,7 @@ public class MySheetsAdapter extends RecyclerView.Adapter<MySheetsViewHolder> {
     @NonNull
     @Override
     public MySheetsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MySheetsViewHolder(LayoutInflater.from(context).inflate(R.layout.sheet_type_card, null));
+        return new MySheetsViewHolder(LayoutInflater.from(context).inflate(R.layout.sheet_type_card2, null));
     }
 
     @Override
