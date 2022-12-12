@@ -41,6 +41,7 @@ public class LoadedGameActivity extends AppCompatActivity {
     private String username;
     private String campaign;
 
+
     private NavArgument nameArg, campaignArg;
 
     public static String TAG = "LoadedGameActivity";
