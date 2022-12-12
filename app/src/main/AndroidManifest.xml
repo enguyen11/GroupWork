@@ -17,6 +17,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GroupWork"
         tools:targetApi="31">
+
+        <activity
+            android:name=".DNDChat.CampaignSelection"
+            android:label="Campaign Selection"
+            android:exported="false" />
+        <activity
+            android:name=".DNDChat.ChatSelection"
+            android:label="Chat Selection"
+            android:exported="false" />
+        <activity
+            android:name=".DNDChat.DnDChat"
+            android:exported="false" />
         <activity
             android:name=".board.BattleMapActivity"
             android:exported="false"

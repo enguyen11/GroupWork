@@ -98,6 +98,12 @@
     <string name="string_add_modifier">add modifier</string>
     <string name="string_subtract_modifier">subtract modifier</string>
     <string name="string_please_enter_your_username">Please enter your username</string>
+
+    <string name="please_enter_your_message_here">Please enter your message here</string>
+    <string name="enter_your_message_here">Enter your message here</string>
+    <string name="sender">sender</string>
+    <string name="some_message">Some Message</string>
+
     <string name="string_please_only_use_alphanumeric_characters">Please only use alphanumeric characters.</string>
     <string name="string_1">1</string>
     <string name="string_party_summary">Party Summary</string>
@@ -110,6 +116,7 @@
     <string name="string_add_stat">Add Stat</string>
     <string name="string_template_instr">Click on a template below to create a new character</string>
     <string name="string_character_instr">Click on a name below to open a character sheet</string>
+
 
 
 </resources>
